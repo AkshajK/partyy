@@ -18,7 +18,10 @@ const Room = require("./models/room");
 const Category = require("./models/category");
 // import authentication library
 const auth = require("./auth");
-
+const mainCalls = require("./mainCalls");
+const roomCalls = require("./roomCalls");
+const gameCalls = require("./gameCalls");
+const categoryDashboardCalls = require("./categoryDashboardCalls");
 // api endpoints: all these paths will be prefixed with "/api/"
 const router = express.Router();
 
