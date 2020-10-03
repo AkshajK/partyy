@@ -30,14 +30,6 @@ const socket = require("./server-socket");
 
 router.post("/login", auth.login);
 router.post("/logout", auth.logout);
-router.get("/whoami", (req, res) => {
-  if (!req.user) {
-    // not logged in
-    return res.send({});
-  }
-
-  res.send(req.user);
-});
 
 router.post("/initsocket", (req, res) => {
   // do nothing if user not logged in
@@ -48,6 +40,18 @@ router.post("/initsocket", (req, res) => {
 // |------------------------------|
 // | write your API methods below!|
 // |------------------------------|
+router.post("/message", auth.ensureLoggedIn, mainCalls.message);
+router.post("/getLeaderboard", auth.ensureLoggedIn, mainCalls.getLeaderboard);
+router.post("/joinLobby", auth.ensureLoggedIn, mainCalls.joinLobby);
+
+router.post("/createRoom", auth.ensureLoggedIn, roomCalls.createRoom);
+router.post("/joinRoom", auth.ensureLoggedIn, roomCalls.joinRoom);
+router.post("/leaveRoom", auth.ensureLoggedIn, roomCalls.leaveRoom);
+
+router.post("/startGame", auth.ensureLoggedIn, mainCalls.startGame);
+
+router.post("/getCategoryAndSongData", auth.ensureLoggedIn, categoryDashboardCalls.getCategoryAndSongData);
+router.post("/addCategory", auth.ensureLoggedIn, categoryDashboardCalls.addCategory);
 
 // anything else falls to this "not found" case
 router.all("*", (req, res) => {
