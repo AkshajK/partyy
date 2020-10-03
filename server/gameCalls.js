@@ -10,9 +10,14 @@ startGame = (req, res) => {
   
 };
 
+guessAnswer = (req, res) => {
+
+}
+
 
 
 
 module.exports = {
-  startGame
+  startGame,
+  guessAnswer
 };

@@ -14,6 +14,10 @@ const RoomSchema = new mongoose.Schema({
   },
   status: String, // "Waiting" or "InProgress" or "Finished"
   created: { type: Date, default: Date.now },
+  closed: {
+    type: Boolean, 
+    default: false
+  }
 });
 
 // compile model from schema

@@ -48,7 +48,8 @@ router.post("/createRoom", auth.ensureLoggedIn, roomCalls.createRoom);
 router.post("/joinRoom", auth.ensureLoggedIn, roomCalls.joinRoom);
 router.post("/leaveRoom", auth.ensureLoggedIn, roomCalls.leaveRoom);
 
-router.post("/startGame", auth.ensureLoggedIn, mainCalls.startGame);
+router.post("/startGame", auth.ensureLoggedIn, gameCalls.startGame);
+router.post("/guessAnswer", auth.ensureLoggedIn, gameCalls.guessAnswer);
 
 router.post("/getCategoryAndSongData", auth.ensureLoggedIn, categoryDashboardCalls.getCategoryAndSongData);
 router.post("/addCategory", auth.ensureLoggedIn, categoryDashboardCalls.addCategory);

@@ -38,6 +38,14 @@ function getOrCreateUser(token) {
   });
 }
 
+/*
+login
+Input (req.body): {cookieToken: String} or {}
+Precondition: 
+Socket: 
+Returns: {user: User}
+Description: If req.body.cookieToken, log them in as the user with that cookieToken. Else, create a new User object for them and log them in as that. Return the user object
+*/
 function login(req, res) {
   getOrCreateUser(req.body.cookieToken)
     .then((user) => {
