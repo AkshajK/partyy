@@ -35,7 +35,7 @@ class App extends Component {
     // login
     let token = cookies.get("cookieToken");
     post("/api/login", { cookieToken: token }).then((user) => {
-      this.setState({ userId: user._id, userName: user.name });
+      this.setState({ userId: user._id, userName: user.name, userLeaderboardData: user.leaderboardData });
       if (!token) cookies.set("cookieToken", user.cookieToken);
       post("/api/initsocket", { socketid: socket.id });
     });
@@ -53,7 +53,7 @@ class App extends Component {
     return (
       <Grid container direction="row" style={{ width: "100%" }}>
         <Box width="300px">
-          <SideBar userName={this.state.userName} />
+          <SideBar userName={this.state.userName} userLeaderboardData={this.state.userLeaderboardData} />
         </Box>
         <Box width="calc(100%-300px)">
           <Router>

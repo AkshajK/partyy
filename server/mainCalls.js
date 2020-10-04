@@ -39,11 +39,18 @@ Returns: {leaderboard: {"categoryId": {topScores: [], topRatings: []}}, categori
 Description: Returns a leaderboard of top scores and ratings for each category, already sorted, and also all the categories
 */
 getLeaderboard = (req, res) => {
+  /*
+  const category = new Category({name: "General"});
+  category.save()
+  const category2 = new Category({name: "General 2"});
+  category2.save()
+  */
   User.find({}, (err, users) => {
     Category.find({}, (err, categories) => {
+      console.log(categories)
       var leaderboard = {};
       for (var j = 0; j < categories.length; j++) {
-        leaderboard[categories[i]._id] = {
+        leaderboard[categories[j]._id] = {
           topScores: [],
           topRatings: [],
         };
@@ -52,13 +59,15 @@ getLeaderboard = (req, res) => {
         let topScores = [];
         let topRatings = [];
         let leaderboardData = users[i].leaderboardData;
-        for (var j = 0; j < categories.length; j++) {
+        for (var j = 0; j < leaderboardData.length; j++) {
           leaderboard[leaderboardData[j].categoryId].topScores.push({
             userId: users[i]._id,
+            name: users[i].name,
             score: leaderboardData[j].highScore,
           });
           leaderboard[leaderboardData[j].categoryId].topRatings.push({
             userId: users[i]._id,
+            name: users[i].name,
             rating: leaderboardData[j].rating,
           });
         }
