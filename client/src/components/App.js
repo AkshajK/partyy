@@ -39,9 +39,11 @@ class App extends Component {
     // login
     let token = cookies.get("cookieToken");
     post("/api/login", { cookieToken: token }).then((user) => {
-      this.setState({ userId: user._id, userName: user.name, userLeaderboardData: user.leaderboardData });
-      if (!token) cookies.set("cookieToken", user.cookieToken);
-      post("/api/initsocket", { socketid: socket.id });
+      
+      post("/api/initsocket", { socketid: socket.id }).then(()=>{
+        this.setState({ userId: user._id, userName: user.name, userLeaderboardData: user.leaderboardData });
+        if (!token) cookies.set("cookieToken", user.cookieToken);
+      });
     });
 
     socket.on("disconnect", (reason) => {

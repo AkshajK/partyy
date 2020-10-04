@@ -4,6 +4,7 @@ import "../../utilities.css";
 
 import Box from "@material-ui/core/Box";
 import Button from "@material-ui/core/Button";
+import CircularProgress from "@material-ui/core/CircularProgress";
 
 import Grid from "@material-ui/core/Grid"
 import Paper from "@material-ui/core/Paper";
@@ -20,9 +21,21 @@ class Lobby extends Component {
 
   componentDidMount() {
     // remember -- api calls go here!
+    post("api/joinLobby", {}).then((data) => {
+      
+      
+      this.setState({
+        doneLoading: true,
+        users: data.users,
+        rooms: data.rooms,
+        messages: data.messages
+      });
+    });
   }
 
   render() {
+    if (!this.state.doneLoading) return <CircularProgress />;
+
     return (
       
         
