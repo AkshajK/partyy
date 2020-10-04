@@ -17,24 +17,22 @@ Returns: {name: String}  (the room name, some randomly generated string)
 Description: Creates a room
 */
 createRoom = (req, res) => {
-  let name = Math.random().toString(36).substring(2, 15)
+  let name = Math.random().toString(36).substring(2, 15);
   Category.findById(req.body.categoryId).then((category) => {
-    if(!category) res.send({})
+    if (!category) res.send({});
     const newRoom = new Room({
       name: name,
       categoryId: req.body.categoryId,
       rated: req.body.rated,
       private: req.body.private,
       host: req.user._id,
-    })
+    });
     newRoom.save().then(() => {
       socket.getSocketFromUserID(req.user._id).to("Room: Lobby").emit("createdRoom", newRoom);
-      res.send({name: name})
-    })
-  })
-  
+      res.send({ name: name });
+    });
+  });
 };
-
 
 /*
 joinRoom
@@ -45,19 +43,19 @@ Returns:  {room: Room, game: Game, users: [{userId: String, userName: String, le
 Description: Checks to see if room name exists and is not closed. If it is closed, shows error message. Else, returns information associated with the room and game
 */
 joinRoom = (req, res) => {
-  Room.findOne({name: req.body.name}).then((room) => {
-    if(!room) res.send({exists: false})
+  Room.findOne({ name: req.body.name }).then((room) => {
+    if (!room) res.send({ exists: false });
     else {
-      Game.findById(room.gameId).then((game) => {
-        User.find({roomId: room._id}, (err, users) => {
-          User.findById(req.user._id).then((me) => {
-            Category.findById(room.categoryId).then((category) => {
-              me.roomId = room._id
-              me.save().then(() => {
-                socket.getSocketFromUserID(req.user._id).join("Room: "+room._id);
-                let listOfIds = room.allUserIdsThatHaveBeenInRoom
-                listOfIds.push(req.user._id)
-                room.allUserIdsThatHaveBeenInRoom = listOfIds
+      Game.findOne(room.gameId !== "Waiting" ? {_id: room.gameId}:{doesntxist: "nope"}).then((game) => {
+        User.findById(req.user._id).then((me) => {
+          me.roomId = room._id;
+          me.save().then(() => {
+            User.find({ roomId: room._id }, (err, users) => {
+              Category.findById(room.categoryId).then((category) => {
+                socket.getSocketFromUserID(req.user._id).join("Room: " + room._id);
+                let listOfIds = room.allUserIdsThatHaveBeenInRoom;
+                listOfIds.push(req.user._id);
+                room.allUserIdsThatHaveBeenInRoom = listOfIds;
                 room.save().then((savedRoom) => {
                   res.send({
                     exists: true,
@@ -70,20 +68,16 @@ joinRoom = (req, res) => {
                         leaderboardData: user.leaderboardData,
                       };
                     }),
-                    category: category
-                  })
-                })
-                
-                
-              })
-            })
-            
-          })
-          
-        })
-      })
+                    category: category,
+                  });
+                });
+              });
+            });
+          });
+        });
+      });
     }
-  })
+  });
 };
 
 /*
@@ -95,17 +89,18 @@ Returns: {}
 Description: Does socket.leave("Room: roomId")
 */
 leaveRoom = (req, res) => {
-  
-  socket.getSocketFromUserID(req.user._id).to("Room: "+req.body.roomId).emit("leftRoom", {
-    userId: req.user._id,
-  });
-  socket.getSocketFromUserID(req.user._id).leave("Room: "+req.body.roomId);
-  res.send({})
+  socket
+    .getSocketFromUserID(req.user._id)
+    .to("Room: " + req.body.roomId)
+    .emit("leftRoom", {
+      userId: req.user._id,
+    });
+  socket.getSocketFromUserID(req.user._id).leave("Room: " + req.body.roomId);
+  res.send({});
 };
-
 
 module.exports = {
   createRoom,
   joinRoom,
-  leaveRoom
+  leaveRoom,
 };

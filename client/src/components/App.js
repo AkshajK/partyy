@@ -7,6 +7,8 @@ import Room from "./pages/Room.js"
 import CategoryDashboard from "./pages/CategoryDashboard.js"
 import CircularProgress from "@material-ui/core/CircularProgress";
 import "../utilities.css";
+import {Modal} from "antd";
+import 'antd/dist/antd.css'
 
 import { socket } from "../client-socket.js";
 
@@ -30,7 +32,9 @@ class App extends Component {
       userId: undefined,
     };
   }
-
+  setCategory  = (c) => {
+    this.setState({category: c})
+  }
   componentDidMount() {
     // login
     let token = cookies.get("cookieToken");
@@ -39,6 +43,12 @@ class App extends Component {
       if (!token) cookies.set("cookieToken", user.cookieToken);
       post("/api/initsocket", { socketid: socket.id });
     });
+
+    socket.on("disconnect", (reason) => {
+      if (reason === "io server disconnect") {
+        this.setState({ disconnect: true });
+      }
+    });
   }
 
   handleLogout = () => {
@@ -46,24 +56,62 @@ class App extends Component {
     post("/api/logout");
   };
 
+  redirect = (link) => {
+    this.setState({ redirect: link });
+  };
+
   render() {
     if (!this.state.userId) {
       return <CircularProgress />;
     }
+    
+ 
+    if (this.state.redirect !== "") {
+      let page = this.state.redirect;
+      this.setState({ redirect: "" });
+      return (
+        <Router>
+          <Redirect to={page} />
+        </Router>
+      );
+    }
+    
     return (
       <Grid container direction="row" style={{ width: "100%" }}>
+        
         <Box width="300px">
-          <SideBar userName={this.state.userName} userLeaderboardData={this.state.userLeaderboardData} />
+          <SideBar userName={this.state.userName} userLeaderboardData={this.state.userLeaderboardData}
+          category={this.state.category} setCategory={this.setCategory} />
         </Box>
-        <Box width="calc(100%-300px)">
+        <Box width="calc(100% - 300px)">
           <Router>
             <Switch>
-              <Lobby exact path="/" name={this.state.name} userId={this.state.userId} />
-              <Room exact path="/:roomName" name={this.state.name} userId={this.state.userId} />
+              <Lobby exact path="/" name={this.state.name} userId={this.state.userId} category={this.state.category} redirect={this.redirect} />
+              <Room exact path="/:roomName" name={this.state.name} userId={this.state.userId} redirect={this.redirect} />
               <NotFound default />
             </Switch>
           </Router>
         </Box>
+
+        {this.state.disconnect ? (
+          Modal.error({
+            title: "Disconnected",
+            content: (
+              <div>
+                <p>
+                  You have disconnected. Maybe you opened Partyy in another tab, or you have
+                  been inactive for a long period of time.
+                </p>
+                <p>Hit OK to relaunch Partyy!</p>
+              </div>
+            ),
+            onOk() {
+              window.location.href = "/";
+            },
+          })
+        ) : (
+          <></>
+        )}
       </Grid>
     );
   }

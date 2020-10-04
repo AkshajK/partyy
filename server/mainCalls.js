@@ -47,7 +47,7 @@ getLeaderboard = (req, res) => {
   */
   User.find({}, (err, users) => {
     Category.find({}, (err, categories) => {
-      console.log(categories)
+      console.log(categories);
       var leaderboard = {};
       for (var j = 0; j < categories.length; j++) {
         leaderboard[categories[j]._id] = {
@@ -80,7 +80,7 @@ getLeaderboard = (req, res) => {
           return b.rating - a.rating;
         });
       }
-      res.send({leaderboard: leaderboard, categories: categories});
+      res.send({ leaderboard: leaderboard, categories: categories });
     });
   });
 };
@@ -96,16 +96,17 @@ Description: Adds message to database if it is from lobby. Emits socket with mes
 joinLobby = (req, res) => {
   Room.find({}, (err, rooms) => {
     Message.find({}, (err, messages) => {
-      User.find({ roomId: "Lobby" }, (err, users) => {
-        User.findById(req.user._id).then((me) => {
-          socket.getSocketFromUserID(req.user._id).join("Room: Lobby");
-          socket.getSocketFromUserID(req.user._id).to("Room: Lobby").emit("joinedLobby", {
-            userId: me._id,
-            userName: me.name,
-            leaderboardData: me.leaderboardData,
-          });
-          me.roomId = "Lobby";
-          me.save().then(() => {
+      User.findById(req.user._id).then((me) => {
+        me.roomId = "Lobby";
+        me.save().then(() => {
+          User.find({ roomId: "Lobby" }, (err, users) => {
+            socket.getSocketFromUserID(req.user._id).join("Room: Lobby");
+            socket.getSocketFromUserID(req.user._id).to("Room: Lobby").emit("joinedLobby", {
+              userId: me._id,
+              userName: me.name,
+              leaderboardData: me.leaderboardData,
+            });
+
             res.send({
               users: users.map((user) => {
                 return {

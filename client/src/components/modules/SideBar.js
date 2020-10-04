@@ -20,7 +20,7 @@ import "../../utilities.css";
 import { get, post } from "../../utilities.js";
 
 export default function SideBar(props) {
-  const [gameMode, setGameMode] = React.useState("")
+  
   const [leaderboard, setLeaderboard] = React.useState({})
   const [categories, setCategories] = React.useState([])
 
@@ -33,25 +33,26 @@ export default function SideBar(props) {
       console.log(newLeaderboard)
       console.log(newCategories)
       
-      setGameMode(newCategories[0])
       setLeaderboard(newLeaderboard)
       setCategories(newCategories)
+      props.setCategory(newCategories[0])
+      
       
       console.log("REPULLED LEADERBOARD DATA!")
     })
   }, [props.userLeaderboardData]);
   
-  if(categories.length === 0) return <CircularProgress />
+  //if(!props.category || categories.length === 0 || (Object.entries(leaderboard).length === 0)) return <CircularProgress />
 
-  let leaderboardData = props.userLeaderboardData.find((data)=>{return data.categoryId === gameMode._id}) || {rating: 1200, highScore: 0}
+  let leaderboardData = props.userLeaderboardData.find((data)=>{return data.categoryId === props.category._id}) || {rating: 1200, highScore: 0}
   return (
     <Grid container direction="column">
       <FormControl variant="filled" >
         <InputLabel id="demo-simple-select-filled-label">Game Mode</InputLabel>
         <Select
           labelId="demo-simple-select-filled-label"
-          value={gameMode}
-          onChange={(event)=>{setGameMode(event.target.value)}}
+          value={props.category || ""}
+          onChange={(event)=>{props.setCategory(event.target.value)}}
         >
           {categories.map((category)=>{
             return <MenuItem value={category}>{category.name}</MenuItem>
@@ -73,7 +74,7 @@ export default function SideBar(props) {
       </CardContent>
       
     </Card>
-    <Leaderboard leaderboard={leaderboard[gameMode._id]} />
+    <Leaderboard leaderboard={props.category ? leaderboard[props.category._id] : undefined} />
     </Grid>
 
     

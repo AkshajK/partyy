@@ -5,6 +5,8 @@ import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
 import AppBar from "@material-ui/core/AppBar";
 import Tabs from "@material-ui/core/Tabs";
+import CircularProgress from '@material-ui/core/CircularProgress';
+
 import Tab from "@material-ui/core/Tab";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
@@ -45,6 +47,7 @@ function a11yProps(index) {
 
 export default function Leaderboard(props) {
   const [value, setValue] = React.useState(0);
+  if(!props.leaderboard) return <CircularProgress />
   return (
     <>
       <AppBar position="static">
