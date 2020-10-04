@@ -10,7 +10,7 @@ import Grid from "@material-ui/core/Grid"
 import Paper from "@material-ui/core/Paper";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
-
+import RoomTable from "../modules/RoomTable.js"
 import { get, post } from "../../utilities.js";
 class Lobby extends Component {
   constructor(props) {
@@ -41,7 +41,7 @@ class Lobby extends Component {
         
         <Grid container direction="row" style={{ width: "100%" }}>
         <Box width="calc(100% - 300px)">
-          Hi
+          <RoomTable users={this.state.users} rooms={this.state.rooms} redirect={this.props.redirect} />
         </Box>
         <Box width="300px">
           {this.props.category ? <Button onClick={

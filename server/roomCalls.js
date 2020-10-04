@@ -18,20 +18,26 @@ Description: Creates a room
 */
 createRoom = (req, res) => {
   let name = Math.random().toString(36).substring(2, 15);
-  Category.findById(req.body.categoryId).then((category) => {
-    if (!category) res.send({});
-    const newRoom = new Room({
-      name: name,
-      categoryId: req.body.categoryId,
-      rated: req.body.rated,
-      private: req.body.private,
-      host: req.user._id,
+  User.findById(req.user._id).then((me) => {
+    Category.findById(req.body.categoryId).then((category) => {
+      if (!category) res.send({});
+      const newRoom = new Room({
+        name: name,
+        category: category,
+        rated: req.body.rated,
+        private: req.body.private,
+        host: {
+          userId: req.user._id,
+          name: me.name
+        }
+      });
+      newRoom.save().then(() => {
+        socket.getSocketFromUserID(req.user._id).to("Room: Lobby").emit("createdRoom", newRoom);
+        res.send({ name: name });
+      });
     });
-    newRoom.save().then(() => {
-      socket.getSocketFromUserID(req.user._id).to("Room: Lobby").emit("createdRoom", newRoom);
-      res.send({ name: name });
-    });
-  });
+  })
+  
 };
 
 /*
@@ -51,11 +57,14 @@ joinRoom = (req, res) => {
           me.roomId = room._id;
           me.save().then(() => {
             User.find({ roomId: room._id }, (err, users) => {
-              Category.findById(room.categoryId).then((category) => {
+              Category.findById(room.category._id).then((category) => {
                 socket.getSocketFromUserID(req.user._id).join("Room: " + room._id);
                 let listOfIds = room.allUserIdsThatHaveBeenInRoom;
                 listOfIds.push(req.user._id);
                 room.allUserIdsThatHaveBeenInRoom = listOfIds;
+                let roomUsers = room.users;
+                roomUsers.push(req.user._id);
+                room.users = roomUsers;
                 room.save().then((savedRoom) => {
                   res.send({
                     exists: true,
@@ -95,8 +104,22 @@ leaveRoom = (req, res) => {
     .emit("leftRoom", {
       userId: req.user._id,
     });
-  socket.getSocketFromUserID(req.user._id).leave("Room: " + req.body.roomId);
-  res.send({});
+  Room.findById(req.body.roomId).then((room)=> {
+    console.log("hi")
+    console.log(room.users)
+    let users = room.users.filter((id)=>{
+      return id !== req.user._id
+    })
+    room.users = users
+    console.log("hi")
+    console.log(req.user._id)
+    console.log(room.users)
+    room.save().then(() => {
+      socket.getSocketFromUserID(req.user._id).leave("Room: " + req.body.roomId);
+      res.send({});
+    })
+  })
+  
 };
 
 module.exports = {

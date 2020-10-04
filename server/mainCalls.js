@@ -17,7 +17,7 @@ Description: Adds message to database if it is from lobby. Emits socket with mes
 message = (req, res) => {
   User.findById(req.user._id).then((user) => {
     const msg = new Message({
-      sender: req.user._id,
+      sender: {userId: req.user._id, name: user.name},
       roomId: user.roomId,
       message: req.body.text,
     });

@@ -2,12 +2,15 @@ const mongoose = require("mongoose");
 
 const RoomSchema = new mongoose.Schema({
   name: String, // randomly generated and is part of URL
-  categoryId: String,
+  category: Object,
   rated: {
     type: Boolean,
     default: false,
   },
-  host: String, // userId
+  host: {
+    userId: String, // userId
+    name: String
+  },
   gameId: {
     type: String,
     default: "Waiting",
@@ -24,6 +27,10 @@ const RoomSchema = new mongoose.Schema({
   private: {
     type: Boolean,
     default: false
+  },
+  users: {
+    type: [String],
+    default: []
   },
   allUserIdsThatHaveBeenInRoom: {
     type: [String],

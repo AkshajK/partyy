@@ -38,7 +38,7 @@ class Room extends Component {
         private: data.room.private,
         allUserIdsThatHaveBeenInRoom: data.room.allUserIdsThatHaveBeenInRoom,
         exists: true,
-   
+        
         game: data.game,
         users: data.users,
         category: data.category,
