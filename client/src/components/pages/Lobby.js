@@ -11,6 +11,7 @@ import Paper from "@material-ui/core/Paper";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
 import RoomTable from "../modules/RoomTable.js"
+import Chat from "../modules/Chat.js"
 import { get, post } from "../../utilities.js";
 class Lobby extends Component {
   constructor(props) {
@@ -44,7 +45,8 @@ class Lobby extends Component {
           <RoomTable users={this.state.users} rooms={this.state.rooms} redirect={this.props.redirect} />
         </Box>
         <Box width="300px">
-          {this.props.category ? <Button onClick={
+          <Chat messages={this.state.messages.concat(this.props.messages)} />
+          {this.props.category ? <Button fullWidth onClick={
             () => {
             post("api/createRoom", {categoryId: this.props.category._id}).then((data) => {
               this.props.redirect("/"+data.name)

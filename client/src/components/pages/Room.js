@@ -10,7 +10,7 @@ import Paper from "@material-ui/core/Paper";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
 import CircularProgress from "@material-ui/core/CircularProgress";
-
+import Chat from "../modules/Chat.js"
 import { get, post } from "../../utilities.js";
 
 class Room extends Component {
@@ -54,7 +54,8 @@ class Room extends Component {
           {"Welcome to a " + this.state.category.name + " room."}
         </Box>
         <Box width="300px">
-            <Button
+            <Chat messages={this.props.messages.filter((msg)=>{return msg.roomId === this.state.roomId})} />
+            <Button fullWidth
               onClick={() => {
                 post("api/leaveRoom", { roomId: this.state.roomId }).then((data) => {
                   this.props.redirect("/");

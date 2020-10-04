@@ -21,9 +21,9 @@ message = (req, res) => {
       roomId: user.roomId,
       message: req.body.text,
     });
-    socket
-      .getSocketFromUserID(req.user._id)
-      .to("Room: " + user.roomId)
+    socket.getIo()
+      
+      .in("Room: " + user.roomId)
       .emit("message", msg);
     if (user.roomId === "Lobby") msg.save();
     res.send({});
@@ -120,7 +120,7 @@ joinLobby = (req, res) => {
                 .sort((a, b) => {
                   b.timestamp - a.timestamp;
                 })
-                .filter((i, msg) => {
+                .filter((msg, i) => {
                   return i < 100;
                 }),
             });

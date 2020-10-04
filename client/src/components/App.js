@@ -30,6 +30,7 @@ class App extends Component {
     super(props);
     this.state = {
       userId: undefined,
+      messages: []
     };
   }
   setCategory  = (c) => {
@@ -51,6 +52,14 @@ class App extends Component {
         this.setState({ disconnect: true });
       }
     });
+
+    socket.on("message", (msg) => {
+      let messages = this.state.messages.concat([]);
+      messages.push(msg)
+      this.setState({messages: messages})
+      console.log("GOT THE MESSAGE")
+      console.log(msg)
+    })
   }
 
   handleLogout = () => {
@@ -88,8 +97,8 @@ class App extends Component {
         <Box width="calc(100% - 300px)">
           <Router>
             <Switch>
-              <Lobby exact path="/" name={this.state.name} userId={this.state.userId} category={this.state.category} redirect={this.redirect} />
-              <Room exact path="/:roomName" name={this.state.name} userId={this.state.userId} redirect={this.redirect} />
+              <Lobby exact path="/" name={this.state.name} userId={this.state.userId} category={this.state.category} redirect={this.redirect} messages={this.state.messages.filter((msg)=>{return msg.roomId === "Lobby"})} />
+              <Room exact path="/:roomName" name={this.state.name} userId={this.state.userId} redirect={this.redirect} messages={this.state.messages} />
               <NotFound default />
             </Switch>
           </Router>
