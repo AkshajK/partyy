@@ -4,7 +4,7 @@ const Song = require("./models/song");
 const Message = require("./models/message");
 const Room = require("./models/room");
 const Category = require("./models/category");
-
+const socket = require("./server-socket");
 
 startGame = (req, res) => {
   

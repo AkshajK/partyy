@@ -43,6 +43,8 @@ router.post("/initsocket", (req, res) => {
 router.post("/message", auth.ensureLoggedIn, mainCalls.message);
 router.post("/getLeaderboard", auth.ensureLoggedIn, mainCalls.getLeaderboard);
 router.post("/joinLobby", auth.ensureLoggedIn, mainCalls.joinLobby);
+router.post("/leaveLobby", auth.ensureLoggedIn, mainCalls.leaveLobby);
+
 
 router.post("/createRoom", auth.ensureLoggedIn, roomCalls.createRoom);
 router.post("/joinRoom", auth.ensureLoggedIn, roomCalls.joinRoom);

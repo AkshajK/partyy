@@ -12,10 +12,17 @@ const RoomSchema = new mongoose.Schema({
     type: String,
     default: "Waiting",
   },
-  status: String, // "Waiting" or "InProgress" or "Finished"
+  status: {
+    type: String, // "Waiting" or "InProgress" or "Finished"
+    default: "Waiting"
+  },
   created: { type: Date, default: Date.now },
   closed: {
     type: Boolean, 
+    default: false
+  },
+  private: {
+    type: Boolean,
     default: false
   }
 });

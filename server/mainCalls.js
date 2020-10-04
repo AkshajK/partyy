@@ -5,7 +5,7 @@ const Message = require("./models/message");
 const Room = require("./models/room");
 const Category = require("./models/category");
 const socket = require("./server-socket");
-const { useReducer } = require("react");
+
 
 /*
 message
@@ -81,7 +81,7 @@ getLeaderboard = (req, res) => {
 joinLobby
 Input (req.body): 
 Precondition: 
-Socket: "joinedLobby", {userId: String, userName: String, leaderboardData: []}
+Socket: to("Room: Lobby").emit("joinedLobby", {userId: String, userName: String, leaderboardData: []})
 Returns: {users: [{userId: String, userName: String, leaderboardData: []}], rooms: [Room], messages: [Messages]}
 Description: Adds message to database if it is from lobby. Emits socket with message
 */
@@ -96,31 +96,45 @@ joinLobby = (req, res) => {
             userName: me.name,
             leaderboardData: me.leaderboardData,
           });
-          res.send({
-            users: users.map((user) => {
-              return {
-                userId: user._id,
-                userName: user.name,
-                leaderboardData: user.leaderboardData,
-              };
-            }),
-            rooms: rooms,
-            messages: messages
-              .sort((a, b) => {
-                b.timestamp - a.timestamp;
-              })
-              .filter((i, msg) => {
-                return i < 100;
+          me.roomId = "Lobby"
+          me.save().then(() => {
+            res.send({
+              users: users.map((user) => {
+                return {
+                  userId: user._id,
+                  userName: user.name,
+                  leaderboardData: user.leaderboardData,
+                };
               }),
-          });
+              rooms: rooms,
+              messages: messages
+                .sort((a, b) => {
+                  b.timestamp - a.timestamp;
+                })
+                .filter((i, msg) => {
+                  return i < 100;
+                }),
+            });
+          })
+          
         });
       });
     });
   });
 };
 
+leaveLobby = (req, res) => {
+ 
+  socket.getSocketFromUserID(req.user._id).to("Room: Lobby").emit("leftLobby", {
+    userId: req.user._id,
+  });
+  socket.getSocketFromUserID(req.user._id).leave("Room: Lobby");
+  res.send({})
+}
+
 module.exports = {
   message,
   getLeaderboard,
   joinLobby,
+  leaveLobby
 };
