@@ -73,10 +73,10 @@ getLeaderboard = (req, res) => {
         }
       }
       for (var j = 0; j < categories.length; j++) {
-        leaderboard[categories[i]._id].topScores.sort((a, b) => {
+        leaderboard[categories[j]._id].topScores.sort((a, b) => {
           return b.score - a.score;
         });
-        leaderboard[categories[i]._id].topRatings.sort((a, b) => {
+        leaderboard[categories[j]._id].topRatings.sort((a, b) => {
           return b.rating - a.rating;
         });
       }

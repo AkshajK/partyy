@@ -14,13 +14,7 @@ import "../../utilities.css";
 //import { redirectPage } from "@reach/router";
 
 import { get, post } from "../../utilities.js";
-const formatDate = (duedate) => {
-  return (
-    new Date(duedate.toString()).toString().substring(0, 11) +
-    new Date(duedate.toString()).toLocaleString([], { hour: "2-digit", minute: "2-digit" })
-  );
-  // duedate.toString().substring(0, 11) + duedate.toString().substring(16, 21);
-};
+
 const StyledTableCell = withStyles((theme) => ({
   head: {
     backgroundColor: theme.palette.common.black,
@@ -41,32 +35,28 @@ const StyledTableRow = withStyles((theme) => ({
 
 const useStyles = makeStyles({
   table: {
-    minWidth: 700,
+    minWidth: 150,
   },
 });
-export default function RoomTable(props) {
+export default function CorrectAnswerTable(props) {
   const classes = useStyles();
   
   
   return (
     <TableContainer component={Paper}>
-      <Table className={classes.table} aria-label="customized table">
+      <Table className={classes.table}>
         <TableHead>
           <TableRow>
-            <StyledTableCell>Host</StyledTableCell>
-            <StyledTableCell align="right">Players</StyledTableCell>
-            <StyledTableCell align="right">Game Mode</StyledTableCell>
-            <StyledTableCell align="right">Status</StyledTableCell>
-            <StyledTableCell align="right">Created</StyledTableCell>
+            <StyledTableCell>Player</StyledTableCell>
+            <StyledTableCell align="right">Time</StyledTableCell>
+            <StyledTableCell align="right">Points</StyledTableCell>
+            
           </TableRow>
         </TableHead>
-        <TableBody>
+        
+        {/*<TableBody>
           {props.rooms.map((room) => (
-            <StyledTableRow key={room.name} hover onClick={()=>{
-              post("api/leaveLobby",{}).then(()=>{
-                props.redirect("/"+room.name)
-              })
-              }}>
+            <StyledTableRow key={room.name} hover onClick={()=>{props.redirect("/"+room.name)}}>
               <StyledTableCell component="th" scope="row">
                 {room.host.name}
               </StyledTableCell>
@@ -76,7 +66,7 @@ export default function RoomTable(props) {
               <StyledTableCell align="right">{formatDate(room.created)}</StyledTableCell>
             </StyledTableRow>
           ))}
-        </TableBody>
+          </TableBody>*/}
       </Table>
     </TableContainer>
 

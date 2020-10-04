@@ -46,7 +46,9 @@ class App extends Component {
         if (!token) cookies.set("cookieToken", user.cookieToken);
       });
     });
-
+    socket.on("reconnect_failed", () => {
+      this.setState({ disconnect: true });
+    });
     socket.on("disconnect", (reason) => {
       if (reason === "io server disconnect") {
         this.setState({ disconnect: true });

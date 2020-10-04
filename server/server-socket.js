@@ -2,7 +2,8 @@ let io;
 
 const userToSocketMap = {}; // maps user ID to socket object
 const socketToUserMap = {}; // maps socket ID to user object
-
+const User = require("./models/user");
+const Room = require("./models/room");
 const getSocketFromUserID = (userid) => userToSocketMap[userid];
 const getUserFromSocketID = (socketid) => socketToUserMap[socketid];
 const getSocketFromSocketID = (socketid) => io.sockets.connected[socketid];
@@ -32,8 +33,41 @@ module.exports = {
     io.on("connection", (socket) => {
       console.log(`socket has connected ${socket.id}`);
       socket.on("disconnect", (reason) => {
+        
         const user = getUserFromSocketID(socket.id);
-        removeUser(user, socket);
+        
+        if (user) {
+          User.findById(user._id).then((me) => {
+            if (me.roomId === "Lobby") {
+              io.in("Room: Lobby").emit("leftLobby", {
+                userId: me._id,
+              });
+            } else {
+              io.in("Room: " + me.roomId).emit("leftRoom", {
+                userId: me._id,
+              });
+              io.in("Room: Lobby").emit("leftRoom", {
+                userId: me._id,
+                roomId: me.roomId
+              });
+              Room.findById(me.roomId).then((room) => {
+                let users = room.users.filter((id) => {
+                  return id !== me._id;
+                });
+                room.users = users;
+                room.save().then(()=>{
+                  me.roomId="Offline"
+                  me.save().then(() => {
+                    removeUser(user, socket);
+                  })
+                  
+                });
+              });
+            }
+           
+          });
+        }
+        else removeUser(user, socket);
       });
     });
   },

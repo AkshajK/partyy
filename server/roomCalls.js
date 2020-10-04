@@ -28,16 +28,15 @@ createRoom = (req, res) => {
         private: req.body.private,
         host: {
           userId: req.user._id,
-          name: me.name
-        }
+          name: me.name,
+        },
       });
       newRoom.save().then(() => {
         socket.getSocketFromUserID(req.user._id).to("Room: Lobby").emit("createdRoom", newRoom);
         res.send({ name: name });
       });
     });
-  })
-  
+  });
 };
 
 /*
@@ -52,39 +51,61 @@ joinRoom = (req, res) => {
   Room.findOne({ name: req.body.name }).then((room) => {
     if (!room) res.send({ exists: false });
     else {
-      Game.findOne(room.gameId !== "Waiting" ? {_id: room.gameId}:{doesntxist: "nope"}).then((game) => {
-        User.findById(req.user._id).then((me) => {
-          me.roomId = room._id;
-          me.save().then(() => {
-            User.find({ roomId: room._id }, (err, users) => {
-              Category.findById(room.category._id).then((category) => {
-                socket.getSocketFromUserID(req.user._id).join("Room: " + room._id);
-                let listOfIds = room.allUserIdsThatHaveBeenInRoom;
-                listOfIds.push(req.user._id);
-                room.allUserIdsThatHaveBeenInRoom = listOfIds;
-                let roomUsers = room.users;
-                roomUsers.push(req.user._id);
-                room.users = roomUsers;
-                room.save().then((savedRoom) => {
-                  res.send({
-                    exists: true,
-                    room: savedRoom,
-                    game: game,
-                    users: users.map((user) => {
-                      return {
-                        userId: user._id,
-                        userName: user.name,
-                        leaderboardData: user.leaderboardData,
-                      };
-                    }),
-                    category: category,
+      Game.findOne(room.gameId !== "Waiting" ? { _id: room.gameId } : { doesntxist: "nope" }).then(
+        (game) => {
+          User.findById(req.user._id).then((me) => {
+            me.roomId = room._id;
+            me.save().then(() => {
+              User.find({ roomId: room._id }, (err, users) => {
+                Category.findById(room.category._id).then((category) => {
+                  socket.getSocketFromUserID(req.user._id).join("Room: " + room._id);
+                  socket
+                    .getSocketFromUserID(req.user._id)
+                    .to("Room: " + room._id)
+                    .emit("joinRoom", {
+                      userId: me._id,
+                      userName: me.name,
+                      leaderboardData: me.leaderboardData,
+                    });
+                  socket
+                    .getSocketFromUserID(req.user._id)
+                    .to("Room: Lobby")
+                    .emit("joinRoomLobby", {
+                      userId: me._id,
+                      roomId: room._id
+                    });
+                  let listOfIds = room.allUserIdsThatHaveBeenInRoom;
+                  listOfIds.push(req.user._id);
+                  room.allUserIdsThatHaveBeenInRoom = listOfIds;
+                  let roomUsers = room.users;
+                  roomUsers.push(req.user._id);
+                  room.users = roomUsers;
+                  room.save().then((savedRoom) => {
+                    if (savedRoom.users.length !== users.length) {
+                      console.log("ERROR: USERS DIFFER");
+                      console.log(savedRoom.users);
+                      console.log(users);
+                    }
+                    res.send({
+                      exists: true,
+                      room: savedRoom,
+                      game: game,
+                      users: users.map((user) => {
+                        return {
+                          userId: user._id,
+                          userName: user.name,
+                          leaderboardData: user.leaderboardData,
+                        };
+                      }),
+                      category: category,
+                    });
                   });
                 });
               });
             });
           });
-        });
-      });
+        }
+      );
     }
   });
 };
@@ -104,22 +125,25 @@ leaveRoom = (req, res) => {
     .emit("leftRoom", {
       userId: req.user._id,
     });
-  Room.findById(req.body.roomId).then((room)=> {
-    console.log("hi")
-    console.log(room.users)
-    let users = room.users.filter((id)=>{
-      return id !== req.user._id
-    })
-    room.users = users
-    console.log("hi")
-    console.log(req.user._id)
-    console.log(room.users)
+    socket
+    .getSocketFromUserID(req.user._id)
+    .to("Room: " + "Lobby")
+    .emit("leftRoomLobby", {
+      userId: req.user._id,
+      roomId: req.body.roomId
+    });
+  
+  Room.findById(req.body.roomId).then((room) => {
+    let users = room.users.filter((id) => {
+      return id !== req.user._id;
+    });
+    room.users = users;
+
     room.save().then(() => {
       socket.getSocketFromUserID(req.user._id).leave("Room: " + req.body.roomId);
       res.send({});
-    })
-  })
-  
+    });
+  });
 };
 
 module.exports = {

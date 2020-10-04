@@ -4,7 +4,10 @@ import "../../utilities.css";
 
 import Box from "@material-ui/core/Box";
 import Button from "@material-ui/core/Button";
+import { socket } from "../../client-socket.js";
 
+import PlayerTable from "../modules/PlayerTable.js"
+import CorrectAnswerTable from "../modules/CorrectAnswerTable.js"
 import Grid from "@material-ui/core/Grid"
 import Paper from "@material-ui/core/Paper";
 import ListItem from "@material-ui/core/ListItem";
@@ -44,15 +47,31 @@ class Room extends Component {
         category: data.category,
       });
     });
+
+    socket.on("joinRoom", (data)=>{
+      let users = this.state.users.concat([]) 
+      users.push(data)
+      this.setState({users: users})
+    })
+
+    socket.on("leftRoom", (data)=>{
+      let users = this.state.users.filter((user)=>{return user.userId !== data.userId})
+      this.setState({users: users})
+    })
   }
 
   render() {
     if (!this.state.exists) return <CircularProgress />;
     return (
       <Grid container direction="row" style={{ width: "100%" }}>
-        <Box width="calc(100% - 300px)">
-          {"Welcome to a " + this.state.category.name + " room."}
-        </Box>
+        <Grid container direction="row" style={{width:"calc(100% - 300px)"}}>
+          <Box width="50%">
+          <PlayerTable users={this.state.users} />
+          </Box>
+          <Box width="50%">
+          <CorrectAnswerTable correctAnswers={this.state.correctAnswers || []} />
+          </Box>
+        </Grid>
         <Box width="300px">
             <Chat messages={this.props.messages.filter((msg)=>{return msg.roomId === this.state.roomId})} />
             <Button fullWidth
