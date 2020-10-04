@@ -1,13 +1,13 @@
 import React, { Component } from "react";
-import GoogleLogin, { GoogleLogout } from "react-google-login";
 
 import "../../utilities.css";
-import "./Skeleton.css";
 
-//TODO: REPLACE WITH YOUR OWN CLIENT_ID
-//const GOOGLE_CLIENT_ID = "121479668229-t5j82jrbi9oejh7c8avada226s75bopn.apps.googleusercontent.com";
+import Box from "@material-ui/core/Box";
+import Paper from "@material-ui/core/Paper";
+import ListItem from "@material-ui/core/ListItem";
+import ListItemText from "@material-ui/core/ListItemText";
 
-class Skeleton extends Component {
+class CategoryDashboard extends Component {
   constructor(props) {
     super(props);
     // Initialize Default State
@@ -29,4 +29,4 @@ class Skeleton extends Component {
   }
 }
 
-export default Skeleton;
+export default CategoryDashboard;

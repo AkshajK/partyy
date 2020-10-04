@@ -24,6 +24,10 @@ const RoomSchema = new mongoose.Schema({
   private: {
     type: Boolean,
     default: false
+  },
+  allUserIdsThatHaveBeenInRoom: {
+    type: [String],
+    default: []
   }
 });
 

@@ -6,7 +6,6 @@ const Room = require("./models/room");
 const Category = require("./models/category");
 const socket = require("./server-socket");
 
-
 /*
 message
 Input (req.body): {text: String}
@@ -36,8 +35,8 @@ getLeaderboard
 Input (req.body): 
 Precondition: 
 Socket: 
-Returns: {"categoryId": {topScores: [], topRatings: []}}
-Description: Returns a leaderboard of top scores and ratings for each category, already sorted
+Returns: {leaderboard: {"categoryId": {topScores: [], topRatings: []}}, categories: [Category]}
+Description: Returns a leaderboard of top scores and ratings for each category, already sorted, and also all the categories
 */
 getLeaderboard = (req, res) => {
   User.find({}, (err, users) => {
@@ -72,7 +71,7 @@ getLeaderboard = (req, res) => {
           return b.rating - a.rating;
         });
       }
-      res.send(leaderboard);
+      res.send({leaderboard: leaderboard, categories: categories});
     });
   });
 };
@@ -96,7 +95,7 @@ joinLobby = (req, res) => {
             userName: me.name,
             leaderboardData: me.leaderboardData,
           });
-          me.roomId = "Lobby"
+          me.roomId = "Lobby";
           me.save().then(() => {
             res.send({
               users: users.map((user) => {
@@ -115,8 +114,7 @@ joinLobby = (req, res) => {
                   return i < 100;
                 }),
             });
-          })
-          
+          });
         });
       });
     });
@@ -124,17 +122,16 @@ joinLobby = (req, res) => {
 };
 
 leaveLobby = (req, res) => {
- 
   socket.getSocketFromUserID(req.user._id).to("Room: Lobby").emit("leftLobby", {
     userId: req.user._id,
   });
   socket.getSocketFromUserID(req.user._id).leave("Room: Lobby");
-  res.send({})
-}
+  res.send({});
+};
 
 module.exports = {
   message,
   getLeaderboard,
   joinLobby,
-  leaveLobby
+  leaveLobby,
 };

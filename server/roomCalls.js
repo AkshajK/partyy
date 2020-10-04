@@ -51,22 +51,33 @@ joinRoom = (req, res) => {
       Game.findById(room.gameId).then((game) => {
         User.find({roomId: room._id}, (err, users) => {
           User.findById(req.user._id).then((me) => {
-            me.roomId = room._id
-            me.save().then(() => {
-              socket.getSocketFromUserID(req.user._id).join("Room: "+room._id);
-              res.send({
-                exists: true,
-                room: room,
-                game: game,
-                users: users.map((user) => {
-                  return {
-                    userId: user._id,
-                    userName: user.name,
-                    leaderboardData: user.leaderboardData,
-                  };
-                }),
+            Category.findById(room.categoryId).then((category) => {
+              me.roomId = room._id
+              me.save().then(() => {
+                socket.getSocketFromUserID(req.user._id).join("Room: "+room._id);
+                let listOfIds = room.allUserIdsThatHaveBeenInRoom
+                listOfIds.push(req.user._id)
+                room.allUserIdsThatHaveBeenInRoom = listOfIds
+                room.save().then((savedRoom) => {
+                  res.send({
+                    exists: true,
+                    room: savedRoom,
+                    game: game,
+                    users: users.map((user) => {
+                      return {
+                        userId: user._id,
+                        userName: user.name,
+                        leaderboardData: user.leaderboardData,
+                      };
+                    }),
+                    category: category
+                  })
+                })
+                
+                
               })
             })
+            
           })
           
         })
