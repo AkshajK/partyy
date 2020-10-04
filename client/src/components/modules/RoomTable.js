@@ -42,6 +42,7 @@ const StyledTableRow = withStyles((theme) => ({
 const useStyles = makeStyles({
   table: {
     minWidth: 700,
+    
   },
 });
 export default function RoomTable(props) {
@@ -49,8 +50,8 @@ export default function RoomTable(props) {
   
   
   return (
-    <TableContainer component={Paper}>
-      <Table className={classes.table} aria-label="customized table">
+    <TableContainer component={Paper} style={{height: "100%", width: "100%"}}>
+      <Table className={classes.table} aria-label="customized table" stickyHeader>
         <TableHead>
           <TableRow>
             <StyledTableCell>Host</StyledTableCell>

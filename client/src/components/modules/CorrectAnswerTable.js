@@ -44,7 +44,7 @@ export default function CorrectAnswerTable(props) {
   
   return (
     <TableContainer component={Paper}>
-      <Table className={classes.table}>
+      <Table className={classes.table} stickyHeader>
         <TableHead>
           <TableRow>
             <StyledTableCell>Player</StyledTableCell>

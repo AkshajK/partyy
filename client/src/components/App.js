@@ -90,13 +90,13 @@ class App extends Component {
     }
     
     return (
-      <Grid container direction="row" style={{ width: "100%" }}>
+      <Grid container direction="row" style={{ width: "100%", height: "100%" }}>
         
-        <Box width="300px">
+        <Box width="300px" height="100%">
           <SideBar userName={this.state.userName} userLeaderboardData={this.state.userLeaderboardData}
           category={this.state.category} setCategory={this.setCategory} />
         </Box>
-        <Box width="calc(100% - 300px)">
+        <Box width="calc(100% - 300px)" height="100%">
           <Router>
             <Switch>
               <Lobby exact path="/" name={this.state.name} userId={this.state.userId} category={this.state.category} redirect={this.redirect} messages={this.state.messages.filter((msg)=>{return msg.roomId === "Lobby"})} />
