@@ -100,7 +100,7 @@ class App extends Component {
           <Router>
             <Switch>
               
-              <Lobby exact path="/" url={window.location.pathname} name={this.state.name} userId={this.state.userId} category={this.state.category} redirect={this.redirect} messages={this.state.messages.filter((msg)=>{return msg.roomId === "Lobby"})} />
+              <Lobby exact path="/" url={window.location.pathname} name={this.state.name} userId={this.state.userId} category={this.state.category} redirect={this.redirect} messages={this.state.messages.filter((msg)=>{return msg.roomId === "Lobby"})} resetMessages={()=>{this.setState({messages: []})}} />
               <Room exact path="/:roomName" url={window.location.pathname} name={this.state.name} userId={this.state.userId} redirect={this.redirect} messages={this.state.messages} />
               <NotFound default />
             </Switch>

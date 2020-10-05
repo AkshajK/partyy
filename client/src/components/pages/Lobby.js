@@ -28,6 +28,7 @@ class Lobby extends Component {
     post("api/joinLobby", {}).then((data) => {
       
       console.log(data.users)
+      this.props.resetMessages()
       this.setState({
         doneLoading: true,
         users: data.users.concat([]),
@@ -120,9 +121,6 @@ class Lobby extends Component {
           }>
     New {this.props.category.name} Game
           </Button> : <></>}
-          <Button onClick={()=>{console.log(this.state)}}>
-            View State
-          </Button>
         </Box>
       </Grid>
         
