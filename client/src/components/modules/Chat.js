@@ -35,13 +35,13 @@ export default function Chat(props) {
   const [lastMessage, setLastMessage] = React.useState(new Date());
 
   return (
-    <Paper style={{ borderRadius: "5px", backgroundColor: "#FFFFFF" }}>
+    <Paper style={{ borderRadius: "0px"}}>
       <Box
         height={"300px"}
         style={{
           width: "100%",
           overflow: "auto",
-          color: "black",
+          //color: "black",
           display: "flex",
           flexDirection: "column-reverse",
           marginBottom: "auto",

@@ -86,7 +86,7 @@ class Room extends Component {
           <CorrectAnswerTable correctAnswers={this.state.correctAnswers || []} />
           </Box>
         </Grid>
-        <Box width="300px">
+        <Box width="300px" bgcolor="sidebar">
             <Chat messages={this.props.messages.filter((msg)=>{return msg.roomId === this.state.roomId})} />
             <Button fullWidth
               onClick={() => {

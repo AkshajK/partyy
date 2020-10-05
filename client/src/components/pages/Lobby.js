@@ -98,10 +98,10 @@ class Lobby extends Component {
       
         
         <Grid container direction="row" style={{ width: "100%", height: "100%" }}>
-        <Box width="calc(100% - 300px)" height="100%">
+        <Box width="calc(100% - 300px)" height="100%" style={{padding: "40px"}}>
           <RoomTable users={this.state.users} rooms={this.state.rooms} redirect={this.props.redirect} />
         </Box>
-        <Box width="300px" height="100%">
+        <Box width="300px" height="100%" bgcolor="sidebar">
           <List>
             {this.state.users.map((user)=>{
               return (<ListItem>

@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { BrowserRouter as Router, Route, Switch, Redirect } from "react-router-dom";
 import NotFound from "./pages/NotFound.js";
+
 import SideBar from "./modules/SideBar.js"
 import Lobby from "./pages/Lobby.js"
 import Room from "./pages/Room.js"
@@ -9,7 +10,7 @@ import CircularProgress from "@material-ui/core/CircularProgress";
 import "../utilities.css";
 import {Modal} from "antd";
 import 'antd/dist/antd.css'
-
+import {theme} from "./theme.js"
 import { socket } from "../client-socket.js";
 
 import { get, post } from "../utilities";
@@ -18,12 +19,17 @@ const cookies = new Cookies();
 
 import Box from "@material-ui/core/Box";
 import Grid from "@material-ui/core/Grid";
+import Container from "@material-ui/core/Container";
 import Paper from "@material-ui/core/Paper";
 
+import { createMuiTheme, MuiThemeProvider } from '@material-ui/core/styles';
+import CssBaseline from '@material-ui/core/CssBaseline';
 
 /**
  * Define the "App" component as a class.
  */
+
+
 class App extends Component {
   // makes props available in this component
   constructor(props) {
@@ -62,8 +68,11 @@ class App extends Component {
       console.log("GOT THE MESSAGE")
       console.log(msg)
     })
+
+    
   }
 
+  
   handleLogout = () => {
     this.setState({ userId: undefined });
     post("/api/logout");
@@ -89,14 +98,18 @@ class App extends Component {
       );
     }
     
+    
     return (
+      <MuiThemeProvider theme={theme}>
+        <CssBaseline />
       <Grid container direction="row" style={{ width: "100%", height: "100%" }}>
         
-        <Box width="300px" height="100%">
+        <Box width="300px" height="100%" bgcolor="sidebar">
           <SideBar userName={this.state.userName} userLeaderboardData={this.state.userLeaderboardData}
           category={this.state.category} setCategory={this.setCategory} />
         </Box>
-        <Box width="calc(100% - 300px)" height="100%">
+        <Box width="calc(100% - 300px)" height="100%" >
+          <Container style={{height: "100%", width: "100%"}}>
           <Router>
             <Switch>
               
@@ -105,6 +118,7 @@ class App extends Component {
               <NotFound default />
             </Switch>
           </Router>
+          </Container>
         </Box>
 
         {this.state.disconnect ? (
@@ -127,6 +141,7 @@ class App extends Component {
           <></>
         )}
       </Grid>
+      </MuiThemeProvider>
     );
   }
 }

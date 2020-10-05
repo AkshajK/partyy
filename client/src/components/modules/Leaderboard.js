@@ -50,7 +50,7 @@ export default function Leaderboard(props) {
   if(!props.leaderboard) return <CircularProgress />
   return (
     <>
-      <AppBar position="static">
+      <AppBar position="static" color="inherit">
         <Tabs
           value={value}
           onChange={(event, newValue) => {

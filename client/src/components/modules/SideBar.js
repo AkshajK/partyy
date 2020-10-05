@@ -60,20 +60,20 @@ export default function SideBar(props) {
           
         </Select>
       </FormControl>
-    <Card>
-      <CardContent>
-      <Typography variant="subtitle1" gutterBottom>
+    <Box bgcolor="userinfo">
+      
+      <Typography variant="subtitle1" color="textPrimary" gutterBottom>
         {props.userName}
       </Typography>
-      <Typography variant="subtitle2" gutterBottom>
+      <Typography variant="subtitle2" color="textSecondary" gutterBottom>
         {"Rating: " + leaderboardData.rating}
       </Typography>
-      <Typography variant="subtitle2" gutterBottom>
+      <Typography variant="subtitle2" color="textSecondary" gutterBottom>
       {"High Score: " + leaderboardData.highScore} 
       </Typography>
-      </CardContent>
+     
       
-    </Card>
+    </Box>
     <Leaderboard leaderboard={props.category ? leaderboard[props.category._id] : undefined} />
     </Grid>
 
