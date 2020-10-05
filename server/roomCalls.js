@@ -31,8 +31,8 @@ createRoom = (req, res) => {
           name: me.name,
         },
       });
-      newRoom.save().then(() => {
-        socket.getSocketFromUserID(req.user._id).to("Room: Lobby").emit("createdRoom", newRoom);
+      newRoom.save().then((daroom) => {
+        socket.getSocketFromUserID(req.user._id).to("Room: Lobby").emit("createdRoom", daroom);
         res.send({ name: name });
       });
     });
@@ -75,7 +75,7 @@ joinRoom = (req, res) => {
                       roomId: room._id
                     });
                   let listOfIds = room.allUserIdsThatHaveBeenInRoom;
-                  listOfIds.push(req.user._id);
+                  if(!listOfIds.includes(req.user._id)) listOfIds.push(req.user._id);
                   room.allUserIdsThatHaveBeenInRoom = listOfIds;
                   let roomUsers = room.users;
                   roomUsers.push(req.user._id);

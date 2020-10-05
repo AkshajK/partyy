@@ -106,9 +106,10 @@ joinLobby = (req, res) => {
               userName: me.name,
               leaderboardData: me.leaderboardData,
             });
-
+  
+            console.log(req.user._id)
             res.send({
-              users: users.map((user) => {
+              users: users.filter((user)=>{return socket.getSocketFromUserID(user._id)}).map((user) => {
                 return {
                   userId: user._id,
                   userName: user.name,

@@ -42,7 +42,10 @@ module.exports = {
               io.in("Room: Lobby").emit("leftLobby", {
                 userId: me._id,
               });
-            } else {
+            } else if (me.roomId === "Offline") {
+              
+            }
+            else {
               io.in("Room: " + me.roomId).emit("leftRoom", {
                 userId: me._id,
               });

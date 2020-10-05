@@ -30,9 +30,9 @@ class Lobby extends Component {
       console.log(data.users)
       this.setState({
         doneLoading: true,
-        users: data.users,
-        rooms: data.rooms,
-        messages: data.messages
+        users: data.users.concat([]),
+        rooms: data.rooms.concat([]),
+        messages: data.messages.concat([])
       });
     });
 
@@ -46,6 +46,7 @@ class Lobby extends Component {
       console.log("SOMEONEJOIINEDAROOM")
       console.log(data)
       let rooms = this.state.rooms 
+      console.log(rooms)
       let newRoom = rooms.find((room)=>{return room._id === data.roomId})
       newRoom.users = newRoom.users.concat([data.userId])
 
@@ -71,9 +72,26 @@ class Lobby extends Component {
       this.setState({users: users})
     })
   }
-
+  componentWillUnmount() {
+    socket.off("createdRoom")
+    socket.off("joinRoomLobby")
+    socket.off("leftRoomLobby")
+    socket.off("joinedLobby")
+    socket.off("leftLobby")
+    
+  }
+  
+  /*componentDidUpdate(prevProps) {
+    if(this.props.url !== prevProps.url) // Check if it's a new user, you can also use some unique property, like the ID  (this.props.user.id !== prevProps.user.id)
+    {
+      this.componentDidMount();
+    }
+  } */
+  
   render() {
     if (!this.state.doneLoading) return <CircularProgress />;
+    console.log("render rooms")
+    console.log(this.state.rooms)
 
     return (
       
@@ -102,6 +120,9 @@ class Lobby extends Component {
           }>
     New {this.props.category.name} Game
           </Button> : <></>}
+          <Button onClick={()=>{console.log(this.state)}}>
+            View State
+          </Button>
         </Box>
       </Grid>
         

@@ -43,7 +43,7 @@ class Room extends Component {
         exists: true,
         
         game: data.game,
-        users: data.users,
+        users: data.users.concat([]),
         category: data.category,
       });
     });
@@ -59,6 +59,20 @@ class Room extends Component {
       this.setState({users: users})
     })
   }
+
+  componentWillUnmount() {
+
+    socket.off("joinRoom")
+    socket.off("leftRoom")
+    
+  }
+  /*
+  componentDidUpdate(prevProps) {
+    if(this.props.url !== prevProps.url) // Check if it's a new user, you can also use some unique property, like the ID  (this.props.user.id !== prevProps.user.id)
+    {
+      this.componentDidMount();
+    }
+  } */
 
   render() {
     if (!this.state.exists) return <CircularProgress />;

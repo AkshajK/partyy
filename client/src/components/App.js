@@ -99,8 +99,9 @@ class App extends Component {
         <Box width="calc(100% - 300px)" height="100%">
           <Router>
             <Switch>
-              <Lobby exact path="/" name={this.state.name} userId={this.state.userId} category={this.state.category} redirect={this.redirect} messages={this.state.messages.filter((msg)=>{return msg.roomId === "Lobby"})} />
-              <Room exact path="/:roomName" name={this.state.name} userId={this.state.userId} redirect={this.redirect} messages={this.state.messages} />
+              
+              <Lobby exact path="/" url={window.location.pathname} name={this.state.name} userId={this.state.userId} category={this.state.category} redirect={this.redirect} messages={this.state.messages.filter((msg)=>{return msg.roomId === "Lobby"})} />
+              <Room exact path="/:roomName" url={window.location.pathname} name={this.state.name} userId={this.state.userId} redirect={this.redirect} messages={this.state.messages} />
               <NotFound default />
             </Switch>
           </Router>
