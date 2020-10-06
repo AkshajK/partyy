@@ -1,0 +1,43 @@
+html, body {
+    margin:0;
+  overflow:hidden;
+  background:#000;
+  color:white;
+  font-family:Arial;
+}
+
+.message{
+  padding:20px;
+  position:absolute;
+  top:50%;
+  left:50%;
+  transform:translate(-50%, -50%);
+  background:black;
+  cursor:pointer;
+  font-size:14px;
+  border:1px solid white;
+}
+
+#badge{
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 92px;
+}
+
+
+a:link, a:hover, a:visited, a:active{
+  color:white;
+  text-decoration: none;
+}
+.experiment-url{
+  position:absolute;
+  bottom:10px;
+  right:10px;
+  padding:8px;
+  z-index: 1;
+  font-size: 11px;
+  background:black;
+  letter-spacing:0.5px;
+  border: 1px solid white;
+}

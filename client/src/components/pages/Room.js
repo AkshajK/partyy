@@ -16,6 +16,7 @@ import Typography from '@material-ui/core/Typography';
 import ListItemText from "@material-ui/core/ListItemText";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import Chat from "../modules/Chat.js"
+import Music from "../modules/Music.js"
 import { get, post } from "../../utilities.js";
 
 class Room extends Component {
@@ -105,6 +106,8 @@ class Room extends Component {
       else header = "Guess the Song"
       
     }
+
+    let playingMusic = this.state.game && (this.state.game.status === "RoundInProgress")
       return (
       <Grid container direction="row" style={{ width: "100%" }}>
         <Grid container direction="column" style={{width:"calc(100% - 300px)", height: "100%"}}>
@@ -122,8 +125,9 @@ class Room extends Component {
         </Grid>
         </Grid>
         <Box width="300px" bgcolor="sidebar">
-            <Box style={{height: "240px", width: "100%",  display: "flex", overflow: "auto", justifyContent: "center", alignItems: "center"}}>
-              <img src = {img} height={"240px"} />
+            <Box style={Object.assign({height: "240px", overflow: "auto"}, playingMusic?{}:{width: "100%",  display: "flex", justifyContent:"center", alignItems: "center"})}>
+              {playingMusic ?                 <Music url = {this.state.game.song.songUrl} visual={window.AudioContext ? true : false} pauseButton={window.AudioContext ? false : true}  />
+: <img src = {img} height={"240px"} />}
             </Box> 
             <Typography variant="h5" align="center" color="textPrimary" gutterBottom style={{marginTop: "10px"}} >
               {roundMessage}
