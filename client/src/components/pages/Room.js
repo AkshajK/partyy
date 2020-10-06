@@ -114,7 +114,7 @@ class Room extends Component {
         </Typography>
         <Grid container direction="row" style={{width:"calc(100% - 20px)", margin: "20px 20px 20px 0px"}}>
           <Box width="50%">
-          <PlayerTable users={this.state.users} />
+          <PlayerTable users={this.state.users} players={(this.state.game || {}).players} />
           </Box>
           <Box width="50%">
           <CorrectAnswerTable correctAnswers={this.state.correctAnswers || []} />
@@ -129,7 +129,7 @@ class Room extends Component {
               {roundMessage}
             </Typography>
             
-            <Chat messages={this.props.messages.filter((msg)=>{return msg.roomId === this.state.roomId})} />
+            <Chat messages={this.props.messages.filter((msg)=>{return msg.roomId === this.state.roomId})}  />
             <Button fullWidth
               onClick={() => {
                 post("api/startGame")

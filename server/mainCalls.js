@@ -5,7 +5,7 @@ const Message = require("./models/message");
 const Room = require("./models/room");
 const Category = require("./models/category");
 const socket = require("./server-socket");
-
+const gameCalls = require("./gameCalls");
 /*
 message
 Input (req.body): {text: String}
@@ -21,10 +21,38 @@ message = (req, res) => {
       roomId: user.roomId,
       message: req.body.text,
     });
-    socket.getIo()
+ 
+    if(user.roomId !== "Lobby") {
+      Room.findById(user.roomId).then((room)=>{
+        if(room.gameId !== "Waiting") {
+          Game.findById(room.gameId).then((game) => {
+            if(game.status === "RoundInProgress") {
+              gameCalls.guessAnswer(req.user._id+"",game._id, msg)
+              
+            }
+            else {
+              socket.getIo()
       
       .in("Room: " + user.roomId)
       .emit("message", msg);
+            }
+          })
+        }
+        else {
+          socket.getIo()
+      
+      .in("Room: " + user.roomId)
+      .emit("message", msg);
+        }
+      })
+    }
+    else {
+      socket.getIo()
+      
+      .in("Room: " + user.roomId)
+      .emit("message", msg);
+    }
+    
     if (user.roomId === "Lobby") msg.save();
     res.send({});
   });

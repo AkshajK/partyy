@@ -41,14 +41,16 @@ const useStyles = makeStyles({
 export default function PlayerTable(props) {
   const classes = useStyles();
   
-  let score = 0
+  let score = (user) => {
   if (props.players) {
-    let player = props.players.find((player)=>{player.userId === user.userId}) 
-    if(player) [
-      score = player.score
-    ]
+    let player = props.players.find((player)=>{return player.userId === user.userId}) 
+    if(player) {
+      return player.score
+    }
+    
   }
- 
+  return 0
+  }
   return (
     <TableContainer component={Paper}>
       <Table className={classes.table} stickyHeader>
@@ -66,7 +68,7 @@ export default function PlayerTable(props) {
                 {user.userName}
               </StyledTableCell>
               <StyledTableCell align="right">{
-                score
+                score(user)
               }</StyledTableCell>
               
             </StyledTableRow>

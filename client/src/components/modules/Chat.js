@@ -52,30 +52,34 @@ export default function Chat(props) {
             50,
             props.messages
           ).map((message) => {
-            let text = (
-              <>
-                <div style={{ display: "inline" }}>
-                  {"[" +
-                    addZero(new Date(message.timestamp).getHours()) +
-                    ":" +
-                    addZero(new Date(message.timestamp).getMinutes()) +
-                    "] "}
-                </div>
-                <div style={{ color: "#678efd", display: "inline", fontWeight: "900" }}>
-                  {message.sender.name}
-                </div>
-                <div style={{ display: "inline" }}>{": " + crop(message.message)}</div>
-              </>
-            );
-            if (message.systemMessage) {
+            let text = ""
+            if (message.style==="system messagee") {
               text = message.message;
-              if (message.style === "correct answer") {
+            }
+            else if (message.style === "correct answer") {
                 text = (
                   <div style={{ color: "#78cb48", display: "inline", fontWeight: "900" }}>
                     {message.message}
                   </div>
                 );
               }
+            
+            else {
+             text = (
+                <>
+                  <div style={{ display: "inline" }}>
+                    {"[" +
+                      addZero(new Date(message.timestamp).getHours()) +
+                      ":" +
+                      addZero(new Date(message.timestamp).getMinutes()) +
+                      "] "}
+                  </div>
+                  <div style={{ color: "#678efd", display: "inline", fontWeight: "900" }}>
+                    {message.sender.name}
+                  </div>
+                  <div style={{ display: "inline" }}>{": " + crop(message.message)}</div>
+                </>
+              );
             }
 
             return (
