@@ -54,7 +54,8 @@ class App extends Component {
     });
     socket.on("reconnect_failed", () => {
       this.setState({ disconnect: true });
-      window.location.reload();
+      
+      //window.location.reload();
     });
     socket.on("disconnect", (reason) => {
       if (reason === "io server disconnect") {
@@ -75,7 +76,7 @@ class App extends Component {
           if(!socket.connected) {
             window.location.reload();
           }
-      }, 1000)
+      }, 10000)
   })
     socket.on("reconnect", (attemptNumber) => {
         window.location.reload();
@@ -121,7 +122,7 @@ class App extends Component {
       <Grid container direction="row" style={{ width: "100%", height: "100%" }}>
         
         <Box width="300px" height="100%" bgcolor="sidebar">
-          <SideBar userName={this.state.userName} userLeaderboardData={this.state.userLeaderboardData}
+          <SideBar userName={this.state.userName} userId={this.state.userId} //userLeaderboardData={this.state.userLeaderboardData}
           category={this.state.category} setCategory={this.setCategory} />
         </Box>
         <Box width="calc(100% - 300px)" height="100%" >

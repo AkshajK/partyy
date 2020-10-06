@@ -7,6 +7,8 @@ import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import { socket } from "../../client-socket.js";
+
 import Typography from '@material-ui/core/Typography';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -27,7 +29,7 @@ export default function SideBar(props) {
   // get leaderboard again whenever our leaderboard data changes
   useEffect(() => {
     // Update the document title using the browser API
-    post("api/getLeaderboard").then((data) => {
+    let setData = (data) => {
       let newLeaderboard = data.leaderboard
       let newCategories = data.categories
       console.log(newLeaderboard)
@@ -39,12 +41,25 @@ export default function SideBar(props) {
       
       
       console.log("REPULLED LEADERBOARD DATA!")
+    }
+    post("api/getLeaderboard").then((data) => {
+      setData(data)
     })
-  }, [props.userLeaderboardData]);
+    socket.on("leaderboard", (data) => {
+      setData(data)
+    })
+  }, []);
   
   //if(!props.category || categories.length === 0 || (Object.entries(leaderboard).length === 0)) return <CircularProgress />
 
-  let leaderboardData = props.userLeaderboardData.find((data)=>{return data.categoryId === props.category._id}) || {rating: 1200, highScore: 0}
+  let leaderboardData = {rating: 1200, highScore: 0}//props.userLeaderboardData.find((data)=>{return data.categoryId === props.category._id}) || {rating: 1200, highScore: 0}
+  if(props.category && leaderboard[props.category._id] ) {
+    let r = leaderboard[props.category._id].topScores.find((user)=>{return user.userId === props.userId})
+    if(r) leaderboardData.highScore = r.score 
+    r = leaderboard[props.category._id].topRatings.find((user)=>{return user.userId === props.userId})
+    if(r) leaderboardData.rating = Math.floor(r.rating)
+    
+  }
   return (
     <Grid container direction="column">
       <FormControl variant="filled" >

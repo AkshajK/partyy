@@ -73,44 +73,11 @@ getLeaderboard = (req, res) => {
   const category2 = new Category({name: "General 2"});
   category2.save()
   */
-  User.find({}, (err, users) => {
-    Category.find({}, (err, categories) => {
-      console.log(categories);
-      var leaderboard = {};
-      for (var j = 0; j < categories.length; j++) {
-        leaderboard[categories[j]._id] = {
-          topScores: [],
-          topRatings: [],
-        };
-      }
-      for (var i = 0; i < users.length; i++) {
-        let topScores = [];
-        let topRatings = [];
-        let leaderboardData = users[i].leaderboardData;
-        for (var j = 0; j < leaderboardData.length; j++) {
-          leaderboard[leaderboardData[j].categoryId].topScores.push({
-            userId: users[i]._id,
-            name: users[i].name,
-            score: leaderboardData[j].highScore,
-          });
-          leaderboard[leaderboardData[j].categoryId].topRatings.push({
-            userId: users[i]._id,
-            name: users[i].name,
-            rating: leaderboardData[j].rating,
-          });
-        }
-      }
-      for (var j = 0; j < categories.length; j++) {
-        leaderboard[categories[j]._id].topScores.sort((a, b) => {
-          return b.score - a.score;
-        });
-        leaderboard[categories[j]._id].topRatings.sort((a, b) => {
-          return b.rating - a.rating;
-        });
-      }
-      res.send({ leaderboard: leaderboard, categories: categories });
-    });
-  });
+
+  gameCalls.getLeaderboard().then((data) => {
+    res.send(data);
+  })
+  
 };
 
 /*

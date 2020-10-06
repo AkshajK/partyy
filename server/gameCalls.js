@@ -5,6 +5,8 @@ const Message = require("./models/message");
 const Room = require("./models/room");
 const Category = require("./models/category");
 const socket = require("./server-socket");
+var Promise = require("promise");
+var ObjectId = require('mongodb').ObjectId
 const NUM_ROUNDS = 5;
 let fromNow = (num) => {
   return new Date(new Date().getTime() + num);
@@ -56,7 +58,7 @@ startGame = (req, res) => {
 };
 
 startRound = (roomId, roundNum, gameId) => {
-  console.log("Started Round " + roundNum);
+  //console.log("Started Round " + roundNum);
   Room.findById(roomId).then((room) => {
     //console.log(room.gameId)
     if (room.gameId === "Waiting") return;
@@ -84,7 +86,7 @@ startRound = (roomId, roundNum, gameId) => {
 };
 
 endRound = (roomId, roundNum, gameId) => {
-  console.log("Ended round" + roundNum);
+ // console.log("Ended round" + roundNum);
   Room.findById(roomId).then((room) => {
     if (room.gameId === "Waiting") return;
     Game.findById(room.gameId).then((game) => {
@@ -105,7 +107,8 @@ endRound = (roomId, roundNum, gameId) => {
             .getIo()
             .in("Room: Lobby")
             .emit("room", savedRoom);
-          }) // room status update in lobby
+          }) 
+          updateLeaderboard(game.players, ""+room.category._id)
         }
         else {
           game.status = "RoundStarting";
@@ -209,7 +212,114 @@ guessAnswer = (userId, gameId, msg) => {
   
 };
 
+const getLeaderboard = () => {
+  return new Promise((resolve, reject) => {
+    User.find({}, (err, users) => {
+      Category.find({}, (err, categories) => {
+        console.log(categories);
+        var leaderboard = {};
+        for (var j = 0; j < categories.length; j++) {
+          leaderboard[categories[j]._id] = {
+            topScores: [],
+            topRatings: [],
+          };
+        }
+        for (var i = 0; i < users.length; i++) {
+          let topScores = [];
+          let topRatings = [];
+          let leaderboardData = users[i].leaderboardData;
+          for (var j = 0; j < leaderboardData.length; j++) {
+            leaderboard[leaderboardData[j].categoryId].topScores.push({
+              userId: users[i]._id,
+              name: users[i].name,
+              score: leaderboardData[j].highScore,
+            });
+            leaderboard[leaderboardData[j].categoryId].topRatings.push({
+              userId: users[i]._id,
+              name: users[i].name,
+              rating: leaderboardData[j].rating,
+            });
+          }
+        }
+        for (var j = 0; j < categories.length; j++) {
+          leaderboard[categories[j]._id].topScores.sort((a, b) => {
+            return b.score - a.score;
+          });
+          leaderboard[categories[j]._id].topRatings.sort((a, b) => {
+            return b.rating - a.rating;
+          });
+        }
+        //console.log("got here 3")
+        let res={ leaderboard: leaderboard, categories: categories }
+        resolve(res);
+      });
+    });
+  })
+  
+}
+
+updateLeaderboard = (players, categoryId) => {
+   let ratedPlayers = players.filter((p)=>{return p.rated})
+   let k = 60/ratedPlayers.length
+   
+   User.find({_id: {$in: players.map((p)=>{return ObjectId(p.userId)})}}, (err, users)=>{
+     console.log("players: " + users.length) 
+     if(users.length === 0) {
+       return;
+     }
+     let counter1 = 0
+     //let userArray = users
+      users.forEach((user1) => {
+        let oldEntry = user1.leaderboardData.find((entry)=>{return entry.categoryId === categoryId})
+        if(!oldEntry) oldEntry = {categoryId: categoryId, rating: 1200, highScore: 0}
+        let player1 = players.find((p)=>{return p.userId === user1._id+""})
+        let rating = oldEntry.rating
+        oldEntry.highScore = Math.max(oldEntry.highScore, player1.score)
+        let update = 0
+        let counter2 = 0
+        users.forEach((user2) => {
+         let oldEntry2 = user2.leaderboardData.find((entry)=>{return entry.categoryId === categoryId})
+         let player2rating = oldEntry2 ? oldEntry2.rating : 1200
+         let player2 = players.find((p)=>{return p.userId === user2._id+""})
+         let constant = 0
+         if (player1.score>player2.score) {
+           constant = 1
+         } else if (player1.score === player2.score) {
+           constant = 0.5
+         }
+         let p1 = 1.0 / (1.0 + Math.pow(10, (player2rating - rating) / 400.0));
+         if(player2.rated && player1.rated) update += k*(constant - p1)
+         counter2 += 1
+         if(counter2 === users.length) {
+           oldEntry.rating = rating + update
+           let newLeaderboardData = user1.leaderboardData.filter((entry)=>{return entry.categoryId !== categoryId})
+           newLeaderboardData.push(oldEntry)
+           user1.leaderboardData = newLeaderboardData
+           user1.save().then(() => {
+             counter1+=1
+             if(counter1 === users.length) {
+               getLeaderboard().then((data) => {
+                 socket.getIo().emit("leaderboard", data);
+               }).catch((error) => {
+                 console.error(error)
+               })
+               return;
+             }
+           })
+           
+         }
+        
+      })
+     })
+     
+  })
+   
+}
+
+
+
 module.exports = {
   startGame,
   guessAnswer,
+  getLeaderboard
 };

@@ -82,7 +82,7 @@ joinRoom = (req, res) => {
                   let listOfIds = room.allUserIdsThatHaveBeenInRoom;
                   if(!listOfIds.includes(req.user._id)) listOfIds.push(req.user._id);
                   room.allUserIdsThatHaveBeenInRoom = listOfIds;
-                  let roomUsers = room.users.filter((user)=>{return socket.getSocketFromUserID(user._id)});
+                  let roomUsers = room.users.filter((user)=>{return socket.getSocketFromUserID(user)});
                   if(!roomUsers.includes(req.user._id))
                       roomUsers.push(req.user._id); 
                   room.users = roomUsers;
@@ -151,7 +151,7 @@ leaveRoom = (req, res) => {
     room.users = users;
 
     room.save().then((savedRoom) => {
-
+      
       socket
     .getSocketFromUserID(req.user._id)
     .to("Room: " + "Lobby")

@@ -71,7 +71,7 @@ export default function Leaderboard(props) {
                 <ListItemIcon>
                   <StarIcon />
                 </ListItemIcon>
-                <ListItemText primary={entry.name + ": " + entry.rating} />
+                <ListItemText primary={entry.name + ": " + Math.floor(entry.rating)} />
               </ListItem>
             );
           })}
