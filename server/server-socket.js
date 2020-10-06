@@ -49,16 +49,19 @@ module.exports = {
               io.in("Room: " + me.roomId).emit("leftRoom", {
                 userId: me._id,
               });
-              io.in("Room: Lobby").emit("leftRoom", {
+              /*
+              io.in("Room: Lobby").emit("leftRoomLobby", {
                 userId: me._id,
                 roomId: me.roomId
-              });
+              });*/
+
               Room.findById(me.roomId).then((room) => {
                 let users = room.users.filter((id) => {
                   return id !== me._id;
                 });
                 room.users = users;
-                room.save().then(()=>{
+                room.save().then((savedRoom)=>{
+                  io.in("Room: Lobby").emit("room", savedRoom);
                   me.roomId="Offline"
                   me.save().then(() => {
                     removeUser(user, socket);

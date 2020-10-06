@@ -66,7 +66,7 @@ export default function RoomTable(props) {
           </TableRow>
         </TableHead>
         <TableBody>
-          {props.rooms.reverse().map((room) => (
+          {props.rooms.sort((a,b)=>{return new Date(b.created).getTime()- new Date(a.created).getTime()}).map((room) => (
             <StyledTableRow key={room.name} hover onClick={()=>{
               post("api/leaveLobby",{}).then(()=>{
                 props.redirect("/"+room.name)

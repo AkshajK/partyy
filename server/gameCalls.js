@@ -31,7 +31,13 @@ startGame = (req, res) => {
         });
         game.save().then((savedGame) => {
           room.gameId = savedGame._id;
-          room.save().then(() => {
+          room.save().then((savedRoom) => {
+            
+              socket
+              .getIo()
+              .in("Room: Lobby")
+              .emit("room", savedRoom);
+            
             let hideAnswer = savedGame 
             hideAnswer.song = {songUrl: hideAnswer.song.songUrl}
             socket
@@ -94,7 +100,12 @@ endRound = (roomId, roundNum, gameId) => {
           game.status = "RoundFinished";
           room.status = "Finished"
 
-          room.save() // room status update in lobby
+          room.save().then((savedRoom)=>{
+            socket
+            .getIo()
+            .in("Room: Lobby")
+            .emit("room", savedRoom);
+          }) // room status update in lobby
         }
         else {
           game.status = "RoundStarting";

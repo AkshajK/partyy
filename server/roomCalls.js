@@ -32,7 +32,9 @@ createRoom = (req, res) => {
         },
       });
       newRoom.save().then((daroom) => {
-        socket.getSocketFromUserID(req.user._id).to("Room: Lobby").emit("createdRoom", daroom);
+        //socket.getSocketFromUserID(req.user._id).to("Room: Lobby").emit("createdRoom", daroom);
+         socket.getSocketFromUserID(req.user._id).to("Room: Lobby").emit("room", daroom);
+
         res.send({ name: name });
       });
     });
@@ -67,13 +69,16 @@ joinRoom = (req, res) => {
                       userName: me.name,
                       leaderboardData: me.leaderboardData,
                     });
+                     /*
                   socket
                     .getSocketFromUserID(req.user._id)
                     .to("Room: Lobby")
+                    .emit("room", )
+                   
                     .emit("joinRoomLobby", {
                       userId: me._id,
                       roomId: room._id
-                    });
+                    });*/
                   let listOfIds = room.allUserIdsThatHaveBeenInRoom;
                   if(!listOfIds.includes(req.user._id)) listOfIds.push(req.user._id);
                   room.allUserIdsThatHaveBeenInRoom = listOfIds;
@@ -87,6 +92,10 @@ joinRoom = (req, res) => {
                       console.log(savedRoom.users);
                       console.log(users);
                     }
+                    socket
+                    .getSocketFromUserID(req.user._id)
+                    .to("Room: Lobby")
+                    .emit("room", savedRoom)
                     res.send({
                       exists: true,
                       room: savedRoom,
@@ -126,13 +135,14 @@ leaveRoom = (req, res) => {
     .emit("leftRoom", {
       userId: req.user._id,
     });
+    /*
     socket
     .getSocketFromUserID(req.user._id)
     .to("Room: " + "Lobby")
     .emit("leftRoomLobby", {
       userId: req.user._id,
       roomId: req.body.roomId
-    });
+    });*/
   
   Room.findById(req.body.roomId).then((room) => {
     let users = room.users.filter((id) => {
@@ -140,7 +150,12 @@ leaveRoom = (req, res) => {
     });
     room.users = users;
 
-    room.save().then(() => {
+    room.save().then((savedRoom) => {
+
+      socket
+    .getSocketFromUserID(req.user._id)
+    .to("Room: " + "Lobby")
+    .emit("room", savedRoom);
       socket.getSocketFromUserID(req.user._id).leave("Room: " + req.body.roomId);
       res.send({});
     });

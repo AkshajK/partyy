@@ -36,7 +36,7 @@ class Lobby extends Component {
         messages: data.messages.concat([])
       });
     });
-
+    /*
     socket.on("createdRoom", (room)=>{
       let rooms = this.state.rooms
       rooms.push(room)
@@ -61,11 +61,19 @@ class Lobby extends Component {
       
       this.setState({rooms: rooms})
     })
+    */
 
     socket.on("joinedLobby", (data)=>{
       let users = this.state.users 
       users.push(data)
       this.setState({users: users})
+    })
+
+    socket.on("room", (room) => {
+      let rooms = this.state.rooms.filter((rm)=>{return rm._id+"" !== room._id+""})
+      rooms.push(room)
+      this.setState({rooms: rooms})
+
     })
 
     socket.on("leftLobby", (data)=>{
@@ -74,9 +82,10 @@ class Lobby extends Component {
     })
   }
   componentWillUnmount() {
-    socket.off("createdRoom")
-    socket.off("joinRoomLobby")
-    socket.off("leftRoomLobby")
+   // socket.off("createdRoom")
+   // socket.off("joinRoomLobby")
+   // socket.off("leftRoomLobby")
+   socket.off("room")
     socket.off("joinedLobby")
     socket.off("leftLobby")
     
