@@ -11,6 +11,8 @@ import Tab from "@material-ui/core/Tab";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
+import ListItemSecondaryAction from "@material-ui/core/ListItemSecondaryAction";
+
 import ListItemText from "@material-ui/core/ListItemText";
 import StarIcon from "@material-ui/icons/Star";
 
@@ -63,32 +65,38 @@ export default function Leaderboard(props) {
         </Tabs>
       </AppBar>
       <TabPanel value={value} index={0}>
-        <p>Top Ratings:</p>
+       
         <List>
           {props.leaderboard.topRatings.map((entry) => {
             return (
               <ListItem>
-                <ListItemIcon>
-                  <StarIcon />
-                </ListItemIcon>
-                <ListItemText primary={entry.name + ": " + Math.floor(entry.rating)} />
-              </ListItem>
+             
+                <ListItemText primary={entry.name + ":"} />
+                <ListItemSecondaryAction>
+                <Typography variant="h5" color="primary">
+                  {Math.floor(entry.rating)}
+                </Typography>
+                </ListItemSecondaryAction>
+                 </ListItem>
             );
           })}
         </List>
       </TabPanel>
       <TabPanel value={value} index={1}>
-      <p>Top Scores:</p>
+      <List>
       {props.leaderboard.topScores.map((entry) => {
             return (
               <ListItem>
-                <ListItemIcon>
-                  <StarIcon />
-                </ListItemIcon>
-                <ListItemText primary={entry.name + ": " + entry.score} />
+                <ListItemText primary= {entry.name + ":"} />
+                <ListItemSecondaryAction>
+                <Typography variant="h5" color="primary">
+                  {entry.score}
+                </Typography>
+                </ListItemSecondaryAction>
               </ListItem>
             );
           })}
+          </List>
       </TabPanel>
     </>
   );

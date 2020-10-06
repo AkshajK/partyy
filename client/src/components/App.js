@@ -126,7 +126,7 @@ class App extends Component {
           category={this.state.category} setCategory={this.setCategory} />
         </Box>
         <Box width="calc(100% - 300px)" height="100%" >
-          <Container style={{height: "100%", width: "100%"}}>
+          
           <Router>
             <Switch>
               
@@ -135,7 +135,7 @@ class App extends Component {
               <NotFound default />
             </Switch>
           </Router>
-          </Container>
+          
         </Box>
 
         {this.state.disconnect ? (

@@ -16,6 +16,12 @@ import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import Leaderboard from "./Leaderboard.js"
+import List from "@material-ui/core/List";
+import ListItem from "@material-ui/core/ListItem";
+import ListItemIcon from "@material-ui/core/ListItemIcon";
+import ListItemSecondaryAction from "@material-ui/core/ListItemSecondaryAction";
+
+import ListItemText from "@material-ui/core/ListItemText";
 import "../../utilities.css";
 //import { redirectPage } from "@reach/router";
 
@@ -62,6 +68,9 @@ export default function SideBar(props) {
   }
   return (
     <Grid container direction="column">
+      <Typography style={{fontWeight: 900, fontFamily: "Permanent Marker", margin: "20px 20px 20px 20px"}} align="center" variant="h4" color="textPrimary" gutterBottom>
+        {"Partyy.Life 2.0"}
+      </Typography>
       <FormControl variant="filled" >
         <InputLabel id="demo-simple-select-filled-label">Game Mode</InputLabel>
         <Select
@@ -77,15 +86,37 @@ export default function SideBar(props) {
       </FormControl>
     <Box bgcolor="userinfo">
       
-      <Typography variant="subtitle1" color="textPrimary" gutterBottom>
+      <List dense>
+        <ListItem>
+        <Typography style={{fontWeight: 900}} variant="h5" color="textPrimary" gutterBottom>
         {props.userName}
       </Typography>
-      <Typography variant="subtitle2" color="textSecondary" gutterBottom>
-        {"Rating: " + leaderboardData.rating}
+        </ListItem>
+        <ListItem>
+        <Typography variant="subtitle1" color="textSecondary" gutterBottom>
+        {"Rating: "}
       </Typography>
-      <Typography variant="subtitle2" color="textSecondary" gutterBottom>
-      {"High Score: " + leaderboardData.highScore} 
+      <ListItemSecondaryAction>
+      <Typography variant="h5" color="primary" gutterBottom>
+        {leaderboardData.rating}
       </Typography>
+      </ListItemSecondaryAction>
+        </ListItem>
+
+        <ListItem>
+        <Typography variant="subtitle1" color="textSecondary" gutterBottom>
+        {"High Score: "}
+      </Typography>
+      <ListItemSecondaryAction>
+      <Typography variant="h5" color="primary" gutterBottom>
+        {leaderboardData.highScore}
+      </Typography>
+      </ListItemSecondaryAction>
+        </ListItem>
+      </List>
+      
+      
+      
      
       
     </Box>

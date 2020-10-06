@@ -27,10 +27,10 @@ function getOrCreateUser(token) {
   // the "sub" field means "subject", which is a unique identifier for each user
   return User.findOne({ cookieToken: token }).then((existingUser) => {
     if (existingUser) return existingUser;
-    const animals = ["Duck", "Monkey", "Dog", "Elephant", "Dummy", "Jerry", "Tom", "Pea-Eating Duck"];
+    const animals = ["Duck", "Monkey", "Dog", "Elephant", "Dummy", "Jerry", "Tom", "Goose", "Chimpanzee"];
     const random = Math.floor(Math.random() * animals.length);
     const newUser = new User({
-      name: "Anonymous " + animals[random],
+      name: animals[random],
       cookieToken: Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15),
     });
 
