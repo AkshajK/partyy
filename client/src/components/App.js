@@ -84,7 +84,10 @@ class App extends Component {
 
   render() {
     if (!this.state.userId) {
-      return <CircularProgress />;
+      return (
+      <MuiThemeProvider theme={theme}>
+        <CssBaseline /><CircularProgress />
+        </MuiThemeProvider>);
     }
     
  

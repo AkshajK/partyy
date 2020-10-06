@@ -5,7 +5,7 @@ const RoomSchema = new mongoose.Schema({
   category: Object,
   rated: {
     type: Boolean,
-    default: false,
+    default: true,
   },
   host: {
     userId: String, // userId

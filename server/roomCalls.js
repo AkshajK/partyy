@@ -77,8 +77,9 @@ joinRoom = (req, res) => {
                   let listOfIds = room.allUserIdsThatHaveBeenInRoom;
                   if(!listOfIds.includes(req.user._id)) listOfIds.push(req.user._id);
                   room.allUserIdsThatHaveBeenInRoom = listOfIds;
-                  let roomUsers = room.users;
-                  roomUsers.push(req.user._id);
+                  let roomUsers = room.users.filter((user)=>{return socket.getSocketFromUserID(user._id)});
+                  if(!roomUsers.includes(req.user._id))
+                      roomUsers.push(req.user._id); 
                   room.users = roomUsers;
                   room.save().then((savedRoom) => {
                     if (savedRoom.users.length !== users.length) {
@@ -90,7 +91,7 @@ joinRoom = (req, res) => {
                       exists: true,
                       room: savedRoom,
                       game: game,
-                      users: users.map((user) => {
+                      users: users.filter((user)=>{return socket.getSocketFromUserID(user._id)}).map((user) => {
                         return {
                           userId: user._id,
                           userName: user.name,

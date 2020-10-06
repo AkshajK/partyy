@@ -5,9 +5,9 @@ const GameSchema = new mongoose.Schema({
   winner: String, // userId
 
   song: Object,
-  songHistory: [String], // song Ids (including song)
+  songHistory: [Object], // song Ids (including song)
   status: {
-    type: String, // "RoundStarting" or "RoundInProgress",
+    type: String, // "RoundStarting" or "RoundInProgress" or "RoundFinished",
     default: "RoundStarting",
   },
   roundNumber: {
