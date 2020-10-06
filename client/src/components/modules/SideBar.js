@@ -68,7 +68,7 @@ export default function SideBar(props) {
   }
   return (
     <Grid container direction="column">
-      <Typography style={{fontWeight: 900, fontFamily: "Permanent Marker", margin: "20px 20px 20px 20px"}} align="center" variant="h4" color="textPrimary" gutterBottom>
+      <Typography  style={{fontWeight: 900, fontFamily: "Permanent Marker", margin: "20px 20px 20px 20px"}} align="center" variant="h4" color="textPrimary" gutterBottom>
         {"Partyy.Life 2.0"}
       </Typography>
       <FormControl variant="filled" >

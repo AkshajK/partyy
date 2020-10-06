@@ -70,7 +70,8 @@ startRound = (roomId, roundNum, gameId) => {
       
       game.status = "RoundInProgress";
       game.statusChangeTime = fromNow(30000);
-     
+      game.usersAlreadyAnswered=[]
+      game.correctAnswers = 0
       game.save().then((savedGame) => {
        console.log("saved")
         socket
@@ -114,9 +115,9 @@ endRound = (roomId, roundNum, gameId) => {
           game.status = "RoundStarting";
           game.song = songs[0];
           game.statusChangeTime = fromNow(3000);
-          game.usersAlreadyAnswered=[]
+         
           game.roundNumber = game.roundNumber + 1;
-          game.correctAnswers = 0
+          
         }
         game.save().then((savedGame) => {
           let hideAnswer = savedGame 
@@ -141,32 +142,37 @@ var stringSimilarity = require('string-similarity');
 let similarity = (a, b) => {
   return stringSimilarity.compareTwoStrings(a.toLowerCase(),b.toLowerCase());
 }
-guessAnswer = (userId, gameId, msg) => {
+guessAnswer = (userId, name, gameId, msg) => {
   Game.findById(gameId).then((game)=>{
     let correct = false
   let messageText = msg.message
   let title = game.song.title
-  if(!game.usersAlreadyAnswered.includes(userId) && (game.status==="RoundInProgress")&&((similarity(messageText, title) > 0.7) || (similarity(messageText.toLowerCase().replace("fuck", "forget"), title) > 0.7) ||
+  if(!game.usersAlreadyAnswered.map((e)=>{return e.userId}).includes(userId) && (game.status==="RoundInProgress")&&((similarity(messageText, title) > 0.7) || (similarity(messageText.toLowerCase().replace("fuck", "forget"), title) > 0.7) ||
   (similarity(messageText.toLowerCase().replace(" and ", " & "), title))))
     correct = true;
   if(correct) {
-    User.findById(userId).then((user)=>{
+    
       socket.getIo()
       .in("Room: " + game.roomId)
       .emit("message", {
         roomId: game.roomId,
 
-        message: user.name + " guessed the title!",
+        message: name + " guessed the title!",
         style: "correct answer"
       });
-    })
+    
 
     let givenPoints =  Math.floor(((new Date(game.statusChangeTime)).getTime() - (new Date()).getTime()))/1000.0
     let numAnswered = game.correctAnswers
     let points = 40 + Math.floor(givenPoints) + (numAnswered === 0 ? 30 : (numAnswered === 1 ? 15 : (numAnswered === 2 ? 5 : 0)))
     game.correctAnswers = numAnswered + 1
     let usersAlreadyAnswered = game.usersAlreadyAnswered
-    usersAlreadyAnswered.push(userId)
+    usersAlreadyAnswered.push({
+      userId: userId,
+      userName: name,
+      time: (30-givenPoints).toFixed(3),
+      score: points
+    })
     game.usersAlreadyAnswered=usersAlreadyAnswered
     let newPlayers = game.players
     let player = newPlayers.find((p)=>{return p.userId === userId+""})

@@ -49,6 +49,7 @@ class Room extends Component {
         users: data.users.concat([]),
         category: data.category,
       });
+      this.props.setShowSidebar(data.game.status !== "RoundInProgress");
     });
 
     socket.on("joinRoom", (data)=>{
@@ -64,6 +65,13 @@ class Room extends Component {
 
     socket.on("game", (game) => {
       console.log(game)
+      
+      if(game.status === "RoundFinished") {
+        this.props.setShowSidebar(true);
+      }
+      else if(game.status === "RoundInProgress" && (this.state.game.status !== "RoundInProgress") ) {
+        this.props.setShowSidebar(false);
+      }
       this.setState({game: game})
     })
   }
@@ -109,22 +117,29 @@ class Room extends Component {
 
     let playingMusic = this.state.game && (this.state.game.status === "RoundInProgress")
       return (
-      <Grid container direction="row" style={{ width: "100%" }}>
+      <Grid container direction="row" style={{ width: "100%", height: "100%" }}>
         <Grid container direction="column" style={{width:"calc(100% - 300px)", height: "100%"}}>
         {timer}
         <Typography variant="h5" align="center" color="textPrimary" gutterBottom style={{marginTop: "10px"}}>
           {header}
         </Typography>
-        <Grid container direction="row" style={{width:"calc(100% - 20px)", margin: "20px 20px 20px 0px"}}>
-          <Box width="50%">
+        <Grid container direction="row" style={{width:"calc(100% - 40px)", margin: "20px 20px 20px 20px"}}>
+          {!(this.state.game && (this.state.game.status === "RoundInProgress" || (this.state.game.correctAnswers > 0))) ?
+              <Box width="100%">
+              <PlayerTable users={this.state.users} players={(this.state.game || {}).players} />
+              </Box>
+          :
+          <React.Fragment>
+          <Box width="calc(50% - 10px)">
           <PlayerTable users={this.state.users} players={(this.state.game || {}).players} />
           </Box>
-          <Box width="50%">
-          <CorrectAnswerTable correctAnswers={this.state.correctAnswers || []} />
-          </Box>
+          <Box width="20px"></Box>
+          <Box width="calc(50% - 10px)">
+          <CorrectAnswerTable correctAnswers={this.state.game ? this.state.game.usersAlreadyAnswered : []} />
+          </Box></React.Fragment>}
         </Grid>
         </Grid>
-        <Box width="300px" bgcolor="sidebar">
+        <Box width="300px" height="100%" bgcolor="sidebar">
             <Box style={Object.assign({height: "240px", overflow: "auto"}, playingMusic?{}:{width: "100%",  display: "flex", justifyContent:"center", alignItems: "center"})}>
               {playingMusic ?                 <Music url = {this.state.game.song.songUrl} visual={window.AudioContext ? true : false} pauseButton={window.AudioContext ? false : true}  />
 : <img src = {img} height={"240px"} />}

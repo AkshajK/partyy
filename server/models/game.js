@@ -19,7 +19,12 @@ const GameSchema = new mongoose.Schema({
     default: 0
   },
   usersAlreadyAnswered: {
-    type: [String],
+    type: [{
+      userId: String,
+      userName: String,
+      time: Number,
+      score: Number
+    }],
     default: []
   }
   ,

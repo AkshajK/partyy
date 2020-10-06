@@ -5,6 +5,7 @@ import Grid from "@material-ui/core/Grid";
 import { withStyles, makeStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
+import Typography from '@material-ui/core/Typography';
 import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
@@ -54,20 +55,30 @@ export default function CorrectAnswerTable(props) {
             
           </TableRow>
         </TableHead>
-        
-        {/*<TableBody>
-          {props.rooms.map((room) => (
-            <StyledTableRow key={room.name} hover onClick={()=>{props.redirect("/"+room.name)}}>
+        <TableBody>
+          {props.correctAnswers.map((entry) => {return (
+            <StyledTableRow key={entry.userId} hover >
               <StyledTableCell component="th" scope="row">
-                {room.host.name}
+              <Typography variant="h5" color="textPrimary">
+                {entry.userName}
+              </Typography>
               </StyledTableCell>
-              <StyledTableCell align="right">{room.users.length}</StyledTableCell>
-              <StyledTableCell align="right">{room.category.name}</StyledTableCell>
-              <StyledTableCell align="right">{room.closed ? "Completed" : room.status === "Finished" ? "Waiting" : room.status }</StyledTableCell>
-              <StyledTableCell align="right">{formatDate(room.created)}</StyledTableCell>
+              <StyledTableCell align="right">
+                <Typography variant="h5" color="primary">
+                {entry.time}
+              </Typography>
+              </StyledTableCell>
+              <StyledTableCell align="right">
+                <Typography variant="h5" color="primary">
+                {entry.score}
+              </Typography>
+              </StyledTableCell>
+              
             </StyledTableRow>
-          ))}
-          </TableBody>*/}
+          )})}
+        </TableBody>
+        
+        
       </Table>
     </TableContainer>
 

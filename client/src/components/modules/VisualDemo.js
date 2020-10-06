@@ -27,9 +27,11 @@ export default function VisualDemo(props) {
         document.getElementById(num))
       for(let i=0; i<props.frequencyBandArray.length; i++){
         let num = props.frequencyBandArray[i]
+        if(domElements[num]) {
         domElements[num].style.backgroundColor = `rgb(0, ${amplitudeValues.current[num]}, 255)`
         domElements[num].style.height = `${amplitudeValues.current[num]}px`
         domElements[num].style.width= `6%`
+        }
       }
     };
 

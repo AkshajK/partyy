@@ -36,11 +36,15 @@ class App extends Component {
     super(props);
     this.state = {
       userId: undefined,
-      messages: []
+      messages: [],
+      showSidebar: true
     };
   }
   setCategory  = (c) => {
     this.setState({category: c})
+  }
+  setShowSidebar = (bool) => {
+    this.setState({showSidebar: bool})
   }
   componentDidMount() {
     // login
@@ -121,17 +125,17 @@ class App extends Component {
         <CssBaseline />
       <Grid container direction="row" style={{ width: "100%", height: "100%" }}>
         
-        <Box width="300px" height="100%" bgcolor="sidebar">
+        {this.state.showSidebar ? <Box width="300px" height="100%" bgcolor="sidebar">
           <SideBar userName={this.state.userName} userId={this.state.userId} //userLeaderboardData={this.state.userLeaderboardData}
           category={this.state.category} setCategory={this.setCategory} />
-        </Box>
-        <Box width="calc(100% - 300px)" height="100%" >
+        </Box> : <React.Fragment />}
+        <Box width={this.state.showSidebar ? "calc(100% - 300px)" : "100%"} height="100%" >
           
           <Router>
             <Switch>
               
               <Lobby exact path="/" url={window.location.pathname} name={this.state.name} userId={this.state.userId} category={this.state.category} redirect={this.redirect} messages={this.state.messages.filter((msg)=>{return msg.roomId === "Lobby"})} resetMessages={()=>{this.setState({messages: []})}} />
-              <Room exact path="/:roomName" url={window.location.pathname} name={this.state.name} userId={this.state.userId} redirect={this.redirect} messages={this.state.messages} />
+              <Room exact path="/:roomName" setShowSidebar={this.setShowSidebar} url={window.location.pathname} name={this.state.name} userId={this.state.userId} redirect={this.redirect} messages={this.state.messages} />
               <NotFound default />
             </Switch>
           </Router>
