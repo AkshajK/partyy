@@ -54,11 +54,13 @@ class App extends Component {
     });
     socket.on("reconnect_failed", () => {
       this.setState({ disconnect: true });
+      window.location.reload();
     });
     socket.on("disconnect", (reason) => {
       if (reason === "io server disconnect") {
         this.setState({ disconnect: true });
       }
+     
     });
 
     socket.on("message", (msg) => {
@@ -68,7 +70,17 @@ class App extends Component {
       console.log("GOT THE MESSAGE")
       console.log(msg)
     })
-
+    socket.on("connect", () => {
+      setInterval(() => {
+          if(!socket.connected) {
+            window.location.reload();
+          }
+      }, 1000)
+  })
+    socket.on("reconnect", (attemptNumber) => {
+        window.location.reload();
+    
+    })
     
   }
 
@@ -78,6 +90,7 @@ class App extends Component {
     post("/api/logout");
   };
 
+  
   redirect = (link) => {
     this.setState({ redirect: link });
   };
