@@ -16,7 +16,7 @@ class Music extends React.Component {
             changedOnce: false
         }
         this.state.audio.crossOrigin = "anonymous";
-        this.state.audio.src = this.props.url + "?cb=" + new Date().getTime()
+        this.state.audio.src = this.props.url ? (this.props.url.split('?')[0] + "?cb=" + new Date().getTime()) : undefined
     }
   
     componentDidMount() {

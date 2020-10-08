@@ -4,8 +4,8 @@ import NotFound from "./pages/NotFound.js";
 
 import SideBar from "./modules/SideBar.js"
 import Lobby from "./pages/Lobby.js"
-import Room from "./pages/Room.js"
 import CategoryDashboard from "./pages/CategoryDashboard.js"
+import Room from "./pages/Room.js"
 import CircularProgress from "@material-ui/core/CircularProgress";
 import "../utilities.css";
 import {Modal} from "antd";
@@ -75,15 +75,16 @@ class App extends Component {
       console.log("GOT THE MESSAGE")
       console.log(msg)
     })
+    /*
     socket.on("connect", () => {
       setInterval(() => {
           if(!socket.connected) {
-            window.location.reload();
+            DOSOMETHAINHERE;
           }
       }, 10000)
-  })
+  })*/
     socket.on("reconnect", (attemptNumber) => {
-        window.location.reload();
+        this.componentDidMount();
     
     })
     
@@ -134,8 +135,10 @@ class App extends Component {
           <Router>
             <Switch>
               
-              <Lobby exact path="/" url={window.location.pathname} name={this.state.name} userId={this.state.userId} category={this.state.category} redirect={this.redirect} messages={this.state.messages.filter((msg)=>{return msg.roomId === "Lobby"})} resetMessages={()=>{this.setState({messages: []})}} />
+              <Lobby exact path="/" setShowSidebar={this.setShowSidebar} url={window.location.pathname} name={this.state.name} userId={this.state.userId} category={this.state.category} redirect={this.redirect} messages={this.state.messages.filter((msg)=>{return msg.roomId === "Lobby"})} resetMessages={()=>{this.setState({messages: []})}} />
+              <CategoryDashboard exact path="/dashboard" />
               <Room exact path="/:roomName" setShowSidebar={this.setShowSidebar} url={window.location.pathname} name={this.state.name} userId={this.state.userId} redirect={this.redirect} messages={this.state.messages} />
+              
               <NotFound default />
             </Switch>
           </Router>

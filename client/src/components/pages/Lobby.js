@@ -25,6 +25,7 @@ class Lobby extends Component {
 
   componentDidMount() {
     // remember -- api calls go here!
+    this.props.setShowSidebar(true)
     post("api/joinLobby", {}).then((data) => {
       
       console.log(data.users)
