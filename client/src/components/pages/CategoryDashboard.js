@@ -3,6 +3,7 @@ import { Button, notification, Space } from 'antd';
 import "../../utilities.css";
 
 import Box from "@material-ui/core/Box";
+import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
 import List from "@material-ui/core/List";
@@ -31,7 +32,7 @@ class CategoryDashboard extends Component {
     if(!this.state.data) return <h1>Loading</h1>
 
     return (
-      <div style={{height: "100%", overflow: "auto", margin: "20px 20px 20px 20px"}}>
+      <div style={{height: "100%", width: "100%", overflow: "auto", padding: "20px 20px 20px 20px"}}>
         
         <Typography variant="h3" color="textPrimary">
                 {"Dashboard"}
@@ -81,7 +82,9 @@ class CategoryDashboard extends Component {
           }
         }}
       />
-      {
+      <Grid container direction="row" style={{width: "calc(100% - 40px)", height: "100%"}}>
+        <Box width={1/2} style={{height: "100%", overflow: "auto"}}>
+        {
         this.state.data.map((entry) => {
           return (
             <>
@@ -93,9 +96,6 @@ class CategoryDashboard extends Component {
             {song.title + " by " + song.artist}
                 </Typography>
           }).filter((val, i) => {
-            if(this.props.category && (entry.category._id+""=== this.props.category._id)) {
-              return  true;
-            }
             return (i<3);
           })}
           </>
@@ -103,6 +103,31 @@ class CategoryDashboard extends Component {
           
         })
       }
+        </Box>
+        <Box width={1/2}  style={{height: "100%", overflow: "auto"}} >
+        {
+        this.state.data.filter((e)=>{
+          if(e.category._id+""=== this.props.category._id)
+            return  true;
+        }).map((entry) => {
+          return (
+            <>
+          <Typography variant="h4" color="primary">
+          {entry.category.name}
+              </Typography>
+          {entry.songs.map((song) => {
+            return <Typography variant="h5" color="textPrimary">
+            {song.title + " by " + song.artist}
+                </Typography>
+          })}
+          </>
+          )
+          
+        })
+      }
+        </Box>
+      </Grid>
+      
 
 
 
