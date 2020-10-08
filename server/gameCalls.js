@@ -148,7 +148,7 @@ guessAnswer = (userId, name, gameId, msg) => {
   let messageText = msg.message
   let title = game.song.title
   if(!game.usersAlreadyAnswered.map((e)=>{return e.userId}).includes(userId) && (game.status==="RoundInProgress")&&((similarity(messageText, title) > 0.7) || (similarity(messageText.toLowerCase().replace("fuck", "forget"), title) > 0.7) ||
-  (similarity(messageText.toLowerCase().replace(" and ", " & "), title))))
+  (similarity(messageText.toLowerCase().replace(" and ", " & "), title) > 0.7)))
     correct = true;
   if(correct) {
     

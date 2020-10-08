@@ -35,6 +35,7 @@ var SpotifyWebApi = require("spotify-web-api-node");
 var Promise = require("promise");
 
 let getSongs = (playlistId, offSet, spotifyApi, categoryId) => {
+  var total = 100
   return new Promise((resolve, reject) => {
     spotifyApi
       .getPlaylistTracks(playlistId, {
@@ -58,6 +59,7 @@ let getSongs = (playlistId, offSet, spotifyApi, categoryId) => {
             songUrl: songApi.preview_url,
             categoryId: categoryId,
           });
+          if(song.songUrl) {
           song.save().then(() => {
             counter += 1;
             if (counter === tracks.length) {
@@ -71,6 +73,22 @@ let getSongs = (playlistId, offSet, spotifyApi, categoryId) => {
               }
             }
           });
+          }
+          else {
+            //same thing but dont saave song
+            counter += 1;
+            if (counter === tracks.length) {
+              if (tracks.length === 100) {
+                getSongs(playlistId, offSet + 100, spotifyApi, categoryId).then(() => {
+                  resolve();
+                });
+              }
+              else {
+                resolve();
+              }
+            }
+            
+          }
         }
       });
   });
