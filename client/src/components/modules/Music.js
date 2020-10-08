@@ -31,7 +31,7 @@ class Music extends React.Component {
   
     componentDidUpdate(prevProps) {
       if(prevProps.url !== this.props.url) {
-        this.state.audio.src = this.props.url + "?cb=" + new Date().getTime();
+        this.state.audio.src = this.props.url ? (this.props.url.split('?')[0] + "?cb=" + new Date().getTime()) : undefined
         
       }
     }
