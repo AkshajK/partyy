@@ -136,7 +136,7 @@ class App extends Component {
             <Switch>
               
               <Lobby exact path="/" setShowSidebar={this.setShowSidebar} url={window.location.pathname} name={this.state.name} userId={this.state.userId} category={this.state.category} redirect={this.redirect} messages={this.state.messages.filter((msg)=>{return msg.roomId === "Lobby"})} resetMessages={()=>{this.setState({messages: []})}} />
-              <CategoryDashboard exact path="/dashboard" />
+              <CategoryDashboard exact path="/dashboard" category={this.state.category} />
               <Room exact path="/:roomName" setShowSidebar={this.setShowSidebar} url={window.location.pathname} name={this.state.name} userId={this.state.userId} redirect={this.redirect} messages={this.state.messages} />
               
               <NotFound default />
