@@ -54,7 +54,9 @@ router.post("/startGame", auth.ensureLoggedIn, gameCalls.startGame);
 router.post("/guessAnswer", auth.ensureLoggedIn, gameCalls.guessAnswer);
 
 router.post("/getCategoryAndSongData", auth.ensureLoggedIn, categoryDashboardCalls.getCategoryAndSongData);
-router.post("/addCategory", auth.ensureLoggedIn, categoryDashboardCalls.addCategory);
+router.get("/addCategory", auth.ensureLoggedIn, categoryDashboardCalls.addCategory);
+router.post("/addCategoryAuthenticate", auth.ensureLoggedIn, categoryDashboardCalls.addCategoryAuthenticate);
+
 
 // anything else falls to this "not found" case
 router.all("*", (req, res) => {

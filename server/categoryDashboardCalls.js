@@ -59,8 +59,9 @@ let getSongs = (playlistId, offSet, spotifyApi, categoryId) => {
             songUrl: songApi.preview_url,
             categoryId: categoryId,
           });
-          if(song.songUrl) {
+          if(songApi.preview_url) {
           song.save().then(() => {
+            console.log("Yes preview url" + counter)
             counter += 1;
             if (counter === tracks.length) {
               if (tracks.length === 100) {
@@ -76,6 +77,7 @@ let getSongs = (playlistId, offSet, spotifyApi, categoryId) => {
           }
           else {
             //same thing but dont saave song
+            console.log("No preview url" + counter + " avail markets: " + songApi.available_markets)
             counter += 1;
             if (counter === tracks.length) {
               if (tracks.length === 100) {
@@ -101,29 +103,44 @@ Socket:
 Returns:  
 Description:
 */
+var spotifyApi = new SpotifyWebApi({
+  clientId: process.env.SPOTIFY_ID,
+  clientSecret: process.env.SPOTIFY_SECRET,
+  redirectUri: process.env.URL+"/api/addCategory",
+});
+
+addCategoryAuthenticate = (req, res) => {
+  
+  var scopes = ['user-read-private', 'user-read-email']
+  var authorizeURL = spotifyApi.createAuthorizeURL(scopes, req.body.name+"-----"+req.body.playlistId);
+  res.send({url: authorizeURL});
+  //playlist-read-collaborative
+}
+
+
 addCategory = (req, res) => {
-  var spotifyApi = new SpotifyWebApi({
-    clientId: process.env.SPOTIFY_ID,
-    clientSecret: process.env.SPOTIFY_SECRET,
-    redirectUri: "http://localhost:5000/dashboard",
-  });
-  spotifyApi.clientCredentialsGrant().then(
+  var code  = req.query.code; 
+  var state = req.query.state;
+  var playlistId = state.split("-----")[1]
+  var name = state.split("-----")[0]
+  spotifyApi.authorizationCodeGrant(code).then(
     function (data) {
       console.log("The access token expires in " + data.body["expires_in"]);
       console.log("The access token is " + data.body["access_token"]);
 
       // Save the access token so that it's used in future calls
       spotifyApi.setAccessToken(data.body["access_token"]);
-      console.log(req.body.playlistId);
+      spotifyApi.setRefreshToken(data.body['refresh_token']);
+      console.log(playlistId);
       const category = new Category({
-        name: req.body.name,
-        playlistId: req.body.playlistId,
+        name: name,
+        playlistId: playlistId,
       });
       category.save().then(
         (saved) => {
           
-          getSongs(req.body.playlistId, 0, spotifyApi, saved._id).then(() => {
-            res.send({error: false});
+          getSongs(playlistId, 0, spotifyApi, saved._id).then(() => {
+            res.redirect('/dashboard');
           });
         },
         (err) => {
@@ -141,4 +158,5 @@ addCategory = (req, res) => {
 module.exports = {
   getCategoryAndSongData,
   addCategory,
+  addCategoryAuthenticate
 };
