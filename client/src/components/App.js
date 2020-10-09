@@ -61,6 +61,7 @@ class App extends Component {
       
       //window.location.reload();
     });
+    
     socket.on("disconnect", (reason) => {
       if (reason === "io server disconnect") {
         this.setState({ disconnect: true });
@@ -101,6 +102,10 @@ class App extends Component {
     this.setState({ redirect: link });
   };
 
+  changeName=(name) => {
+    this.setState({userName: name});
+  }
+
   render() {
     if (!this.state.userId) {
       return (
@@ -126,18 +131,18 @@ class App extends Component {
         <CssBaseline />
       <Grid container direction="row" style={{ width: "100%", height: "100%" }}>
         
-        {this.state.showSidebar ? <Box width="300px" height="100%" bgcolor="sidebar">
-          <SideBar userName={this.state.userName} userId={this.state.userId} //userLeaderboardData={this.state.userLeaderboardData}
+        {this.state.showSidebar ? <Box width="320px" height="100%" bgcolor="sidebar">
+          <SideBar changeName={this.changeName} userName={this.state.userName} userId={this.state.userId} //userLeaderboardData={this.state.userLeaderboardData}
           category={this.state.category} setCategory={this.setCategory} />
         </Box> : <React.Fragment />}
-        <Box width={this.state.showSidebar ? "calc(100% - 300px)" : "100%"} height="100%" >
+        <Box width={this.state.showSidebar ? "calc(100% - 320px)" : "100%"} height="100%" >
           
           <Router>
             <Switch>
               
               <Lobby exact path="/" setShowSidebar={this.setShowSidebar} url={window.location.pathname} name={this.state.name} userId={this.state.userId} category={this.state.category} redirect={this.redirect} messages={this.state.messages.filter((msg)=>{return msg.roomId === "Lobby"})} resetMessages={()=>{this.setState({messages: []})}} />
               <CategoryDashboard exact path="/dashboard" category={this.state.category} />
-              <Room exact path="/:roomName" setShowSidebar={this.setShowSidebar} url={window.location.pathname} name={this.state.name} userId={this.state.userId} redirect={this.redirect} messages={this.state.messages} />
+              <Room exact path="/:roomName" setCategory={this.setCategory} setShowSidebar={this.setShowSidebar} url={window.location.pathname} name={this.state.name} userId={this.state.userId} redirect={this.redirect} messages={this.state.messages} />
               
               <NotFound default />
             </Switch>

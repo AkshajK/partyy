@@ -38,6 +38,7 @@ const StyledTableRow = withStyles((theme) => ({
 const useStyles = makeStyles({
   table: {
     minWidth: 150,
+
   },
 });
 export default function PlayerTable(props) {
@@ -54,7 +55,7 @@ export default function PlayerTable(props) {
   return 0
   }
   return (
-    <TableContainer component={Paper}>
+    <TableContainer component={Paper} style={{height: "100%", width: "100%"}}>
       <Table className={classes.table} stickyHeader>
         <TableHead>
          

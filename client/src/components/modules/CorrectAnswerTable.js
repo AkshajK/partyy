@@ -45,7 +45,7 @@ export default function CorrectAnswerTable(props) {
   
   
   return (
-    <TableContainer component={Paper}>
+    <TableContainer component={Paper} style={{maxHeight: "100%", width: "100%"}}>
       <Table className={classes.table} stickyHeader>
         <TableHead>
          

@@ -47,9 +47,12 @@ class Room extends Component {
         
         game: data.game,
         users: data.users.concat([]),
-        category: data.category,
+        category: data.room.category,
       });
-      this.props.setShowSidebar(data.game.status !== "RoundInProgress");
+      this.props.setShowSidebar(!data.game || (data.game.status !== "RoundInProgress"));
+
+      this.props.setCategory(data.room.category);
+      //console.log(data.room.category)
     });
 
     socket.on("joinRoom", (data)=>{
@@ -74,6 +77,15 @@ class Room extends Component {
       }
       this.setState({game: game})
     })
+
+    socket.on("changeName", (user)=>{
+      let users = this.state.users 
+      let filtered = users.filter((u)=>{return u.userId !== user.userId})
+      if(users.length !== filtered.length) {
+        filtered.push(user);
+        this.setState({users: filtered});
+      }
+    })
   }
 
   componentWillUnmount() {
@@ -81,6 +93,7 @@ class Room extends Component {
     socket.off("joinRoom")
     socket.off("leftRoom")
     socket.off("game")
+    socket.off("changeName")
   }
   /*
   componentDidUpdate(prevProps) {
@@ -117,7 +130,7 @@ class Room extends Component {
 
     let playingMusic = this.state.game && (this.state.game.status === "RoundInProgress")
       return (
-      <Grid container direction="row" style={{ width: "100%", height: "100%" }}>
+      <Grid container direction="row" style={{ width: "100%", height: "100%", overflow:"auto" }}>
         <Grid container direction="column" style={{width:"calc(100% - 300px)", height: "100%"}}>
         {timer}
         <Typography variant="h5" align="center" color="textPrimary" gutterBottom style={{marginTop: "10px"}}>

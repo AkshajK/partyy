@@ -1,8 +1,9 @@
 import React, { Component } from "react";
-import { Button, notification, Space } from 'antd';
+import {  notification, Space } from 'antd';
 import "../../utilities.css";
 
 import Box from "@material-ui/core/Box";
+import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
@@ -50,7 +51,7 @@ class CategoryDashboard extends Component {
         
       />
 <TextField
-        label="Playlist Id"
+        label="Playlist Id or Spotify URI"
         variant="outlined"
    
         value={this.state.messageText}
@@ -102,6 +103,18 @@ class CategoryDashboard extends Component {
       }
         </Box>
         <Box width={1/2}  style={{height: "100%", overflow: "auto"}} >
+        <Button onDoubleClick={() => {post("api/deleteCategory", {categoryId: this.props.category._id}).then(()=>{
+          
+          post("api/addCategoryAuthenticate", {
+            playlistId: this.props.category.playlistId, name: this.props.category.name
+          }).then((data1)=>{
+            window.location.href = data1.url;
+          })
+
+
+        })}} fullWidth>{"Double Click to Repull from Spotify"}</Button>
+
+          <Button onDoubleClick={() => {post("api/deleteCategory", {categoryId: this.props.category._id}).then(()=>{window.location.reload()})}} fullWidth>{"Double Click to Delete"}</Button>
         {
         this.state.data.filter((e)=>{
           if(this.props.category && (e.category._id+""=== this.props.category._id))

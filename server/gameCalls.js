@@ -225,7 +225,7 @@ const getLeaderboard = () => {
         console.log(categories);
         var leaderboard = {};
         for (var j = 0; j < categories.length; j++) {
-          leaderboard[categories[j]._id] = {
+          leaderboard[""+categories[j]._id] = {
             topScores: [],
             topRatings: [],
           };
@@ -249,10 +249,10 @@ const getLeaderboard = () => {
           }
         }
         for (var j = 0; j < categories.length; j++) {
-          leaderboard[categories[j]._id].topScores.sort((a, b) => {
+          leaderboard[categories[j]._id+""].topScores.sort((a, b) => {
             return b.score - a.score;
           });
-          leaderboard[categories[j]._id].topRatings.sort((a, b) => {
+          leaderboard[categories[j]._id+""].topRatings.sort((a, b) => {
             return b.rating - a.rating;
           });
         }

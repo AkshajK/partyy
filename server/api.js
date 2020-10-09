@@ -44,7 +44,7 @@ router.post("/message", auth.ensureLoggedIn, mainCalls.message);
 router.post("/getLeaderboard", auth.ensureLoggedIn, mainCalls.getLeaderboard);
 router.post("/joinLobby", auth.ensureLoggedIn, mainCalls.joinLobby);
 router.post("/leaveLobby", auth.ensureLoggedIn, mainCalls.leaveLobby);
-
+router.post("/changeName", auth.ensureLoggedIn, mainCalls.changeName);
 
 router.post("/createRoom", auth.ensureLoggedIn, roomCalls.createRoom);
 router.post("/joinRoom", auth.ensureLoggedIn, roomCalls.joinRoom);
@@ -56,6 +56,7 @@ router.post("/guessAnswer", auth.ensureLoggedIn, gameCalls.guessAnswer);
 router.post("/getCategoryAndSongData", auth.ensureLoggedIn, categoryDashboardCalls.getCategoryAndSongData);
 router.get("/addCategory", auth.ensureLoggedIn, categoryDashboardCalls.addCategory);
 router.post("/addCategoryAuthenticate", auth.ensureLoggedIn, categoryDashboardCalls.addCategoryAuthenticate);
+router.post("/deleteCategory", auth.ensureLoggedIn, categoryDashboardCalls.deleteCategory);
 
 
 // anything else falls to this "not found" case

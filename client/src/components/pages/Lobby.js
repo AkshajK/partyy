@@ -81,6 +81,14 @@ class Lobby extends Component {
       let users = this.state.users.filter((user)=>{return user.userId !== data.userId})
       this.setState({users: users})
     })
+    socket.on("changeName", (user)=>{
+      let users = this.state.users 
+      let filtered = users.filter((u)=>{return u.userId !== user.userId})
+      if(users.length !== filtered.length) {
+        filtered.push(user);
+        this.setState({users: filtered});
+      }
+    })
   }
   componentWillUnmount() {
    // socket.off("createdRoom")
@@ -89,6 +97,7 @@ class Lobby extends Component {
    socket.off("room")
     socket.off("joinedLobby")
     socket.off("leftLobby")
+    socket.off("changeName");
     
   }
   
@@ -107,12 +116,12 @@ class Lobby extends Component {
     return (
       
         
-        <Grid container direction="row" style={{ width: "100%", height: "100%" }}>
+        <Grid container direction="row" style={{ width: "100%", height: "100%", overflow:"auto" }}>
         <Box width="calc(100% - 300px)" height="100%" style={{padding: "40px"}}>
           <RoomTable users={this.state.users} rooms={this.state.rooms} redirect={this.props.redirect} />
         </Box>
         <Box width="300px" height="100%" bgcolor="sidebar">
-          <List>
+          <List style={{maxHeight: "300px", overflow: "auto"}}>
             {this.state.users.map((user)=>{
               return (<ListItem>
                 <ListItemIcon>

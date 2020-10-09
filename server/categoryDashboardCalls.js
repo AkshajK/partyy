@@ -133,22 +133,47 @@ addCategory = (req, res) => {
       spotifyApi.setAccessToken(data.body["access_token"]);
       spotifyApi.setRefreshToken(data.body['refresh_token']);
       console.log(playlistId);
-      const category = new Category({
-        name: name,
-        playlistId: playlistId,
-      });
-      category.save().then(
-        (saved) => {
+
+      Category.findOne({name: name}).then((c)=> {
+        if(c) {
           
-          getSongs(playlistId, 0, spotifyApi, saved._id).then(() => {
-            res.redirect('/dashboard');
-          });
-        },
-        (err) => {
-          console.log(err);
-          res.send({ error: true });
+          Song.remove({categoryId: c._id}).then(() => {
+            c.playlistId = playlistId
+            c.save().then(
+              (saved) => {
+                
+                getSongs(playlistId, 0, spotifyApi, saved._id).then(() => {
+                  res.redirect('/dashboard');
+                });
+              },
+              (err) => {
+                console.log(err);
+                res.send({ error: true });
+              }
+            );
+          })
+          
         }
-      );
+        else {
+          const category = new Category({
+            name: name,
+            playlistId: playlistId,
+          });
+          category.save().then(
+            (saved) => {
+              
+              getSongs(playlistId, 0, spotifyApi, saved._id).then(() => {
+                res.redirect('/dashboard');
+              });
+            },
+            (err) => {
+              console.log(err);
+              res.send({ error: true });
+            }
+          );
+        }
+      })
+      
     },
     function (err) {
       console.log("Something went wrong when retrieving an access token", err);
@@ -156,8 +181,23 @@ addCategory = (req, res) => {
   );
 };
 
+var ObjectId = require('mongodb').ObjectId
+deleteCategory = (req, res) => {
+  Category.remove({_id: ObjectId(req.body.categoryId)}).then(() => {
+    Song.remove({categoryId: req.body.categoryId}).then(() => {
+      Room.remove({"category._id": ObjectId(req.body.categoryId)}).then(() => {
+        res.send({})
+      })
+    })
+  });
+  
+  
+}
+
+
 module.exports = {
   getCategoryAndSongData,
   addCategory,
-  addCategoryAuthenticate
+  addCategoryAuthenticate,
+  deleteCategory
 };

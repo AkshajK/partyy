@@ -5,8 +5,10 @@ import Paper from "@material-ui/core/Paper";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import TextField from "@material-ui/core/TextField";
+import Tooltip from "@material-ui/core/Tooltip"
 import ListItemText from "@material-ui/core/ListItemText";
 import "../../utilities.css";
+
 //import { redirectPage } from "@reach/router";
 
 import { get, post } from "../../utilities.js";
@@ -34,6 +36,15 @@ export default function Chat(props) {
   const [messageText, setMessageText] = React.useState("");
   const [lastMessage, setLastMessage] = React.useState(new Date());
 
+  const formatDate = (duedate) => {
+    
+    return (
+      new Date(duedate.toString()).toString().substring(0, 11) +
+      new Date(duedate.toString()).toLocaleString([], { hour: "2-digit", minute: "2-digit" })
+    );
+    
+    
+  };
   return (
     <Paper style={{ borderRadius: "0px"}}>
       <Box
@@ -66,25 +77,23 @@ export default function Chat(props) {
             
             else {
              text = (
-                <>
-                  <div style={{ display: "inline" }}>
-                    {"[" +
-                      addZero(new Date(message.timestamp).getHours()) +
-                      ":" +
-                      addZero(new Date(message.timestamp).getMinutes()) +
-                      "] "}
-                  </div>
-                  <div style={{ color: "#678efd", display: "inline", fontWeight: "900" }}>
+                
+                  <>
+                  <div style={{ color: "#4595EC", display: "inline", fontWeight: "900" }}>
                     {message.sender.name}
                   </div>
                   <div style={{ display: "inline" }}>{": " + crop(message.message)}</div>
-                </>
+                  </>
+               
               );
             }
 
             return (
+              
               <ListItem dense fullWidth>
+                <Tooltip title={formatDate(message.timestamp)}>
                 <ListItemText>{text}</ListItemText>
+                </Tooltip>
               </ListItem>
             );
           })}

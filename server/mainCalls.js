@@ -89,7 +89,8 @@ Returns: {users: [{userId: String, userName: String, leaderboardData: []}], room
 Description: Adds message to database if it is from lobby. Emits socket with message
 */
 joinLobby = (req, res) => {
-  Room.find({}, (err, rooms) => {
+  
+  Room.find({created: {$gte: new Date(new Date().getTime() - 1000*60*60*12)}}, (err, rooms) => {
     Message.find({}, (err, messages) => {
       User.findById(req.user._id).then((me) => {
         me.roomId = "Lobby";
@@ -135,9 +136,25 @@ leaveLobby = (req, res) => {
   res.send({});
 };
 
+changeName = (req, res) => {
+  User.findById(req.user._id).then((user)=>{
+    user.name = req.body.name 
+    user.save().then(() => {
+      socket.getIo().in("Room: " + req.user.roomId).emit("changeName", {
+        userId: req.user._id,
+        userName: user.name,
+        userLeaderboardData: user.leaderboardData
+      })
+      res.send({})
+    })
+   
+  })
+  
+}
 module.exports = {
   message,
   getLeaderboard,
   joinLobby,
   leaveLobby,
+  changeName
 };

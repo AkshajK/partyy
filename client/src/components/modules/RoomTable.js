@@ -4,6 +4,7 @@ import Grid from "@material-ui/core/Grid";
 
 import { withStyles, makeStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
+import Typography from '@material-ui/core/Typography';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
@@ -15,19 +16,35 @@ import "../../utilities.css";
 
 import { get, post } from "../../utilities.js";
 const formatDate = (duedate) => {
+  const seconds = Math.floor((new Date().getTime() - new Date(duedate).getTime())/1000);
+  if (seconds < 60) return seconds + (seconds===1?" second ago":" seconds ago")
+  const minutes = Math.floor(seconds/60)
+  if (minutes < 60) return minutes + (minutes===1?" minute ago":" minutes ago")
+  const hours = Math.floor(minutes/60)
+  if (hours < 24) return hours + (hours===1?" hour ago":" hours ago")
+  const days = Math.floor(hours/24)
+  return days + (days===1?" day ago":" days ago")
+  /*
   return (
     new Date(duedate.toString()).toString().substring(0, 11) +
     new Date(duedate.toString()).toLocaleString([], { hour: "2-digit", minute: "2-digit" })
   );
+  */
+
   // duedate.toString().substring(0, 11) + duedate.toString().substring(16, 21);
 };
 const StyledTableCell = withStyles((theme) => ({
   head: {
     backgroundColor: theme.palette.common.black,
     color: theme.palette.common.white,
+    fontWeight: 900,
+    fontSize: 14,
+    
   },
   body: {
-    fontSize: 14,
+    fontSize: 18,
+
+    
   },
 }))(TableCell);
 
@@ -73,9 +90,15 @@ export default function RoomTable(props) {
               })
               }}>
               <StyledTableCell component="th" scope="row">
-                {room.host.name}
+              <Typography variant="h5" color="primary" style={{fontWeight: 900}}>
+              {room.host.name}
+                </Typography>
+                
               </StyledTableCell>
-              <StyledTableCell align="right">{room.users.length}</StyledTableCell>
+              <StyledTableCell align="right">
+             
+              {room.users.length}
+              </StyledTableCell>
               <StyledTableCell align="right">{room.category.name}</StyledTableCell>
               <StyledTableCell align="right">{room.closed ? "Completed" : room.status === "Finished" ? "Waiting" : room.status }</StyledTableCell>
               <StyledTableCell align="right">{formatDate(room.created)}</StyledTableCell>
