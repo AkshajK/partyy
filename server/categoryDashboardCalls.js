@@ -112,7 +112,7 @@ var spotifyApi = new SpotifyWebApi({
 
 addCategoryAuthenticate = (req, res) => {
   
-  var scopes = ['user-read-private', 'user-read-email']
+  var scopes = ['user-read-private', 'user-read-email', 'playlist-read-private']
   var authorizeURL = spotifyApi.createAuthorizeURL(scopes, req.body.name+"-----"+req.body.playlistId);
   res.send({url: authorizeURL});
   //playlist-read-collaborative
