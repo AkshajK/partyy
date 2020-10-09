@@ -42,6 +42,7 @@ let getSongs = (playlistId, offSet, spotifyApi, categoryId) => {
         offset: offSet,
         limit: 100,
         fields: "items",
+        market: "US"
       })
       .then((data) => {
         let tracks = data.body.items
@@ -61,7 +62,7 @@ let getSongs = (playlistId, offSet, spotifyApi, categoryId) => {
           });
           if(songApi.preview_url) {
           song.save().then(() => {
-            console.log("Yes preview url" + counter)
+            //console.log("Yes preview url" + counter)
             counter += 1;
             if (counter === tracks.length) {
               if (tracks.length === 100) {
@@ -77,7 +78,7 @@ let getSongs = (playlistId, offSet, spotifyApi, categoryId) => {
           }
           else {
             //same thing but dont saave song
-            console.log("No preview url" + counter + " avail markets: " + songApi.available_markets)
+           // console.log("No preview url" + counter + " avail markets: " + songApi.available_markets)
             counter += 1;
             if (counter === tracks.length) {
               if (tracks.length === 100) {

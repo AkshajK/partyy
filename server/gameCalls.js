@@ -235,7 +235,7 @@ const getLeaderboard = () => {
           let topRatings = [];
           let leaderboardData = users[i].leaderboardData;
           for (var j = 0; j < leaderboardData.length; j++) {
-            if(!leaderboard[leaderboardData[j]]) continue;
+            if(!leaderboard[leaderboardData[j].categoryId]) continue;
             leaderboard[leaderboardData[j].categoryId].topScores.push({
               userId: users[i]._id,
               name: users[i].name,

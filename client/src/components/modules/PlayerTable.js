@@ -57,11 +57,7 @@ export default function PlayerTable(props) {
     <TableContainer component={Paper}>
       <Table className={classes.table} stickyHeader>
         <TableHead>
-          <TableRow>
-            <StyledTableCell>Player</StyledTableCell>
-            <StyledTableCell align="right">Score</StyledTableCell>
-            
-          </TableRow>
+         
         </TableHead>
         <TableBody>
           {props.users.map((user) => (
@@ -72,7 +68,7 @@ export default function PlayerTable(props) {
               </Typography>
               </StyledTableCell>
               <StyledTableCell align="right">
-                <Typography variant="h5" color="primary">
+                <Typography variant="h4" color="primary" style={{fontWeight: 900}}>
                 {score(user)}
               </Typography>
                 

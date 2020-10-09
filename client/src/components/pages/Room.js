@@ -130,11 +130,11 @@ class Room extends Component {
               </Box>
           :
           <React.Fragment>
-          <Box width="calc(50% - 10px)">
+          <Box width="calc(40% - 10px)">
           <PlayerTable users={this.state.users} players={(this.state.game || {}).players} />
           </Box>
           <Box width="20px"></Box>
-          <Box width="calc(50% - 10px)">
+          <Box width="calc(60% - 10px)">
           <CorrectAnswerTable correctAnswers={this.state.game ? this.state.game.usersAlreadyAnswered : []} />
           </Box></React.Fragment>}
         </Grid>

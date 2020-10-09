@@ -48,12 +48,7 @@ export default function CorrectAnswerTable(props) {
     <TableContainer component={Paper}>
       <Table className={classes.table} stickyHeader>
         <TableHead>
-          <TableRow>
-            <StyledTableCell>Player</StyledTableCell>
-            <StyledTableCell align="right">Time</StyledTableCell>
-            <StyledTableCell align="right">Points</StyledTableCell>
-            
-          </TableRow>
+         
         </TableHead>
         <TableBody>
           {props.correctAnswers.map((entry) => {return (
@@ -65,12 +60,12 @@ export default function CorrectAnswerTable(props) {
               </StyledTableCell>
               <StyledTableCell align="right">
                 <Typography variant="h5" color="primary">
-                {entry.time}
+                {entry.time + " sec"}
               </Typography>
               </StyledTableCell>
               <StyledTableCell align="right">
                 <Typography variant="h5" color="primary">
-                {entry.score}
+                {"+"+entry.score}
               </Typography>
               </StyledTableCell>
               
