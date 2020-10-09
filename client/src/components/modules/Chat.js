@@ -39,8 +39,8 @@ export default function Chat(props) {
   const formatDate = (duedate) => {
     
     return (
-      new Date(duedate.toString()).toString().substring(0, 11) +
-      new Date(duedate.toString()).toLocaleString([], { hour: "2-digit", minute: "2-digit" })
+      new Date(duedate).toString().substring(0, 11) +
+      new Date(duedate).toLocaleString([], { hour: "2-digit", minute: "2-digit" })
     );
     
     

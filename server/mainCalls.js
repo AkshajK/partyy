@@ -20,6 +20,8 @@ message = (req, res) => {
       sender: {userId: req.user._id, name: user.name},
       roomId: user.roomId,
       message: req.body.text,
+      timestamp: new Date(),
+      style: "message"
     });
  
     if(user.roomId !== "Lobby") {

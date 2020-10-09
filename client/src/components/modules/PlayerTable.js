@@ -55,7 +55,7 @@ export default function PlayerTable(props) {
   return 0
   }
   return (
-    <TableContainer component={Paper} style={{height: "100%", width: "100%"}}>
+    <TableContainer component={Paper} style={{maxHeight: "100%", width: "100%"}}>
       <Table className={classes.table} stickyHeader>
         <TableHead>
          
