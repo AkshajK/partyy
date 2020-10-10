@@ -45,7 +45,7 @@ router.post("/getLeaderboard", auth.ensureLoggedIn, mainCalls.getLeaderboard);
 router.post("/joinLobby", auth.ensureLoggedIn, mainCalls.joinLobby);
 router.post("/leaveLobby", auth.ensureLoggedIn, mainCalls.leaveLobby);
 router.post("/changeName", auth.ensureLoggedIn, mainCalls.changeName);
-
+router.post("/reportSong", auth.ensureLoggedIn, mainCalls.reportSong);
 router.post("/createRoom", auth.ensureLoggedIn, roomCalls.createRoom);
 router.post("/joinRoom", auth.ensureLoggedIn, roomCalls.joinRoom);
 router.post("/leaveRoom", auth.ensureLoggedIn, roomCalls.leaveRoom);

@@ -138,6 +138,15 @@ leaveLobby = (req, res) => {
   res.send({});
 };
 
+reportSong = (req, res) => {
+  Song.findOne({songUrl: req.body.songUrl}).then((song) => {
+    song.bad = true;
+    song.save().then(()=>{
+      res.send({reported: true})
+    });
+  })
+}
+
 changeName = (req, res) => {
   User.findById(req.user._id).then((user)=>{
     user.name = req.body.name 
@@ -158,6 +167,7 @@ module.exports = {
   message,
   getLeaderboard,
   joinLobby,
+  reportSong,
   leaveLobby,
   changeName
 };

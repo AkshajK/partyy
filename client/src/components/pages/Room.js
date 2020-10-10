@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-
+import {  notification, Space } from 'antd';
 import "../../utilities.css";
 
 import Box from "@material-ui/core/Box";
@@ -181,7 +181,21 @@ class Room extends Component {
             >
               Leave Room
             </Button>
-            
+            <Button fullWidth
+              onClick={() => {
+                post("api/reportSong", { songUrl: this.state.game.song.songUrl }).then((data) => {
+                  if(data.reported) {
+                    notification.success({
+                      message: 'Reported',
+                      description:
+                        'You reported a song',
+                    });
+                  }
+                });
+              }}
+            >
+              Report Song
+            </Button>
           
         </Box>
       </Grid>

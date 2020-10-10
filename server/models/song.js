@@ -6,6 +6,10 @@ const SongSchema = new mongoose.Schema({
   artUrl: String,
   songUrl: String,
   categoryId: String,
+  bad: {
+    type: Boolean,
+    default: false
+  }
 });
 
 // compile model from schema

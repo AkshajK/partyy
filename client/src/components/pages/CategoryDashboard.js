@@ -103,7 +103,7 @@ class CategoryDashboard extends Component {
       }
         </Box>
         <Box width={1/2}  style={{height: "100%", overflow: "auto"}} >
-        <Button onDoubleClick={() => {post("api/deleteCategory", {categoryId: this.props.category._id}).then(()=>{
+        <Button onDoubleClick={()=>{
           
           post("api/addCategoryAuthenticate", {
             playlistId: this.props.category.playlistId, name: this.props.category.name
@@ -112,7 +112,7 @@ class CategoryDashboard extends Component {
           })
 
 
-        })}} fullWidth>{"Double Click to Repull from Spotify"}</Button>
+        }} fullWidth>{"Double Click to Repull from Spotify"}</Button>
 
           <Button onDoubleClick={() => {post("api/deleteCategory", {categoryId: this.props.category._id}).then(()=>{window.location.reload()})}} fullWidth>{"Double Click to Delete"}</Button>
         {
@@ -127,7 +127,7 @@ class CategoryDashboard extends Component {
           {entry.category.name}
               </Typography>
           {entry.songs.map((song) => {
-            return <Typography variant="h5" color="textPrimary">
+            return <Typography variant="h5" color={song.bad ? "primary" : "textPrimary"}>
             {song.title + " by " + song.artist}
                 </Typography>
           })}

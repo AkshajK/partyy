@@ -136,7 +136,7 @@ addCategory = (req, res) => {
 
       Category.findOne({name: name}).then((c)=> {
         if(c) {
-          
+          console.log("found")
           Song.remove({categoryId: c._id}).then(() => {
             c.playlistId = playlistId
             c.save().then(
