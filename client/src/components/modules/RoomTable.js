@@ -62,7 +62,7 @@ const StyledTableRow = withStyles((theme) => ({
 
 const useStyles = makeStyles({
   table: {
-    minWidth: 700,
+    minWidth: 300,
     
   },
 });
@@ -77,7 +77,7 @@ export default function RoomTable(props) {
           <TableRow>
             <StyledTableCell>Host</StyledTableCell>
             <StyledTableCell align="right">Players</StyledTableCell>
-            <StyledTableCell align="right">Game Mode</StyledTableCell>
+            <StyledTableCell align="right">Mode</StyledTableCell>
             <StyledTableCell align="right">Status</StyledTableCell>
             <StyledTableCell align="right">Created</StyledTableCell>
           </TableRow>

@@ -42,6 +42,10 @@ module.exports = {
               io.in("Room: Lobby").emit("leftLobby", {
                 userId: me._id,
               });
+              me.roomId="Offline"
+              me.save().then(() => {
+                  removeUser(user, socket);
+              })
             } else if (me.roomId === "Offline") {
               
             }
