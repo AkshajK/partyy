@@ -43,6 +43,8 @@ const StyledTableCell = withStyles((theme) => ({
   },
   body: {
     fontSize: 18,
+    overflow: "auto",
+    whiteSpace: "nowrap"
 
     
   },
@@ -100,7 +102,7 @@ export default function RoomTable(props) {
               {room.users.length}
               </StyledTableCell>
               <StyledTableCell align="right">{room.category.name}</StyledTableCell>
-              <StyledTableCell align="right">{room.closed ? "Completed" : room.status === "Finished" ? "Waiting" : room.status }</StyledTableCell>
+              <StyledTableCell align="right">{room.closed ? "Completed" : room.status === "Finished" ? "Waiting" : (room.status === "InProgress" ? "In Progress" : room.status) }</StyledTableCell>
               <StyledTableCell align="right">{formatDate(room.created)}</StyledTableCell>
             </StyledTableRow>
           ))}

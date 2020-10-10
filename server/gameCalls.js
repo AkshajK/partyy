@@ -147,6 +147,11 @@ guessAnswer = (userId, name, gameId, msg) => {
     let correct = false
   let messageText = msg.message
   let title = game.song.title.replace(/ \([\s\S]*?\)/g, '')
+  if(title.includes("-")) {
+    if(title.split("-")[1].includes("Radio Edit")) {
+      title = title.split("-")[0]
+    }
+  }
   if(!game.usersAlreadyAnswered.map((e)=>{return e.userId}).includes(userId) && (game.status==="RoundInProgress")&&((similarity(messageText, title) > 0.7) || (similarity(messageText.toLowerCase().replace("fuck", "forget"), title) > 0.7) ||
   (similarity(messageText.toLowerCase().replace(" and ", " & "), title) > 0.7)))
     correct = true;
