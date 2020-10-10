@@ -146,7 +146,7 @@ leaveRoom = (req, res) => {
   
   Room.findById(req.body.roomId).then((room) => {
     let users = room.users.filter((id) => {
-      return id !== req.user._id;
+      return id !== req.user._id+"";
     });
     room.users = users;
 

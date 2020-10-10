@@ -57,7 +57,7 @@ module.exports = {
 
               Room.findById(me.roomId).then((room) => {
                 let users = room.users.filter((id) => {
-                  return id !== me._id;
+                  return id !== me._id+"";
                 });
                 room.users = users;
                 room.save().then((savedRoom)=>{
