@@ -141,6 +141,7 @@ leaveLobby = (req, res) => {
 changeName = (req, res) => {
   User.findById(req.user._id).then((user)=>{
     user.name = req.body.name 
+    if(user.name.length > 20) return;
     user.save().then(() => {
       socket.getIo().in("Room: " + req.user.roomId).emit("changeName", {
         userId: req.user._id,

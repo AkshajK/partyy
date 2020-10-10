@@ -6,7 +6,7 @@ import Box from "@material-ui/core/Box";
 import Button from "@material-ui/core/Button";
 import Timer from "../modules/Timer.js"
 import { socket } from "../../client-socket.js";
-import logo from "../images/logo4.png";
+import logo from "../images/logodark.png";
 import PlayerTable from "../modules/PlayerTable.js"
 import CorrectAnswerTable from "../modules/CorrectAnswerTable.js"
 import Grid from "@material-ui/core/Grid"
@@ -131,12 +131,12 @@ class Room extends Component {
     let playingMusic = this.state.game && (this.state.game.status === "RoundInProgress")
       return (
       <Grid container direction="row" style={{ width: "100%", height: "100%", overflow:"auto" }}>
-        <Grid container direction="column" style={{width:"calc(100% - 300px)", height: "100%"}}>
+        <Grid container direction="column" style={{width:"calc(100% - 320px)", height: "100%"}}>
         {timer}
-        <Typography variant="h5" align="center" color="textPrimary" gutterBottom style={{marginTop: "10px"}}>
+        <Typography variant="h5" align="center" color="textPrimary" gutterBottom style={{marginTop: "10px", overflow: "auto", width: "100%"}} noWrap>
           {header}
         </Typography>
-        <Grid container direction="row" style={{width:"calc(100% - 40px)", margin: "20px 20px 20px 20px"}}>
+        <Grid container direction="row" style={{width:"calc(100% - 40px)", margin: "20px 20px 20px 20px", height: "calc(100% - 160px)", overflow: "auto"}}   >
           {!(this.state.game && (this.state.game.status === "RoundInProgress" || (this.state.game.correctAnswers > 0))) ?
               <Box width="100%">
               <PlayerTable users={this.state.users} players={(this.state.game || {}).players} />
@@ -150,9 +150,18 @@ class Room extends Component {
           <Box width="calc(60% - 10px)">
           <CorrectAnswerTable correctAnswers={this.state.game ? this.state.game.usersAlreadyAnswered : []} />
           </Box></React.Fragment>}
+          
         </Grid>
+        <Button fullWidth 
+              onClick={() => {
+                post("api/startGame")
+              }}
+              disabled={this.state.game && this.state.game.status !== "RoundFinished"}
+            >
+              Start Game
+            </Button>
         </Grid>
-        <Box width="300px" height="100%" bgcolor="sidebar">
+        <Box width="320px" height="100%" bgcolor="sidebar">
             <Box style={Object.assign({height: "240px", overflow: "auto"}, playingMusic?{}:{width: "100%",  display: "flex", justifyContent:"center", alignItems: "center"})}>
               {playingMusic ?                 <Music url = {this.state.game.song.songUrl} visual={window.AudioContext ? true : false} pauseButton={window.AudioContext ? false : true}  />
 : <img src = {img} height={"240px"} />}
@@ -162,14 +171,7 @@ class Room extends Component {
             </Typography>
             
             <Chat messages={this.props.messages.filter((msg)=>{return msg.roomId === this.state.roomId})}  />
-            <Button fullWidth
-              onClick={() => {
-                post("api/startGame")
-              }}
-              disabled={this.state.game && this.state.game.status !== "RoundFinished"}
-            >
-              Start Game
-            </Button>
+            
             <Button fullWidth
               onClick={() => {
                 post("api/leaveRoom", { roomId: this.state.roomId }).then((data) => {

@@ -1,12 +1,13 @@
-import React, { Component, useState, useEffect} from "react";
+import React, { Component, useState, useEffect, } from "react";
+import { withStyles } from '@material-ui/core/styles';
 import Box from "@material-ui/core/Box";
 import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
 import Card from '@material-ui/core/Card';
 import Dialog from "@material-ui/core/Dialog";
-import DialogActions from "@material-ui/core/DialogActions";
-import DialogContent from "@material-ui/core/DialogContent";
-import DialogContentText from "@material-ui/core/DialogContentText";
+import MuiDialogTitle from '@material-ui/core/DialogTitle';
+import MuiDialogContent from '@material-ui/core/DialogContent';
+import MuiDialogActions from '@material-ui/core/DialogActions';
 import TextField from "@material-ui/core/TextField"
 import DialogTitle from "@material-ui/core/DialogTitle";
 import CardActions from '@material-ui/core/CardActions';
@@ -35,7 +36,21 @@ import "../../utilities.css";
 
 import { get, post } from "../../utilities.js";
 
-export default function SideBar(props) {
+const styles = (theme) => ({
+  root: {
+    margin: 0,
+    padding: theme.spacing(2),
+    textColor: "#FFFFFF"
+  },
+  closeButton: {
+    //position: 'absolute',
+    //right: theme.spacing(1),
+    //top: theme.spacing(1),
+    color: theme.palette.grey[500],
+  },
+});
+let SideBar = (props) => {
+  const { classes, children, className, ...other } = props;
   
   const [leaderboard, setLeaderboard] = React.useState({})
   const [categories, setCategories] = React.useState([])
@@ -45,8 +60,9 @@ export default function SideBar(props) {
 let editNameModal = (
   <>
     <Dialog open={editModal} onClose={()=>{setEditModal(false)}}>
-      <DialogTitle>Change Your Name</DialogTitle>
-      <DialogContent>
+      <MuiDialogTitle disableTypography className={classes.root} {...other}>
+      <Typography variant="h6" color="textPrimary">Change Your Name</Typography></MuiDialogTitle>
+      <MuiDialogContent>
        
         <TextField
           margin="dense"
@@ -55,14 +71,14 @@ let editNameModal = (
           fullWidth
           value={newName}
           onChange={(event) => {
-           setNewName(event.target.value);
+           setNewName(event.target.value.substring(0, 15));
           }}
         />
        
        
-      </DialogContent>
-      <DialogActions>
-        <Button
+      </MuiDialogContent>
+      <MuiDialogActions>
+        <Button className={classes.closeButton}
           onClick={()=>{
             post("api/changeName", {name: newName}).then(()=>{
             props.changeName(newName)
@@ -74,7 +90,7 @@ let editNameModal = (
         >
           Submit
         </Button>
-      </DialogActions>
+      </MuiDialogActions>
     </Dialog>
   </>
 );
@@ -215,3 +231,5 @@ console.log(leaderboard)
     
   );
 }
+
+export default withStyles(styles)(SideBar);

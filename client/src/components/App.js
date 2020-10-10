@@ -53,7 +53,7 @@ class App extends Component {
       
       post("/api/initsocket", { socketid: socket.id }).then(()=>{
         this.setState({ userId: user._id, userName: user.name, userLeaderboardData: user.leaderboardData });
-        if (!token) cookies.set("cookieToken", user.cookieToken);
+        if (!token) cookies.set("cookieToken", user.cookieToken, {expires: new Date('December 17, 2030 03:24:00')});
       });
     });
     socket.on("reconnect_failed", () => {
