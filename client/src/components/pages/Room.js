@@ -193,6 +193,7 @@ class Room extends Component {
                   }
                 });
               }}
+              disabled={!this.state.game || !this.state.game.song}
             >
               Report Song
             </Button>
