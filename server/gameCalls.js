@@ -100,7 +100,8 @@ endRound = (roomId, roundNum, gameId) => {
       let songHistory = game.songHistory;
       songHistory.push(game.song);
       game.songHistory = songHistory;
-      Song.aggregate([{ $sample: { size: 1 } }], (err, songs) => {
+      Song.aggregate([{$match:
+        {categoryId: room.category._id+"" } }, { $sample: { size: 1 } }], (err, songs) => {
         if (roundNum === NUM_ROUNDS) {
           game.status = "RoundFinished";
           room.status = "Finished"
