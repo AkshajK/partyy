@@ -37,7 +37,8 @@ class App extends Component {
     this.state = {
       userId: undefined,
       messages: [],
-      showSidebar: true
+      showSidebar: true,
+      rainbow: true
     };
   }
   setCategory  = (c) => {
@@ -45,6 +46,9 @@ class App extends Component {
   }
   setShowSidebar = (bool) => {
     this.setState({showSidebar: bool})
+  }
+  toggleRainbow = () => {
+    this.setState({rainbow: !this.state.rainbow});
   }
   componentDidMount() {
     // login
@@ -142,7 +146,7 @@ class App extends Component {
               
               <Lobby exact path="/" setShowSidebar={this.setShowSidebar} url={window.location.pathname} name={this.state.name} userId={this.state.userId} category={this.state.category} redirect={this.redirect} messages={this.state.messages.filter((msg)=>{return msg.roomId === "Lobby"})} resetMessages={()=>{this.setState({messages: []})}} />
               <CategoryDashboard exact path="/dashboard" category={this.state.category} />
-              <Room exact path="/:roomName" setCategory={this.setCategory} setShowSidebar={this.setShowSidebar} url={window.location.pathname} name={this.state.name} userId={this.state.userId} redirect={this.redirect} messages={this.state.messages} />
+              <Room exact path="/:roomName" rainbow={this.state.rainbow} toggleRainbow = {this.toggleRainbow} setCategory={this.setCategory} setShowSidebar={this.setShowSidebar} url={window.location.pathname} name={this.state.name} userId={this.state.userId} redirect={this.redirect} messages={this.state.messages} />
               
               <NotFound default />
             </Switch>

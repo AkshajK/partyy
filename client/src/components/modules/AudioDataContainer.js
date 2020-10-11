@@ -42,6 +42,8 @@ class AudioDataContainer extends React.Component {
           frequencyBandArray={this.frequencyBandArray}
           getFrequencyData={this.getFrequencyData}
           audioData={this.state.audioData}
+          rainbow={this.props.rainbow}
+           toggleRainbow={this.props.toggleRainbow} 
         />
       </div>
     );

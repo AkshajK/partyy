@@ -4,13 +4,14 @@ import { get, post } from "../../utilities";
 import Grid from "@material-ui/core/Grid";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
+import {Progress } from 'antd';
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 
 import { makeStyles, withStyles } from "@material-ui/core/styles";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import LinearProgress from "@material-ui/core/LinearProgress";
-
+/*
 const BorderLinearProgress = withStyles((theme) => ({
   root: {
     height: 10,
@@ -21,10 +22,11 @@ const BorderLinearProgress = withStyles((theme) => ({
   },
   bar: {
     borderRadius: 5,
-    backgroundColor: "#1a90ff",
+    //backgroundColor: props.color,//#1a90ff
+   // backgroundImage: "linear-gradient(to left, red,orange,yellow,green,blue,indigo,violet)"
   },
 }))(LinearProgress);
-
+*/
 export default function Timer(props) {
   const [rerender, forceRerender] = React.useState(0);
   let value =  (new Date(props.endTime).getTime() - new Date().getTime()) / 1000.0;
@@ -60,8 +62,15 @@ export default function Timer(props) {
   }*/
 
   let input = (value / props.max) * 100.0
+  let color= props.rainbow ? 'hsl('+(Math.floor((new Date().getTime())/50) % 360)+', 100%, 50%)' : "#1a90ff"
   return (
     /* <h1 style={{color: color, display: "flex", justifyContent: "center"}}>{value+1}</h1>*/
-    <BorderLinearProgress variant="determinate" value={props.max < 3.1 ? (input) : (100.0-input)} />
+    <Progress percent={props.max < 3.1 ? (input) : (100.0-input)}   
+      showInfo={false}
+    trailColor="#616161" 
+    strokeColor={color}
+    strokeWidth="10px"
+    style={{marginTop: "-7px", marginBottom: "5px"}}
+    />
   );
 }

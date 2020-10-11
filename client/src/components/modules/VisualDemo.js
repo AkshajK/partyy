@@ -28,7 +28,13 @@ export default function VisualDemo(props) {
       for(let i=0; i<props.frequencyBandArray.length; i++){
         let num = props.frequencyBandArray[i]
         if(domElements[num]) {
-        domElements[num].style.backgroundColor = `rgb(0, ${amplitudeValues.current[num]}, 255)`
+         //console.log(amplitudeValues.current[num])
+         
+        if(props.rainbow) {
+          let color= 'hsl('+(Math.floor((new Date().getTime())/50) % 360 - 50 + Math.floor(amplitudeValues.current[num]/4))+', 100%, 50%)'
+          domElements[num].style.backgroundColor = color //`hsl(${2*amplitudeValues.current[num]-100}, 100%, 50%)`
+        }
+        else domElements[num].style.backgroundColor = `rgb(0, ${amplitudeValues.current[num]}, 255)`
         domElements[num].style.height = `${amplitudeValues.current[num]}px`
         domElements[num].style.width= `6%`
         }
@@ -60,6 +66,8 @@ export default function VisualDemo(props) {
               elevation={4}
               id={num}
               key={num}
+              onClick={()=>{props.toggleRainbow()}}
+             
             />
           )}
         </div>

@@ -105,7 +105,7 @@ class Room extends Component {
 
   render() {
     if (!this.state.exists) return <CircularProgress />;
-    let timer = this.state.game && this.state.game.status !== "RoundFinished" ? <Timer endTime={this.state.game.statusChangeTime} max={this.state.game.status === "RoundInProgress" ? 30.0 : 3.0} /> : <div style={{height: "20px"}} />
+    let timer = this.state.game && this.state.game.status !== "RoundFinished" ? <Timer color={"#FF0000"} rainbow={this.props.rainbow} endTime={this.state.game.statusChangeTime} max={this.state.game.status === "RoundInProgress" ? 30.0 : 3.0} /> : <div style={{height: "20px"}} />
     let roundMessage = "Waiting for players..."
     if(this.state.game) roundMessage = "Round " + this.state.game.roundNumber + " of 5" 
     let img = logo
@@ -162,8 +162,14 @@ class Room extends Component {
             </Button>
         </Grid>
         <Box width="320px" height="100%" bgcolor="sidebar">
-            <Box style={Object.assign({height: "240px", overflow: "auto"}, playingMusic?{}:{width: "100%",  display: "flex", justifyContent:"center", alignItems: "center"})}>
-              {playingMusic ?                 <Music url = {this.state.game.song.songUrl} visual={window.AudioContext ? true : false} pauseButton={window.AudioContext ? false : true}  />
+            <Box  style={Object.assign({height: "240px", overflow: "auto"}, playingMusic?{}:{width: "100%",  display: "flex", justifyContent:"center", alignItems: "center"})}>
+              {playingMusic ?                 <Music url = {this.state.game.song.songUrl} visual={window.AudioContext ? true : false} pauseButton={window.AudioContext ? false : true} rainbow={this.props.rainbow} toggleRainbow={()=>{
+                notification.success({
+                  message: 'Switched to ' + (!this.props.rainbow ? 'Rainbow' : 'Blue') + ' Mode',
+                  
+                });
+                this.props.toggleRainbow()
+              }}   />
 : <img src = {img} height={"240px"} />}
             </Box> 
             <Typography variant="h5" align="center" color="textPrimary" gutterBottom style={{marginTop: "10px"}} >

@@ -54,7 +54,7 @@ class Music extends React.Component {
           
           <Box height={this.props.visual ? "130px" : "0px"}></Box>
           
-          {this.props.visual ? <AudioDataContainer audio = {this.state.audio} /> : <img src = {waves} style={{width: "100%"}}/>}
+          {this.props.visual ? <AudioDataContainer  toggleRainbow={this.props.toggleRainbow} rainbow={this.props.rainbow} audio = {this.state.audio} /> : <img src = {waves} style={{width: "100%"}}/>}
           {/* {this.props.pauseButton ? <ReactPlayer url={this.props.url} playing={this.state.play} controls/> : <ReactPlayer url={this.props.url} playing={this.state.play} width={'0%'} height={'0%'}/>} */}
           {/* <div>post</div> */}
           {this.props.pauseButton ? <Button onClick={this.togglePlay} fullWidth >{this.state.play && this.state.changedOnce ? 'Pause' : 'Play'}</Button> : ""}
