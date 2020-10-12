@@ -1,5 +1,5 @@
 import Box from "@material-ui/core/Box";
-import React, { Component, useState } from "react";
+import React, { Component, useState, useEffect } from "react";
 import { get, post } from "../../utilities";
 import Grid from "@material-ui/core/Grid";
 import List from "@material-ui/core/List";
@@ -28,14 +28,26 @@ const BorderLinearProgress = withStyles((theme) => ({
 }))(LinearProgress);
 */
 export default function Timer(props) {
+
+ 
+  
+
+  let initialValue =  (new Date(props.endTime).getTime() - new Date().getTime()) / 1000.0;
+  if(initialValue < 0) initialValue = 0
   const [rerender, forceRerender] = React.useState(0);
-  let value =  (new Date(props.endTime).getTime() - new Date().getTime()) / 1000.0;
-  if(value < 0) value = 0
-  else {
-    setTimeout(() => {
-        forceRerender(rerender+1)
+  const [value, setValue] = React.useState(initialValue)
+  const [max, setMax] = React.useState(props.max)
+  useEffect(() => {
+    let val = setInterval(() => {
+        let setVal = Math.max((new Date(props.endTime).getTime() - new Date().getTime()) / 1000.0, 0)
+        //console.log(setVal + " " + props.endTime + " " + props.max);
+        setValue(setVal);
+        setMax(props.max)
     }, 100)
-  }
+    return () => {clearInterval(val)}
+  
+    }, [props.endTime, props.max])
+  
 
     /*
   console.log("reseettin timer!")
@@ -61,11 +73,11 @@ export default function Timer(props) {
     setColor("#FF0000");
   }*/
 
-  let input = (value / props.max) * 100.0
+  let input = Math.min((value / max) * 100.0,100)
   let color= props.rainbow ? 'hsl('+(Math.floor((new Date().getTime())/50) % 360)+', 100%, 50%)' : "#1a90ff"
   return (
     /* <h1 style={{color: color, display: "flex", justifyContent: "center"}}>{value+1}</h1>*/
-    <Progress percent={props.max < 3.1 ? (input) : (100.0-input)}   
+    <Progress percent={max < 3.1 ? (input) : (100.0-input)}   
       showInfo={false}
     trailColor="#616161" 
     strokeColor={color}

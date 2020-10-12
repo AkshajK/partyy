@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import {  notification, Space } from 'antd';
 import "../../utilities.css";
-
+import {Modal} from "antd"
 import Box from "@material-ui/core/Box";
 import Button from "@material-ui/core/Button";
 import Timer from "../modules/Timer.js"
@@ -18,6 +18,7 @@ import CircularProgress from "@material-ui/core/CircularProgress";
 import Chat from "../modules/Chat.js"
 import Music from "../modules/Music.js"
 import { get, post } from "../../utilities.js";
+import room from "../../../../server/models/room";
 
 class Room extends Component {
   constructor(props) {
@@ -48,10 +49,22 @@ class Room extends Component {
         game: data.game,
         users: data.users.concat([]),
         category: data.room.category,
+        modal: (true)
       });
       this.props.setShowSidebar(!data.game || (data.game.status !== "RoundInProgress"));
-
       this.props.setCategory(data.room.category);
+      if(true ) {
+        Modal.success({
+          title: (data.room.host.userId !== this.props.userId) ? ('You are in ' + data.room.host.name + "'s room") : ('You are in your own room'),
+          okText: (data.room.host.userId !== this.props.userId) ? 'Join the Partyy!' : 'Start Partyying!',
+          onOk: ()=>{
+            this.setState({modal: false})
+          },
+          onCancel: ()=>{
+            this.setState({modal: false})
+          }
+        });
+      }
       //console.log(data.room.category)
     });
 
@@ -67,10 +80,11 @@ class Room extends Component {
     })
 
     socket.on("game", (game) => {
-      console.log(game)
+
       
       if(game.status === "RoundFinished") {
         this.props.setShowSidebar(true);
+        this.props.setCategory(this.state.category);
       }
       else if(game.status === "RoundInProgress" && (this.state.game.status !== "RoundInProgress") ) {
         this.props.setShowSidebar(false);
@@ -129,6 +143,7 @@ class Room extends Component {
     }
 
     let playingMusic = this.state.game && (this.state.game.status === "RoundInProgress")
+    
       return (
       <Grid container direction="row" style={{ width: "100%", height: "100%", overflow:"auto" }}>
         <Grid container direction="column" style={{width:"calc(100% - 320px)", height: "100%"}}>
@@ -163,7 +178,7 @@ class Room extends Component {
         </Grid>
         <Box width="320px" height="100%" bgcolor="sidebar">
             <Box  style={Object.assign({height: "240px", overflow: "auto"}, playingMusic?{}:{width: "100%",  display: "flex", justifyContent:"center", alignItems: "center"})}>
-              {playingMusic ?                 <Music url = {this.state.game.song.songUrl} visual={window.AudioContext ? true : false} pauseButton={window.AudioContext ? false : true} rainbow={this.props.rainbow} toggleRainbow={()=>{
+              {playingMusic && !this.state.modal ?                 <Music modal={this.state.modal} setModal={()=>{this.setState({modal: false})}} url = {this.state.game.song.songUrl} visual={window.AudioContext ? true : false} pauseButton={window.AudioContext ? false : true} rainbow={this.props.rainbow} toggleRainbow={()=>{
                 notification.success({
                   message: 'Switched to ' + (!this.props.rainbow ? 'Rainbow' : 'Blue') + ' Mode',
                   
@@ -178,6 +193,14 @@ class Room extends Component {
             
             <Chat messages={this.props.messages.filter((msg)=>{return msg.roomId === this.state.roomId})}  />
             
+            <Button fullWidth
+              onClick={() => {
+                this.props.setShowSidebar(!this.props.showSidebar)
+              }}
+              disabled={!this.state.game || !this.state.game.song}
+            >
+              {this.props.showSidebar ? "Hide Leaderboard" : "Show Leaderboard"}
+            </Button>
             <Button fullWidth
               onClick={() => {
                 post("api/leaveRoom", { roomId: this.state.roomId }).then((data) => {
@@ -203,6 +226,7 @@ class Room extends Component {
             >
               Report Song
             </Button>
+            
           
         </Box>
       </Grid>

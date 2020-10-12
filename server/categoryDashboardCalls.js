@@ -14,6 +14,7 @@ Returns: {[{category: Category, songs: [Song]}]}
 Description: Returns all the categories, with all the songs in each category
 */
 getCategoryAndSongData = (req, res) => {
+  if(!req.user.isSiteAdmin) return;
   Category.find({}, (err, categories) => {
     Song.find({}, (err, songs) => {
       let ans = [];
@@ -111,7 +112,7 @@ var spotifyApi = new SpotifyWebApi({
 });
 
 addCategoryAuthenticate = (req, res) => {
-  
+  if(!req.user.isSiteAdmin) return;
   var scopes = ['user-read-private', 'user-read-email', 'playlist-read-private']
   var authorizeURL = spotifyApi.createAuthorizeURL(scopes, req.body.name+"-----"+req.body.playlistId);
   res.send({url: authorizeURL});
@@ -120,6 +121,7 @@ addCategoryAuthenticate = (req, res) => {
 
 
 addCategory = (req, res) => {
+  if(!req.user.isSiteAdmin) return;
   var code  = req.query.code; 
   var state = req.query.state;
   var playlistId = state.split("-----")[1]
@@ -183,6 +185,7 @@ addCategory = (req, res) => {
 
 var ObjectId = require('mongodb').ObjectId
 deleteCategory = (req, res) => {
+  if(!req.user.isSiteAdmin) return;
   Category.remove({_id: ObjectId(req.body.categoryId)}).then(() => {
     Song.remove({categoryId: req.body.categoryId}).then(() => {
       Room.remove({"category._id": ObjectId(req.body.categoryId)}).then(() => {

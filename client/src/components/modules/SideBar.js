@@ -102,26 +102,30 @@ let editNameModal = (
   // get leaderboard again whenever our leaderboard data changes
   useEffect(() => {
     // Update the document title using the browser API
-    let setData = (data) => {
+    let setData = (data, category, setCategory) => {
       let newLeaderboard = data.leaderboard
       let newCategories = data.categories
-      console.log(newLeaderboard)
-      console.log(newCategories)
-      
       setLeaderboard(newLeaderboard)
       setCategories(newCategories)
-      if(!props.category) props.setCategory(newCategories[0])
-      
-      
-      console.log("REPULLED LEADERBOARD DATA!")
+      if(!props.category) {
+        props.setCategory(newCategories[0])
+      }
+
+     
     }
     post("api/getLeaderboard").then((data) => {
+
       setData(data)
     })
     socket.on("leaderboard", (data) => {
+      
       setData(data)
     })
-  }, []);
+
+    return () => {
+      socket.off("leaderboard")
+    }
+  }, [props.category]);
   
 let rankify = (num) => {
   if(num % 10 === 1) return num+"st"
@@ -130,7 +134,7 @@ let rankify = (num) => {
   return num+"th"
 }
   //if(!props.category || categories.length === 0 || (Object.entries(leaderboard).length === 0)) return <CircularProgress />
-console.log(leaderboard)
+
   let leaderboardData = {rating: 1200, highScore: 0, ratingRank: "", highScoreRank: ""}//props.userLeaderboardData.find((data)=>{return data.categoryId === props.category._id}) || {rating: 1200, highScore: 0}
   if(props.category && leaderboard[props.category._id] ) {
     let r = leaderboard[props.category._id].topScores.find((user)=>{return user.userId === props.userId})
@@ -155,7 +159,8 @@ console.log(leaderboard)
         <Select
           labelId="demo-simple-select-filled-label"
           value={props.category ? ""+props.category._id : ""}
-          onChange={(event)=>{props.setCategory(categories.find((c)=>{return c._id+""===event.target.value}))}}
+          onChange={(event)=>{
+            props.setCategory(categories.find((c)=>{return c._id+""===event.target.value}))}}
         >
           {categories.map((category)=>{
             return <MenuItem value={category._id+""}>{category.name}</MenuItem>
@@ -171,7 +176,7 @@ console.log(leaderboard)
         {props.userName}
 
       </Typography>
-      <IconButton onClick={() => {setEditModal(true)}} style={{color: "#222222"}}>
+      <IconButton onClick={() => {setEditModal(true)}} style={{color: "#444444"}}>
         <CreateIcon />
           </IconButton> 
       

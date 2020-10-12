@@ -28,7 +28,7 @@ class Lobby extends Component {
     this.props.setShowSidebar(true)
     post("api/joinLobby", {}).then((data) => {
       
-      console.log(data.users)
+
       this.props.resetMessages()
       this.setState({
         doneLoading: true,
@@ -110,8 +110,7 @@ class Lobby extends Component {
   
   render() {
     if (!this.state.doneLoading) return <CircularProgress />;
-    console.log("render rooms")
-    console.log(this.state.rooms)
+  
 
     return (
       
