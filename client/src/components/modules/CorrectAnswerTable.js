@@ -54,17 +54,17 @@ export default function CorrectAnswerTable(props) {
           {props.correctAnswers.map((entry) => {return (
             <StyledTableRow key={entry.userId} hover >
               <StyledTableCell component="th" scope="row">
-              <Typography variant="h5" color="textPrimary">
+              <Typography component={'div'} variant="h5" color="textPrimary">
                 {entry.userName}
               </Typography>
               </StyledTableCell>
               <StyledTableCell align="right">
-                <Typography variant="h5" color="primary">
+                <Typography component={'div'} variant="h5" color="primary">
                 {entry.time + " sec"}
               </Typography>
               </StyledTableCell>
               <StyledTableCell align="right">
-                <Typography variant="h5" color="primary">
+                <Typography component={'div'} variant="h5" color="primary">
                 {"+"+entry.score}
               </Typography>
               </StyledTableCell>

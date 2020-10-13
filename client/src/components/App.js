@@ -38,7 +38,8 @@ class App extends Component {
       userId: undefined,
       messages: [],
       showSidebar: true,
-      rainbow: true
+      rainbow: true,
+      redirect: ""
     };
   }
   setCategory  = (c) => {
@@ -70,6 +71,10 @@ class App extends Component {
       if (reason === "io server disconnect") {
         this.setState({ disconnect: true });
       }
+      else {
+        console.log("DISCONNECTED")
+        console.log(reason)
+      }
      
     });
 
@@ -87,12 +92,18 @@ class App extends Component {
       }, 10000)
   })*/
     socket.on("reconnect", (attemptNumber) => {
-        this.componentDidMount();
-    
+       // this.componentDidMount();
+      console.log("RECONNECTED");
     })
     
   }
 
+  componentWillUnmount() {
+    // socket.off("createdRoom")
+    // socket.off("joinRoomLobby")
+    // socket.off("leftRoomLobby")
+    socket.off("message");
+   }
   
   handleLogout = () => {
     this.setState({ userId: undefined });
@@ -144,7 +155,7 @@ class App extends Component {
               
               <Lobby exact path="/" setShowSidebar={this.setShowSidebar} url={window.location.pathname} name={this.state.name} userId={this.state.userId} category={this.state.category} redirect={this.redirect} messages={this.state.messages.filter((msg)=>{return msg.roomId === "Lobby"})} resetMessages={()=>{this.setState({messages: []})}} />
               <CategoryDashboard exact path="/dashboard" category={this.state.category} />
-              <Room exact path="/:roomName" rainbow={this.state.rainbow} toggleRainbow = {this.toggleRainbow} setCategory={this.setCategory} showSidebar={this.state.showSidebar} setShowSidebar={this.setShowSidebar} url={window.location.pathname} name={this.state.name} userId={this.state.userId} redirect={this.redirect} messages={this.state.messages} />
+              <Room exact path="/:roomName" rainbow={this.state.rainbow} changeName={this.changeName} toggleRainbow = {this.toggleRainbow} setCategory={this.setCategory} showSidebar={this.state.showSidebar} setShowSidebar={this.setShowSidebar} url={window.location.pathname} name={this.state.userName} userId={this.state.userId} redirect={this.redirect} messages={this.state.messages} />
               
               <NotFound default />
             </Switch>

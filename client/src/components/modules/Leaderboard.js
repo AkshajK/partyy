@@ -34,7 +34,7 @@ function TabPanel(props) {
     >
       {value === index && (
         <Box p={3}>
-          <Typography>{children}</Typography>
+          <Typography component={'div'}>{children}</Typography>
         </Box>
       )}
     </div>
@@ -69,11 +69,11 @@ export default function Leaderboard(props) {
         <List>
           {props.leaderboard.topRatings.map((entry) => {
             return (
-              <ListItem>
+              <ListItem key={entry.userId}>
              
                 <ListItemText primary={entry.name + ":"} />
                 <ListItemSecondaryAction>
-                <Typography variant="h5" color="primary">
+                <Typography component={'div'} variant="h5" color="primary">
                   {Math.floor(entry.rating)}
                 </Typography>
                 </ListItemSecondaryAction>
@@ -86,10 +86,10 @@ export default function Leaderboard(props) {
       <List>
       {props.leaderboard.topScores.map((entry) => {
             return (
-              <ListItem>
+              <ListItem key={entry.userId}>
                 <ListItemText primary= {entry.name + ":"} />
                 <ListItemSecondaryAction>
-                <Typography variant="h5" color="primary">
+                <Typography component={'div'} variant="h5" color="primary">
                   {entry.score}
                 </Typography>
                 </ListItemSecondaryAction>

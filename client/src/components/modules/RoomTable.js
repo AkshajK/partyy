@@ -92,7 +92,7 @@ export default function RoomTable(props) {
               })
               }}>
               <StyledTableCell component="th" scope="row">
-              <Typography variant="h5" color="primary" style={{fontWeight: 900}}>
+              <Typography component={'div'} variant="h5" color="primary" style={{fontWeight: 900}}>
               {room.host.name}
                 </Typography>
                 

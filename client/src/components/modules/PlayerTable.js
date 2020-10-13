@@ -64,12 +64,12 @@ export default function PlayerTable(props) {
           {props.users.map((user) => (
             <StyledTableRow key={user.userId} hover >
               <StyledTableCell component="th" scope="row">
-              <Typography variant="h5" color="textPrimary">
+              <Typography component={'div'} variant="h5" color="textPrimary">
                 {user.userName}
               </Typography>
               </StyledTableCell>
               <StyledTableCell align="right">
-                <Typography variant="h4" color="primary" style={{fontWeight: 900}}>
+                <Typography component={'div'} variant="h4" color="primary" style={{fontWeight: 900}}>
                 {score(user)}
               </Typography>
                 

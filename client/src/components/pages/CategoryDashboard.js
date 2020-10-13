@@ -35,7 +35,7 @@ class CategoryDashboard extends Component {
     return (
       <div style={{height: "100%", width: "100%", overflow: "auto", padding: "20px 20px 20px 20px"}}>
         
-        <Typography variant="h3" color="textPrimary">
+        <Typography component={'div'} variant="h3" color="textPrimary">
                 {"Dashboard"}
               </Typography>
     <TextField
@@ -92,7 +92,7 @@ class CategoryDashboard extends Component {
         this.state.data.map((entry) => {
           return (
             <>
-          <Typography variant="h4" color="primary">
+          <Typography component={'div'} variant="h4" color="primary">
           {entry.category.name + " (" + entry.songs.length + ")"}
               </Typography>
           
@@ -123,11 +123,11 @@ class CategoryDashboard extends Component {
         }).map((entry) => {
           return (
             <>
-          <Typography variant="h4" color="primary">
+          <Typography component={'div'}variant="h4" color="primary">
           {entry.category.name}
               </Typography>
           {entry.songs.map((song) => {
-            return <Typography variant="h5" color={song.bad ? "primary" : "textPrimary"}>
+            return <Typography component={'div'} variant="h5" color={song.bad ? "primary" : "textPrimary"}>
             {song.title + " by " + song.artist}
                 </Typography>
           })}

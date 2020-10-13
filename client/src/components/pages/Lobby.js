@@ -122,7 +122,7 @@ class Lobby extends Component {
         <Box width="320px" height="100%" bgcolor="sidebar">
           <List style={{maxHeight: "300px", overflow: "auto"}}>
             {this.state.users.map((user)=>{
-              return (<ListItem>
+              return (<ListItem key={user.userId}>
                 <ListItemIcon>
                   <PersonIcon />
                 </ListItemIcon>

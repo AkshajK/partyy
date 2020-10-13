@@ -157,6 +157,9 @@ changeName = (req, res) => {
         userName: user.name,
         userLeaderboardData: user.leaderboardData
       })
+      gameCalls.getLeaderboard().then((data) => {
+        socket.getIo().emit("leaderboard", data)
+      })
       res.send({})
     })
    

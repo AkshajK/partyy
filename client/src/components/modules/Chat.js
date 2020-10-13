@@ -90,7 +90,7 @@ export default function Chat(props) {
 
             return (
               
-              <ListItem dense fullWidth>
+              <ListItem dense fullWidth key={message._id}>
                 <Tooltip title={formatDate(message.timestamp)}>
                 <ListItemText>{text}</ListItemText>
                 </Tooltip>

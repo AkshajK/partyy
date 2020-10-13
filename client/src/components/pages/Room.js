@@ -18,13 +18,15 @@ import CircularProgress from "@material-ui/core/CircularProgress";
 import Chat from "../modules/Chat.js"
 import Music from "../modules/Music.js"
 import { get, post } from "../../utilities.js";
-import room from "../../../../server/models/room";
+import EditName from "../modules/EditName.js"
 
 class Room extends Component {
   constructor(props) {
     super(props);
     // Initialize Default State
-    this.state = {};
+    this.state = {
+
+    };
   }
 
   componentDidMount() {
@@ -53,18 +55,8 @@ class Room extends Component {
       });
       this.props.setShowSidebar(!data.game || (data.game.status !== "RoundInProgress"));
       this.props.setCategory(data.room.category);
-      if(true ) {
-        Modal.success({
-          title: (data.room.host.userId !== this.props.userId) ? ('You are in ' + data.room.host.name + "'s room") : ('You are in your own room'),
-          okText: (data.room.host.userId !== this.props.userId) ? 'Join the Partyy!' : 'Start Partyying!',
-          onOk: ()=>{
-            this.setState({modal: false})
-          },
-          onCancel: ()=>{
-            this.setState({modal: false})
-          }
-        });
-      }
+      
+      
       //console.log(data.room.category)
     });
 
@@ -143,12 +135,16 @@ class Room extends Component {
     }
 
     let playingMusic = this.state.game && (this.state.game.status === "RoundInProgress")
+
+    let editName = <EditName open={this.state.modal} onClose={()=>{this.setState({modal: false})}} title={"Enter your Name"} submitText={"Join the Partyy!"} 
+    changeName = {this.props.changeName} onSubmit={()=>{}} userName={this.props.name} />
     
       return (
       <Grid container direction="row" style={{ width: "100%", height: "100%", overflow:"auto" }}>
         <Grid container direction="column" style={{width:"calc(100% - 320px)", height: "100%"}}>
         {timer}
-        <Typography variant="h5" align="center" color="textPrimary" gutterBottom style={{marginTop: "10px", overflow: "auto", width: "100%"}} noWrap>
+        {editName}
+        <Typography component={'div'} variant="h5" align="center" color="textPrimary" gutterBottom style={{marginTop: "10px", overflow: "auto", width: "100%"}} noWrap>
           {header}
         </Typography>
         <Grid container direction="row" style={{width:"calc(100% - 40px)", margin: "20px 20px 20px 20px", height: "calc(100% - 160px)", overflow: "auto"}}   >
@@ -187,7 +183,7 @@ class Room extends Component {
               }}   />
 : <img src = {img} height={"240px"} />}
             </Box> 
-            <Typography variant="h5" align="center" color="textPrimary" gutterBottom style={{marginTop: "10px"}} >
+            <Typography component={'div'} variant="h5" align="center" color="textPrimary" gutterBottom style={{marginTop: "10px"}} >
               {roundMessage}
             </Typography>
             

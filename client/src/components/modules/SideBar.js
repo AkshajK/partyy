@@ -29,7 +29,7 @@ import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemSecondaryAction from "@material-ui/core/ListItemSecondaryAction";
-
+import EditName from "./EditName.js"
 import ListItemText from "@material-ui/core/ListItemText";
 import "../../utilities.css";
 //import { redirectPage } from "@reach/router";
@@ -57,43 +57,9 @@ let SideBar = (props) => {
  const [editModal, setEditModal] = React.useState(false)
  const [newName, setNewName] = React.useState(props.userName)
 // edit name modal
-let editNameModal = (
-  <>
-    <Dialog open={editModal} onClose={()=>{setEditModal(false)}}>
-      <MuiDialogTitle disableTypography className={classes.root} {...other}>
-      <Typography variant="h6" color="textPrimary">Change Your Name</Typography></MuiDialogTitle>
-      <MuiDialogContent>
-       
-        <TextField
-          margin="dense"
-          label="Name"
-          type="text"
-          fullWidth
-          value={newName}
-          onChange={(event) => {
-           setNewName(event.target.value.substring(0, 15));
-          }}
-        />
-       
-       
-      </MuiDialogContent>
-      <MuiDialogActions>
-        <Button className={classes.closeButton}
-          onClick={()=>{
-            post("api/changeName", {name: newName}).then(()=>{
-            props.changeName(newName)
-            setEditModal(false)
-          })}
-        }
-         
-          color="primary"
-        >
-          Submit
-        </Button>
-      </MuiDialogActions>
-    </Dialog>
-  </>
-);
+let editNameModal = <EditName open={editModal} onClose={()=>{setEditModal(false)}} title={"Change Your Name"} submitText={"Submit"} 
+changeName = {props.changeName} onSubmit={()=>{}} userName={props.userName} />
+
 
 
 
@@ -151,7 +117,7 @@ let rankify = (num) => {
   return (
     <Grid container direction="column" style={{height: "100%", maxWidth: "100%", overflow:"auto"}} >
       {editNameModal}
-      <Typography  style={{fontWeight: 900, fontFamily: "Permanent Marker", width: "100%", padding: "20px 20px 20px 20px"}} align="center" variant="h4" color="textPrimary" gutterBottom>
+      <Typography  component={'div'} style={{fontWeight: 900, fontFamily: "Permanent Marker", width: "100%", padding: "20px 20px 20px 20px"}} align="center" variant="h4" color="textPrimary" gutterBottom>
         {"Partyy.Life 2.0"}
       </Typography>
       <FormControl variant="filled" >
@@ -171,8 +137,8 @@ let rankify = (num) => {
     <Box bgcolor="userinfo">
       
       <List dense>
-        <ListItem style={{marginBottom: "10px"}}>
-        <Typography style={{fontWeight: 900}} variant="h5" color="textPrimary" >
+        <ListItem style={{marginBottom: "10px"}} key="1">
+        <Typography component={'div'} style={{fontWeight: 900}} variant="h5" color="textPrimary" >
         {props.userName}
 
       </Typography>
@@ -181,17 +147,17 @@ let rankify = (num) => {
           </IconButton> 
       
         </ListItem>
-        <ListItem>
-        <Typography variant="subtitle1" color="textSecondary" gutterBottom>
+        <ListItem key="2">
+        <Typography component={'div'} variant="subtitle1" color="textSecondary" gutterBottom>
         {"Rating: "}
       </Typography>
       <ListItemSecondaryAction>
         <Grid container direction="row">
-        <Typography variant="h6" color="textSecondary" gutterBottom>
+        <Typography component={'div'} variant="h6" color="textSecondary" gutterBottom>
         {leaderboardData.ratingRank}
       </Typography>
       
-      <Typography variant="h5" color="primary" style={{width: "75px", textAlign: "right"}} gutterBottom>
+      <Typography component={'div'} variant="h5" color="primary" style={{width: "75px", textAlign: "right"}} gutterBottom>
         {leaderboardData.rating}
       </Typography>
     
@@ -200,19 +166,19 @@ let rankify = (num) => {
       </ListItemSecondaryAction>
         </ListItem>
 
-        <ListItem>
+        <ListItem key="3">
         
-        <Typography variant="subtitle1" color="textSecondary" gutterBottom>
+        <Typography component={'div'} variant="subtitle1" color="textSecondary" gutterBottom>
         {"High Score: "}
       </Typography>
       
       <ListItemSecondaryAction>
       <Grid container direction="row">
-      <Typography variant="h6" color="textSecondary" gutterBottom >
+      <Typography  component={'div'} variant="h6" color="textSecondary" gutterBottom >
         {leaderboardData.highScoreRank}
       </Typography>
       
-      <Typography variant="h5" color="primary" gutterBottom style={{width: "75px", textAlign: "right"}}>
+      <Typography component={'div'} variant="h5" color="primary" gutterBottom style={{width: "75px", textAlign: "right"}}>
         {leaderboardData.highScore}
       </Typography>
       
