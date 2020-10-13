@@ -74,6 +74,7 @@ class App extends Component {
       else {
         console.log("DISCONNECTED")
         console.log(reason)
+        this.setState({ disconnect: true });
       }
      
     });
