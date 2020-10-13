@@ -152,10 +152,10 @@ changeName = (req, res) => {
     user.name = req.body.name 
     if(user.name.length > 20) return;
     user.save().then(() => {
-      socket.getIo().in("Room: " + req.user.roomId).emit("changeName", {
+      socket.getIo().in("Room: " + user.roomId).emit("changeName", {
         userId: req.user._id,
         userName: user.name,
-        userLeaderboardData: user.leaderboardData
+        leaderboardData: user.leaderboardData
       })
       gameCalls.getLeaderboard().then((data) => {
         socket.getIo().emit("leaderboard", data)
