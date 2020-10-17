@@ -25,6 +25,9 @@ import Paper from "@material-ui/core/Paper";
 import { createMuiTheme, MuiThemeProvider } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 
+import GoogleLogin, { GoogleLogout } from "react-google-login";
+import zIndex from "@material-ui/core/styles/zIndex";
+const GOOGLE_CLIENT_ID = "234226613823-00e5p1368ao3f1lr038a6odtgn5rud95.apps.googleusercontent.com"
 /**
  * Define the "App" component as a class.
  */
@@ -34,12 +37,14 @@ class App extends Component {
   // makes props available in this component
   constructor(props) {
     super(props);
+    let google = cookies.get("google")==="true"
     this.state = {
       userId: undefined,
       messages: [],
       showSidebar: true,
       rainbow: true,
-      redirect: ""
+      redirect: "",
+      google:google
     };
   }
   setCategory  = (c) => {
@@ -53,14 +58,24 @@ class App extends Component {
   }
   componentDidMount() {
     // login
-    let token = cookies.get("cookieToken");
+let token = cookies.get("cookieToken");
+    post("/api/whoami", {}).then((user) => {
+      if(user._id) {
+        post("/api/initsocket", { socketid: socket.id }).then(()=>{
+        this.setState({ userId: user._id, userName: user.name, userLeaderboardData: user.leaderboardData });
+        if (!token) cookies.set("cookieToken", user.cookieToken, {expires: new Date('December 17, 2030 03:24:00')});
+      });
+      }
+      else {
     post("/api/login", { cookieToken: token }).then((user) => {
-      
       post("/api/initsocket", { socketid: socket.id }).then(()=>{
         this.setState({ userId: user._id, userName: user.name, userLeaderboardData: user.leaderboardData });
         if (!token) cookies.set("cookieToken", user.cookieToken, {expires: new Date('December 17, 2030 03:24:00')});
       });
     });
+  }
+    })
+    
     socket.on("reconnect_failed", () => {
       this.setState({ disconnect: true });
       
@@ -105,11 +120,36 @@ class App extends Component {
     // socket.off("leftRoomLobby")
     socket.off("message");
    }
-  
+  handleGoogleLogin = (res) => {
+    console.log(`Logged in as ${res.profileObj.name}`);
+    const userToken = res.tokenObj.id_token;
+    const cookieToken = cookies.get("cookieToken");
+    post("/api/googleLogin", { token: userToken , cookieToken: cookieToken}).then((user) => {
+      this.setState({ userId: user._id , name: user.name, google:true});
+      cookies.set("google", "true");
+      post("/api/initsocket", { socketid: socket.id });
+    });
+  }
   handleLogout = () => {
-    this.setState({ userId: undefined });
-    post("/api/logout");
-  };
+   let self = this
+   async function cookieStuff() {
+     cookies.set("google", "false");
+  }
+  async function finishLogout() {
+    
+    await cookieStuff();
+    self.setState({
+      google:false
+    })
+   post("/api/logout")
+return false;
+
+  } 
+       
+  finishLogout()
+
+    
+      };
 
   
   redirect = (link) => {
@@ -141,6 +181,7 @@ class App extends Component {
     
     
     return (
+
       <MuiThemeProvider theme={theme}>
         <CssBaseline />
       <Grid container direction="row" style={{ width: "100%", height: "100%" }}>
@@ -163,7 +204,23 @@ class App extends Component {
           </Router>
           
         </Box>
-
+<div className = "login" >
+              { this.state.google ? (
+              <GoogleLogout
+                clientId={GOOGLE_CLIENT_ID}
+                buttonText="Logout"
+                onLogoutSuccess={this.handleLogout}
+                onFailure={(err) => console.log(err)}
+              />
+            ) : (
+              <GoogleLogin
+                clientId={GOOGLE_CLIENT_ID}
+                buttonText="Login"
+                onSuccess={this.handleGoogleLogin}
+                onFailure={(err) => console.log(err)}
+              />
+            )}
+          </div>
         {this.state.disconnect ? (
           Modal.error({
             title: "Disconnected",

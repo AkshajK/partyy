@@ -29,7 +29,14 @@ const router = express.Router();
 const socket = require("./server-socket");
 
 router.post("/login", auth.login);
+router.post("/googleLogin", auth.googleLogin);
 router.post("/logout", auth.logout);
+router.post("/whoami", (req,res) => {
+  if(!req.user) {
+    return res.send({});
+  }
+  res.send(req.user)
+});
 
 router.post("/initsocket", (req, res) => {
   // do nothing if user not logged in
