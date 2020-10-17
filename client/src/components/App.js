@@ -17,7 +17,7 @@ import { socket } from "../client-socket.js";
 import { get, post } from "../utilities";
 import Cookies from "universal-cookie";
 const cookies = new Cookies();
-
+import Button from "@material-ui/core/Button";
 import Box from "@material-ui/core/Box";
 import Grid from "@material-ui/core/Grid";
 import Container from "@material-ui/core/Container";
@@ -196,8 +196,42 @@ return false;
       <Grid container direction="row" style={{ width: "100%", height: "100%" }}>
         
         {this.state.showSidebar ? <Box width="320px" height="100%" bgcolor="sidebar">
+          <Box width="100%" height="calc(100% - 40px)">
           <SideBar changeName={this.changeName} users={this.state.users} lobby={this.state.lobby} userName={this.state.userName} userId={this.state.userId} //userLeaderboardData={this.state.userLeaderboardData}
-          category={this.state.category} setCategory={this.setCategory} />
+          category={this.state.category} setCategory={this.setCategory}  /></Box>
+          <div className = "login" >
+              { this.state.google ? (
+              <GoogleLogout
+                clientId={GOOGLE_CLIENT_ID}
+                buttonText="Logout"
+                onLogoutSuccess={this.handleLogout}
+                onFailure={(err) => console.log(err)}
+                render={renderProps => (
+                  <Button onClick={() => {
+                   renderProps.onClick()
+                   
+                    }
+                    }
+                   disabled={renderProps.disabled} fullWidth  color="inherit">Sign Out</Button>
+                )}
+              />
+            ) : (
+              <GoogleLogin
+                clientId={GOOGLE_CLIENT_ID}
+                buttonText="Login"
+                onSuccess={this.handleGoogleLogin}
+                onFailure={(err) => console.log(err)}
+                render={renderProps => (
+                  <Button onClick={() => {
+                   renderProps.onClick()
+                   
+                    }
+                    }
+                   disabled={renderProps.disabled} fullWidth  color="inherit">Sign In With Google</Button>
+                )}
+              />
+            )}
+          </div>
         </Box> : <React.Fragment />}
         <Box width={this.state.showSidebar ? "calc(100% - 320px)" : "100%"} height="100%" >
           
@@ -213,23 +247,7 @@ return false;
           </Router>
           
         </Box>
-<div className = "login" >
-              { this.state.google ? (
-              <GoogleLogout
-                clientId={GOOGLE_CLIENT_ID}
-                buttonText="Logout"
-                onLogoutSuccess={this.handleLogout}
-                onFailure={(err) => console.log(err)}
-              />
-            ) : (
-              <GoogleLogin
-                clientId={GOOGLE_CLIENT_ID}
-                buttonText="Login"
-                onSuccess={this.handleGoogleLogin}
-                onFailure={(err) => console.log(err)}
-              />
-            )}
-          </div>
+
         {this.state.disconnect ? (
           Modal.error({
             title: "Disconnected",
