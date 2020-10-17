@@ -55,8 +55,8 @@ class Room extends Component {
       });
       this.props.setShowSidebar(!data.game || (data.game.status !== "RoundInProgress"));
       this.props.setCategory(data.room.category);
-      
-      
+      this.props.setUsers(data.users);
+      this.props.setLobby(false);
       //console.log(data.room.category)
     });
 
@@ -64,11 +64,13 @@ class Room extends Component {
       let users = this.state.users.concat([]) 
       users.push(data)
       this.setState({users: users})
+      this.props.setUsers(users)
     })
 
     socket.on("leftRoom", (data)=>{
       let users = this.state.users.filter((user)=>{return user.userId !== data.userId})
       this.setState({users: users})
+      this.props.setUsers(users)
     })
 
     socket.on("game", (game) => {
@@ -90,6 +92,7 @@ class Room extends Component {
       if(users.length !== filtered.length) {
         filtered.push(user);
         this.setState({users: filtered});
+        this.props.setUsers(filtered);
       }
     })
   }

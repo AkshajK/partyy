@@ -27,7 +27,6 @@ import Select from '@material-ui/core/Select';
 import Leaderboard from "./Leaderboard.js"
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
-import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemSecondaryAction from "@material-ui/core/ListItemSecondaryAction";
 import EditName from "./EditName.js"
 import ListItemText from "@material-ui/core/ListItemText";
@@ -102,6 +101,7 @@ let rankify = (num) => {
   //if(!props.category || categories.length === 0 || (Object.entries(leaderboard).length === 0)) return <CircularProgress />
 
   let leaderboardData = {rating: 1200, highScore: 0, ratingRank: "", highScoreRank: ""}//props.userLeaderboardData.find((data)=>{return data.categoryId === props.category._id}) || {rating: 1200, highScore: 0}
+  let leaderboardDataArr = undefined;
   if(props.category && leaderboard[props.category._id] ) {
     let r = leaderboard[props.category._id].topScores.find((user)=>{return user.userId === props.userId})
     if(r) leaderboardData.highScore = r.score 
@@ -113,10 +113,18 @@ let rankify = (num) => {
     r = leaderboard[props.category._id].topRatings.findIndex((user)=>{return user.userId === props.userId})
     if(r !== -1) leaderboardData.ratingRank = rankify(r+1)
     
+    leaderboardDataArr = {}
+    for(var i=0; i<leaderboard[props.category._id].topRatings.length; i++) {
+      var obj = leaderboard[props.category._id].topRatings[i]
+      leaderboardDataArr[obj.userId] = {name: obj.name, rating: Math.floor(obj.rating), rank: rankify(i+1)};
+    }
+    for(var i=0; i<props.users.length; i++) if(!leaderboardDataArr[props.users[i].userId]) leaderboardDataArr[props.users[i].userId] = {rank: "", rating: 1200};
   }
+  
   return (
     <Grid container direction="column" style={{height: "100%", maxWidth: "100%", overflow:"auto"}} >
       {editNameModal}
+      {props.lobby ? <React.Fragment>
       <Typography  component={'div'} style={{fontWeight: 900, fontFamily: "Permanent Marker", width: "100%", padding: "20px 20px 20px 20px"}} align="center" variant="h4" color="textPrimary" gutterBottom>
         {"Partyy.Life 2.0"}
       </Typography>
@@ -192,10 +200,41 @@ let rankify = (num) => {
      
       
     </Box>
-    <Box height="calc(100% - 320px)" style={{overflow: "auto"}}>
+    </React.Fragment> : <></>}
+    {props.lobby ? <React.Fragment /> : <Typography component={'div'} variant="h5" color="textPrimary" gutterBottom align="center" style={{width: "100%", marginTop: "25px"}}>
+                  {"Ratings"}
+      </Typography>}
+    {props.lobby ? <></> : 
+    <List style={{height: "160px", overflow: "auto", margin: "0px 25px 25px 25px" }}>
       
-    <Leaderboard leaderboard={props.category ? leaderboard[props.category._id+""] : undefined} />
-    </Box>
+    {props.users.sort((a,b)=>{
+      if(!leaderboardDataArr) return 0; 
+      if(!leaderboardDataArr[user.userId]) return -1200;
+      return -1*leaderboardDataArr[user.userId].rating
+  }).map((user)=>{
+      if(!leaderboardDataArr) return <></>
+      return ( <ListItem key={user.userId}>
+             
+        <ListItemText primary={user.userName } />
+        <ListItemSecondaryAction>
+        <Grid container direction="row">
+      <Typography  component={'div'} variant="h6" color="textSecondary"  >
+        {leaderboardDataArr[user.userId].rank}
+      </Typography>
+      
+      <Typography component={'div'} variant="h5" color="primary" style={{width: "75px", textAlign: "right"}}>
+          {leaderboardDataArr[user.userId].rating}
+        </Typography>
+      
+      </Grid>
+       
+        </ListItemSecondaryAction>
+         </ListItem>)
+    })}
+  </List>
+  }
+    <Leaderboard appbar={props.lobby} leaderboard={props.category ? leaderboard[props.category._id+""] : undefined} />
+    
     </Grid>
 
     

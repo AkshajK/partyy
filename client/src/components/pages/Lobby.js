@@ -89,6 +89,7 @@ class Lobby extends Component {
         this.setState({users: filtered});
       }
     })
+    this.props.setLobby(true);
   }
   componentWillUnmount() {
    // socket.off("createdRoom")
