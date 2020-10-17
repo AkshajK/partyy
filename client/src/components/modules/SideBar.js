@@ -116,7 +116,7 @@ let rankify = (num) => {
     leaderboardDataArr = {}
     for(var i=0; i<leaderboard[props.category._id].topRatings.length; i++) {
       var obj = leaderboard[props.category._id].topRatings[i]
-      leaderboardDataArr[obj.userId] = {name: obj.name, rating: obj.rating, rank: rankify(i+1)};
+      leaderboardDataArr[obj.userId] = {name: obj.name, rating: Math.floor(obj.rating), rank: rankify(i+1)};
     }
     for(var i=0; i<props.users.length; i++) if(!leaderboardDataArr[props.users[i].userId]) leaderboardDataArr[props.users[i].userId] = {rank: "", rating: 1200};
   }
