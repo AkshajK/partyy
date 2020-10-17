@@ -306,7 +306,7 @@ updateLeaderboard = (players, categoryId) => {
          if(player2.rated && player1.rated) update += k*(constant - p1)
          counter2 += 1
          if(counter2 === users.length) {
-           oldEntry.rating = rating + update
+           oldEntry.rating = rating + update + 1.0
            let newLeaderboardData = user1.leaderboardData.filter((entry)=>{return entry.categoryId !== categoryId})
            newLeaderboardData.push(oldEntry)
            user1.leaderboardData = newLeaderboardData
