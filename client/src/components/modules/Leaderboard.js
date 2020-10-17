@@ -33,9 +33,10 @@ function TabPanel(props) {
       {...other}
     >
       {value === index && (
-        <Box p={3}>
-          <Typography component={'div'}>{children}</Typography>
-        </Box>
+        props.noMargin ?
+        <Typography component={'div'}>{children}</Typography> : <Box p={3}>
+        <Typography component={'div'}>{children}</Typography>
+      </Box>
       )}
     </div>
   );
@@ -51,10 +52,10 @@ export default function Leaderboard(props) {
   const [value, setValue] = React.useState(0);
   if(!props.leaderboard) return <CircularProgress />
   return (
-    <>
-      <AppBar position="static" color="inherit">
+    <React.Fragment>
+      {props.appbar ? <AppBar position="static" color="inherit">
         <Tabs
-          value={value}
+          value={value} 
           onChange={(event, newValue) => {
             setValue(newValue);
           }}
@@ -63,7 +64,12 @@ export default function Leaderboard(props) {
           <Tab label="Top Ratings" {...a11yProps(0)} />
           <Tab label="Top Scores" {...a11yProps(1)} />
         </Tabs>
-      </AppBar>
+      </AppBar> : <React.Fragment />}
+      {props.appbar ? <React.Fragment /> : <Typography component={'div'} variant="h5" color="textPrimary" gutterBottom align="center" style={{width: "100%"}}>
+                  {"Top Scores"}
+      </Typography>}
+      <Box height={props.appbar ? "calc(100% - 400px)" : "calc(100% - 320px)"} style={{overflow: "auto"}}>
+        {props.appbar ? 
       <TabPanel value={value} index={0}>
        
         <List>
@@ -71,7 +77,7 @@ export default function Leaderboard(props) {
             return (
               <ListItem key={entry.userId}>
              
-                <ListItemText primary={entry.name + ":"} />
+                <ListItemText primary={entry.name } />
                 <ListItemSecondaryAction>
                 <Typography component={'div'} variant="h5" color="primary">
                   {Math.floor(entry.rating)}
@@ -81,13 +87,14 @@ export default function Leaderboard(props) {
             );
           })}
         </List>
-      </TabPanel>
-      <TabPanel value={value} index={1}>
+      </TabPanel> : <React.Fragment />}
+      <TabPanel value={value} index={props.appbar ? 1 : 0} style={props.appbar ? undefined : {padding: "0px 25px 25px 25px"}}noMargin={props.appbar ? false : true}>
+     
       <List>
       {props.leaderboard.topScores.map((entry) => {
             return (
               <ListItem key={entry.userId}>
-                <ListItemText primary= {entry.name + ":"} />
+                <ListItemText primary= {entry.name } />
                 <ListItemSecondaryAction>
                 <Typography component={'div'} variant="h5" color="primary">
                   {entry.score}
@@ -97,7 +104,9 @@ export default function Leaderboard(props) {
             );
           })}
           </List>
+         
       </TabPanel>
-    </>
+    </Box>
+    </React.Fragment>
   );
 }

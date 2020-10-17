@@ -3,6 +3,8 @@ import { BrowserRouter as Router, Route, Switch, Redirect } from "react-router-d
 import NotFound from "./pages/NotFound.js";
 
 import SideBar from "./modules/SideBar.js"
+
+import RoomSideBar from "./modules/RoomSideBar.js"
 import Lobby from "./pages/Lobby.js"
 import CategoryDashboard from "./pages/CategoryDashboard.js"
 import Room from "./pages/Room.js"
@@ -39,8 +41,16 @@ class App extends Component {
       messages: [],
       showSidebar: true,
       rainbow: true,
-      redirect: ""
+      redirect: "",
+      lobby: true,
+      users: []
     };
+  }
+  setLobby = (bool) => {
+    this.setState({lobby: bool})
+  }
+  setUsers = (arr) => {
+    this.setState({users: arr})
   }
   setCategory  = (c) => {
     this.setState({category: c})
@@ -146,7 +156,7 @@ class App extends Component {
       <Grid container direction="row" style={{ width: "100%", height: "100%" }}>
         
         {this.state.showSidebar ? <Box width="320px" height="100%" bgcolor="sidebar">
-          <SideBar changeName={this.changeName} userName={this.state.userName} userId={this.state.userId} //userLeaderboardData={this.state.userLeaderboardData}
+          <SideBar changeName={this.changeName} users={this.state.users} lobby={this.state.lobby} userName={this.state.userName} userId={this.state.userId} //userLeaderboardData={this.state.userLeaderboardData}
           category={this.state.category} setCategory={this.setCategory} />
         </Box> : <React.Fragment />}
         <Box width={this.state.showSidebar ? "calc(100% - 320px)" : "100%"} height="100%" >
@@ -154,9 +164,9 @@ class App extends Component {
           <Router>
             <Switch>
               
-              <Lobby exact path="/" setShowSidebar={this.setShowSidebar} url={window.location.pathname} name={this.state.name} userId={this.state.userId} category={this.state.category} redirect={this.redirect} messages={this.state.messages.filter((msg)=>{return msg.roomId === "Lobby"})} resetMessages={()=>{this.setState({messages: []})}} />
+              <Lobby exact path="/" setLobby={this.setLobby} setShowSidebar={this.setShowSidebar} url={window.location.pathname} name={this.state.name} userId={this.state.userId} category={this.state.category} redirect={this.redirect} messages={this.state.messages.filter((msg)=>{return msg.roomId === "Lobby"})} resetMessages={()=>{this.setState({messages: []})}} />
               <CategoryDashboard exact path="/dashboard" category={this.state.category} />
-              <Room exact path="/:roomName" rainbow={this.state.rainbow} changeName={this.changeName} toggleRainbow = {this.toggleRainbow} setCategory={this.setCategory} showSidebar={this.state.showSidebar} setShowSidebar={this.setShowSidebar} url={window.location.pathname} name={this.state.userName} userId={this.state.userId} redirect={this.redirect} messages={this.state.messages} />
+              <Room exact path="/:roomName" setUsers={this.setUsers} setLobby={this.setLobby} rainbow={this.state.rainbow} changeName={this.changeName} toggleRainbow = {this.toggleRainbow} setCategory={this.setCategory} showSidebar={this.state.showSidebar} setShowSidebar={this.setShowSidebar} url={window.location.pathname} name={this.state.userName} userId={this.state.userId} redirect={this.redirect} messages={this.state.messages} />
               
               <NotFound default />
             </Switch>
