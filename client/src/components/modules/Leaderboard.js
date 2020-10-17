@@ -72,14 +72,14 @@ export default function Leaderboard(props) {
         {props.appbar ? 
       <TabPanel value={value} index={0}>
        
-        <List>
+        <List dense>
           {props.leaderboard.topRatings.map((entry) => {
             return (
-              <ListItem key={entry.userId}>
+              <ListItem key={entry.userId} selected={entry.userId === props.userId}>
              
-                <ListItemText primary={entry.name } />
+                <ListItemText primaryTypographyProps={{variant: "h6", style: entry.userId === props.userId ? {fontWeight: 900} : null} } primary={entry.name } />
                 <ListItemSecondaryAction>
-                <Typography component={'div'} variant="h5" color="primary">
+                <Typography component={'div'} variant="h5" color={"primary"} style={entry.userId === props.userId ? {fontWeight: 900} : null}>
                   {Math.floor(entry.rating)}
                 </Typography>
                 </ListItemSecondaryAction>
@@ -90,13 +90,13 @@ export default function Leaderboard(props) {
       </TabPanel> : <React.Fragment />}
       <TabPanel value={value} index={props.appbar ? 1 : 0} style={props.appbar ? undefined : {padding: "0px 25px 25px 25px"}}noMargin={props.appbar ? false : true}>
      
-      <List>
+      <List dense>
       {props.leaderboard.topScores.map((entry) => {
             return (
-              <ListItem key={entry.userId}>
-                <ListItemText primary= {entry.name } />
+              <ListItem key={entry.userId} selected={entry.userId === props.userId}>
+                <ListItemText primaryTypographyProps={{variant: "h6", style: entry.userId === props.userId ? {fontWeight: 900} : null}} primary= {entry.name } />
                 <ListItemSecondaryAction>
-                <Typography component={'div'} variant="h5" color="primary">
+                <Typography component={'div'} variant="h5" color="primary" style={entry.userId === props.userId ? {fontWeight: 900} : null}>
                   {entry.score}
                 </Typography>
                 </ListItemSecondaryAction>

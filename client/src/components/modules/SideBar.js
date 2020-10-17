@@ -205,24 +205,29 @@ let rankify = (num) => {
                   {"Ratings"}
       </Typography>}
     {props.lobby ? <></> : 
-    <List style={{height: "160px", overflow: "auto", margin: "0px 25px 25px 25px" }}>
+    <List dense style={{height: "160px", overflow: "auto", margin: "0px 25px 25px 25px" }}>
       
     {props.users.sort((a,b)=>{
       if(!leaderboardDataArr) return 0; 
-      if(!leaderboardDataArr[user.userId]) return -1200;
-      return -1*leaderboardDataArr[user.userId].rating
+      let a_val = 1200;
+      let b_val = 1200;
+      if(leaderboardDataArr[a.userId]);
+        a_val = leaderboardDataArr[a.userId].rating
+      if(leaderboardDataArr[b.userId]);
+        b_val = leaderboardDataArr[b.userId].rating
+      return b_val-a_val;
   }).map((user)=>{
       if(!leaderboardDataArr) return <></>
-      return ( <ListItem key={user.userId}>
+      return ( <ListItem key={user.userId} selected={user.userId === props.userId}>
              
-        <ListItemText primary={user.userName } />
+        <ListItemText primaryTypographyProps={{variant: "h6", style: user.userId === props.userId ? {fontWeight: 900} : undefined}}  primary={user.userName } />
         <ListItemSecondaryAction>
         <Grid container direction="row">
-      <Typography  component={'div'} variant="h6" color="textSecondary"  >
+      <Typography  component={'div'} variant="h6" color="textSecondary"   >
         {leaderboardDataArr[user.userId].rank}
       </Typography>
       
-      <Typography component={'div'} variant="h5" color="primary" style={{width: "75px", textAlign: "right"}}>
+      <Typography component={'div'} variant="h5" color="primary" style={{width: "75px", textAlign: "right", fontWeight: user.userId === props.userId ? 900 : undefined}}>
           {leaderboardDataArr[user.userId].rating}
         </Typography>
       
@@ -233,7 +238,7 @@ let rankify = (num) => {
     })}
   </List>
   }
-    <Leaderboard appbar={props.lobby} leaderboard={props.category ? leaderboard[props.category._id+""] : undefined} />
+    <Leaderboard userId={props.userId} appbar={props.lobby} leaderboard={props.category ? leaderboard[props.category._id+""] : undefined} />
     
     </Grid>
 
