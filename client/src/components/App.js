@@ -4,7 +4,6 @@ import NotFound from "./pages/NotFound.js";
 
 import SideBar from "./modules/SideBar.js"
 
-import RoomSideBar from "./modules/RoomSideBar.js"
 import Lobby from "./pages/Lobby.js"
 import CategoryDashboard from "./pages/CategoryDashboard.js"
 import Room from "./pages/Room.js"
