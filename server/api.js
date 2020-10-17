@@ -35,7 +35,9 @@ router.post("/whoami", (req,res) => {
   if(!req.user) {
     return res.send({});
   }
-  res.send(req.user)
+  User.findById(req.user._id).then((user)=>{
+    res.send(user)
+  })
 });
 
 router.post("/initsocket", (req, res) => {
