@@ -189,10 +189,10 @@ const guessAnswer = (userId, name, gameId, msg, bot) => {
       title = title.split("-")[0]
     }
   }
-  if(!game.usersAlreadyAnswered.map((e)=>{return e.userId}).includes(userId) && (game.status==="RoundInProgress")&&((similarity(messageText, title) > 0.7) || (similarity(messageText.toLowerCase().replace("fuck", "forget"), title) > 0.7) ||
+  if(!game.usersAlreadyAnswered.map((e)=>{return e.userId}).includes(userId) && (game.status==="RoundInProgress")&&((game.song.title === messageText)||(similarity(messageText, title) > 0.7) || (similarity(messageText.toLowerCase().replace("fuck", "forget"), title) > 0.7) ||
   (similarity(messageText.toLowerCase().replace(" and ", " & "), title) > 0.7)))
     correct = true;
-  if(game.song.title === messageText) correct=true;
+
   if(correct) {
     
       socket.getIo()
