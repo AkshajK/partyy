@@ -172,7 +172,7 @@ class Room extends Component {
               }}
               disabled={this.state.game && this.state.game.status !== "RoundFinished"}
             >
-              Start Game
+              {"Start " + (this.state.category ? this.state.category.name : "") + " Game"}
             </Button>
         </Grid>
         <Box width="320px" height="100%" bgcolor="sidebar">

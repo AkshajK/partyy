@@ -197,7 +197,7 @@ return false;
       <Grid container direction="row" style={{ width: "100%", height: "100%" }}>
         
         {this.state.showSidebar ? <Box width="320px" height="100%" bgcolor="sidebar">
-          <Box width="100%" height="calc(100% - 40px)">
+          <Box width="100%" height="calc(100% - 50px)">
           <SideBar changeName={this.changeName} users={this.state.users} lobby={this.state.lobby} userName={this.state.userName} userId={this.state.userId} //userLeaderboardData={this.state.userLeaderboardData}
           category={this.state.category} setCategory={this.setCategory}  /></Box>
           <div className = "login" >

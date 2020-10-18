@@ -118,16 +118,16 @@ class Lobby extends Component {
         
         <Grid container direction="row" style={{ width: "100%", height: "100%", overflow:"auto" }}>
         <Box width="calc(100% - 320px)" height="100%" style={{padding: "40px"}}>
-          <RoomTable users={this.state.users} rooms={this.state.rooms} redirect={this.props.redirect} />
+          <RoomTable users={this.state.users} rooms={this.state.rooms} redirect={this.props.redirect} categoryId={this.props.category ? this.props.category._id : undefined} />
         </Box>
-        <Box width="320px" height="100%" bgcolor="sidebar">
+        <Box width="320px" height="100%" style={{overflow: "auto"}} bgcolor="sidebar">
           <List style={{maxHeight: "300px", overflow: "auto"}}>
             {this.state.users.map((user)=>{
               return (<ListItem key={user.userId}>
                 <ListItemIcon>
                   <PersonIcon />
                 </ListItemIcon>
-                <ListItemText primary={user.userName} /></ListItem>)
+                <ListItemText primaryTypographyProps={{variant: "h6", style: user.userId === this.props.userId ? {fontWeight: 900} : null} }  primary={user.userName} /></ListItem>)
             })}
           </List>
           <Chat messages={this.state.messages.concat(this.props.messages)} />

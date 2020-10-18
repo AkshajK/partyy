@@ -55,7 +55,7 @@ const StyledTableRow = withStyles((theme) => ({
     '&:nth-of-type(odd)': {
       backgroundColor: theme.palette.action.hover,
     },
-    /*
+    
     '&:nth-of-type(even)': {
       backgroundColor: theme.palette.action.hover,
     },
@@ -85,7 +85,11 @@ export default function RoomTable(props) {
           </TableRow>
         </TableHead>
         <TableBody>
-          {props.rooms.sort((a,b)=>{return new Date(b.created).getTime()- new Date(a.created).getTime()}).map((room) => (
+          {props.rooms.sort((a,b)=>{
+            if(a.users.length < b.users.length) return 1;
+            if(a.users.length > b.users.length) return -1;
+            return new Date(b.created).getTime()- new Date(a.created).getTime()
+          }).map((room) => (
             <StyledTableRow key={room.name} hover onClick={()=>{
               post("api/leaveLobby",{}).then(()=>{
                 props.redirect("/"+room.name)
