@@ -68,7 +68,7 @@ export default function Leaderboard(props) {
       {props.appbar ? <React.Fragment /> : <Typography component={'div'} variant="h5" color="textPrimary" gutterBottom align="center" style={{width: "100%"}}>
                   {"Top Scores"}
       </Typography>}
-      <Box height={props.appbar ? "calc(100% - 400px)" : "calc(100% - 320px)"} style={{overflow: "auto"}}>
+      <Box height={props.appbar ? "calc(100% - 380px)" : "calc(100% - 320px)"} style={{overflow: "auto"}}>
         {props.appbar ? 
       <TabPanel value={value} index={0}>
        
