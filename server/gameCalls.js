@@ -68,7 +68,7 @@ let calculate = (difficulty) => {
   }
   else {
     if(difficulty >= 10) {
-    if(uniform() > 0.5) return 31;
+    if(uniform() > 0.8) return 31;
     }
   }
   const normal = random.normal(mu=difficulty, sigma=1);
@@ -192,6 +192,7 @@ const guessAnswer = (userId, name, gameId, msg, bot) => {
   if(!game.usersAlreadyAnswered.map((e)=>{return e.userId}).includes(userId) && (game.status==="RoundInProgress")&&((similarity(messageText, title) > 0.7) || (similarity(messageText.toLowerCase().replace("fuck", "forget"), title) > 0.7) ||
   (similarity(messageText.toLowerCase().replace(" and ", " & "), title) > 0.7)))
     correct = true;
+  if(game.song.title === messageText) correct=true;
   if(correct) {
     
       socket.getIo()
