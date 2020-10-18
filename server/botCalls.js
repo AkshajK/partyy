@@ -9,6 +9,13 @@ const roomCalls = require("./roomCalls");
 const gameCalls = require("./gameCalls");
 const socket = require("./server-socket");
 
+User.find({bot: true}, (err, users)=> {
+  users.forEach((user)=> {
+    socket.addUser(user, socket.getIo())
+  })
+})
+
+
 botJoinRoom = (req,res)=>{
   if(!req.user.isSiteAdmin) return;
   roomCalls.joinRoom({body: {name: req.body.name}, user: {_id: req.body.botId, bot: true}}, res)

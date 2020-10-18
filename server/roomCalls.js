@@ -6,6 +6,8 @@ const Room = require("./models/room");
 const Category = require("./models/category");
 const socket = require("./server-socket");
 
+
+
 /*
 createRoom
 Input (req.body): {private: Boolean, 
@@ -84,7 +86,7 @@ joinRoom = (req, res) => {
                   let listOfIds = room.allUserIdsThatHaveBeenInRoom;
                   if(!listOfIds.includes(req.user._id)) listOfIds.push(req.user._id);
                   room.allUserIdsThatHaveBeenInRoom = listOfIds;
-                  let roomUsers = room.users.filter((user)=>{return req.user.bot || socket.getSocketFromUserID(user)});
+                  let roomUsers = room.users.filter((user)=>{return socket.getSocketFromUserID(user)});
                   if(!roomUsers.includes(req.user._id))
                       roomUsers.push(req.user._id); 
                   room.users = roomUsers;
