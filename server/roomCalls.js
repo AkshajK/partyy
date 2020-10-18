@@ -63,8 +63,8 @@ joinRoom = (req, res) => {
                   if(!req.user.bot) socket.getSocketFromUserID(req.user._id).join("Room: " + room._id);
 
                   
-                  socket
-                    .getSocketFromUserID(req.user._id)
+                  (socket
+                    .getSocketFromUserID(req.user._id) || socket.getIo())
                     .to("Room: " + room._id)
                     .emit("joinRoom", {
                       userId: me._id,
@@ -94,8 +94,8 @@ joinRoom = (req, res) => {
                       console.log(savedRoom.users);
                       console.log(users);
                     }
-                    socket
-                    .getSocketFromUserID(req.user._id)
+                    (socket
+                    .getSocketFromUserID(req.user._id) || socket.getIo())
                     .to("Room: Lobby")
                     .emit("room", savedRoom)
                     res.send({
