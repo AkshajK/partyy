@@ -26,6 +26,14 @@ const UserSchema = new mongoose.Schema({
     type: Boolean,
     default: true,
   },
+  bot: {
+    type: Boolean,
+    default: false
+  },
+  difficulty: {
+    type: Number,
+    default: 0
+  }
 });
 
 // compile model from schema

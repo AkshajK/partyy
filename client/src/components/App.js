@@ -6,6 +6,7 @@ import SideBar from "./modules/SideBar.js"
 
 import Lobby from "./pages/Lobby.js"
 import CategoryDashboard from "./pages/CategoryDashboard.js"
+import BotDashboard from "./pages/BotDashboard.js"
 import Room from "./pages/Room.js"
 import CircularProgress from "@material-ui/core/CircularProgress";
 import "../utilities.css";
@@ -241,6 +242,8 @@ return false;
               
               <Lobby exact path="/" setLobby={this.setLobby} setShowSidebar={this.setShowSidebar} url={window.location.pathname} name={this.state.name} userId={this.state.userId} category={this.state.category} redirect={this.redirect} messages={this.state.messages.filter((msg)=>{return msg.roomId === "Lobby"})} resetMessages={()=>{this.setState({messages: []})}} />
               <CategoryDashboard exact path="/dashboard" category={this.state.category} />
+              <BotDashboard exact path="/bots" category={this.state.category} />
+
               <Room exact path="/:roomName" setUsers={this.setUsers} setLobby={this.setLobby} rainbow={this.state.rainbow} changeName={this.changeName} toggleRainbow = {this.toggleRainbow} setCategory={this.setCategory} showSidebar={this.state.showSidebar} setShowSidebar={this.setShowSidebar} url={window.location.pathname} name={this.state.userName} userId={this.state.userId} redirect={this.redirect} messages={this.state.messages} />
               
               <NotFound default />

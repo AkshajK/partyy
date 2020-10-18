@@ -24,14 +24,6 @@ const formatDate = (duedate) => {
   if (hours < 24) return hours + (hours===1?" hour ago":" hours ago")
   const days = Math.floor(hours/24)
   return days + (days===1?" day ago":" days ago")
-  /*
-  return (
-    new Date(duedate.toString()).toString().substring(0, 11) +
-    new Date(duedate.toString()).toLocaleString([], { hour: "2-digit", minute: "2-digit" })
-  );
-  */
-
-  // duedate.toString().substring(0, 11) + duedate.toString().substring(16, 21);
 };
 const StyledTableCell = withStyles((theme) => ({
   head: {

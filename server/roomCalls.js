@@ -60,7 +60,9 @@ joinRoom = (req, res) => {
             me.save().then(() => {
               User.find({ roomId: room._id }, (err, users) => {
                 Category.findById(room.category._id).then((category) => {
-                  socket.getSocketFromUserID(req.user._id).join("Room: " + room._id);
+                  if(!req.user.bot) socket.getSocketFromUserID(req.user._id).join("Room: " + room._id);
+
+                  
                   socket
                     .getSocketFromUserID(req.user._id)
                     .to("Room: " + room._id)
@@ -82,7 +84,7 @@ joinRoom = (req, res) => {
                   let listOfIds = room.allUserIdsThatHaveBeenInRoom;
                   if(!listOfIds.includes(req.user._id)) listOfIds.push(req.user._id);
                   room.allUserIdsThatHaveBeenInRoom = listOfIds;
-                  let roomUsers = room.users.filter((user)=>{return socket.getSocketFromUserID(user)});
+                  let roomUsers = room.users.filter((user)=>{return user.bot || socket.getSocketFromUserID(user)});
                   if(!roomUsers.includes(req.user._id))
                       roomUsers.push(req.user._id); 
                   room.users = roomUsers;
@@ -100,7 +102,7 @@ joinRoom = (req, res) => {
                       exists: true,
                       room: savedRoom,
                       game: game,
-                      users: users.filter((user)=>{return socket.getSocketFromUserID(user._id)}).map((user) => {
+                      users: users.filter((user)=>{return user.bot || socket.getSocketFromUserID(user._id)}).map((user) => {
                         return {
                           userId: user._id,
                           userName: user.name,
@@ -129,8 +131,8 @@ Returns: {}
 Description: Does socket.leave("Room: roomId")
 */
 leaveRoom = (req, res) => {
-  socket
-    .getSocketFromUserID(req.user._id)
+  (socket
+    .getSocketFromUserID(req.user._id) || socket.getIo())
     .to("Room: " + req.body.roomId)
     .emit("leftRoom", {
       userId: req.user._id,
@@ -152,12 +154,18 @@ leaveRoom = (req, res) => {
 
     room.save().then((savedRoom) => {
       
-      socket
-    .getSocketFromUserID(req.user._id)
+      (socket
+    .getSocketFromUserID(req.user._id) || socket.getIo())
     .to("Room: " + "Lobby")
     .emit("room", savedRoom);
-      socket.getSocketFromUserID(req.user._id).leave("Room: " + req.body.roomId);
-      res.send({});
+      if(!req.user.bot) socket.getSocketFromUserID(req.user._id).leave("Room: " + req.body.roomId);
+      User.findById(req.user._id).then((user)=>{
+        user.roomId = "Offline"
+        user.save().then(()=>{
+          res.send({});
+        })
+      })
+      
     });
   });
 };

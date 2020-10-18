@@ -6,6 +6,8 @@ const Room = require("./models/room");
 const Category = require("./models/category");
 const socket = require("./server-socket");
 var Promise = require("promise");
+const random = require('random')
+
 var ObjectId = require('mongodb').ObjectId
 const NUM_ROUNDS = 5;
 let fromNow = (num) => {
@@ -59,6 +61,22 @@ startGame = (req, res) => {
   });
 };
 
+let calculate = (difficulty) => {
+  let uniform = random.uniform(min=0, max=1);
+  if(difficulty >= 15) {
+    if(uniform() > 0.5) return 31;
+  }
+  else {
+    if(difficulty >= 10) {
+    if(uniform() > 0.5) return 31;
+    }
+  }
+  const normal = random.normal(mu=difficulty, sigma=1);
+ let ans = normal();
+ console.log(Math.max(ans, 3));
+  return Math.max(ans, 3);
+}
+
 startRound = (roomId, roundNum, gameId) => {
   //console.log("Started Round " + roundNum);
   Room.findById(roomId).then((room) => {
@@ -83,6 +101,22 @@ startRound = (roomId, roundNum, gameId) => {
         setTimeout(() => {
           endRound(room._id, roundNum, gameId);
         }, 30000);
+
+        /*BOT STUFF*/
+        room.users.forEach((userId) => {
+          User.findById(userId).then((user)=> {
+            if(!user.bot) return;
+            let timeTaken = calculate(user.difficulty)*1000;
+            setTimeout(()=>{
+              guessAnswer(user._id, user.name, game._id, {message: game.song.title}, true)
+            }, timeTaken)
+          })
+        })
+
+
+
+
+
       });
     });
   });
@@ -145,7 +179,7 @@ var stringSimilarity = require('string-similarity');
 let similarity = (a, b) => {
   return stringSimilarity.compareTwoStrings(a.toLowerCase(),b.toLowerCase());
 }
-guessAnswer = (userId, name, gameId, msg) => {
+const guessAnswer = (userId, name, gameId, msg, bot) => {
   Game.findById(gameId).then((game)=>{
     let correct = false
   let messageText = msg.message
@@ -215,7 +249,7 @@ guessAnswer = (userId, name, gameId, msg) => {
    
   }
   else {
-    socket.getIo()
+    if(!bot) socket.getIo()
       
       .in("Room: " + game.roomId)
       .emit("message", msg);

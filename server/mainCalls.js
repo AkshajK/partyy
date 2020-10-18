@@ -29,7 +29,7 @@ message = (req, res) => {
         if(room.gameId !== "Waiting") {
           Game.findById(room.gameId).then((game) => {
             if(game.status === "RoundInProgress") {
-              gameCalls.guessAnswer(req.user._id+"",user.name, game._id, msg)
+              gameCalls.guessAnswer(req.user._id+"",user.name, game._id, msg, false)
               
             }
             else {
@@ -92,7 +92,7 @@ Description: Adds message to database if it is from lobby. Emits socket with mes
 */
 joinLobby = (req, res) => {
   
-  Room.find({created: {$gte: new Date(new Date().getTime() - 1000*60*60*12)}}, (err, rooms) => {
+  Room.find({$or: [{created: {$gte: new Date(new Date().getTime() - 1000*60*60*12)}}, { users: {$ne: []} }]}, (err, rooms) => {
     Message.find({}, (err, messages) => {
       User.findById(req.user._id).then((me) => {
         me.roomId = "Lobby";
@@ -107,7 +107,7 @@ joinLobby = (req, res) => {
   
             console.log(req.user._id)
             res.send({
-              users: users.filter((user)=>{return socket.getSocketFromUserID(user._id)}).map((user) => {
+              users: users.filter((user)=>{return user.bot || socket.getSocketFromUserID(user._id)}).map((user) => {
                 return {
                   userId: user._id,
                   userName: user.name,

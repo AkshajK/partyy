@@ -18,6 +18,7 @@ const Room = require("./models/room");
 const Category = require("./models/category");
 // import authentication library
 const auth = require("./auth");
+const botCalls = require("./botCalls");
 const mainCalls = require("./mainCalls");
 const roomCalls = require("./roomCalls");
 const gameCalls = require("./gameCalls");
@@ -58,6 +59,12 @@ router.post("/reportSong", auth.ensureLoggedIn, mainCalls.reportSong);
 router.post("/createRoom", auth.ensureLoggedIn, roomCalls.createRoom);
 router.post("/joinRoom", auth.ensureLoggedIn, roomCalls.joinRoom);
 router.post("/leaveRoom", auth.ensureLoggedIn, roomCalls.leaveRoom);
+
+router.post("/botJoinRoom", auth.ensureLoggedIn, botCalls.botJoinRoom);
+router.post("/botLeaveRoom", auth.ensureLoggedIn, botCalls.botLeaveRoom);
+router.post("/addBot", auth.ensureLoggedIn, botCalls.addBot);
+router.post("/deleteBot", auth.ensureLoggedIn, botCalls.deleteBot);
+router.post("/joinBotDashboard", auth.ensureLoggedIn, botCalls.joinBotDashboard);
 
 router.post("/startGame", auth.ensureLoggedIn, gameCalls.startGame);
 router.post("/guessAnswer", auth.ensureLoggedIn, gameCalls.guessAnswer);

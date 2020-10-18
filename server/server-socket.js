@@ -18,12 +18,12 @@ const addUser = (user, socket) => {
   }
 
   userToSocketMap[user._id] = socket;
-  socketToUserMap[socket.id] = user;
+  if(!user.bot) socketToUserMap[socket.id] = user;
 };
 
 const removeUser = (user, socket) => {
   if (user) delete userToSocketMap[user._id];
-  delete socketToUserMap[socket.id];
+  if(user && !user.bot) delete socketToUserMap[socket.id];
 };
 
 module.exports = {
