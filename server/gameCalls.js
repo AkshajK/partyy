@@ -73,8 +73,8 @@ let calculate = (difficulty) => {
   }
   const normal = random.normal(mu=difficulty, sigma=1);
  let ans = normal();
- console.log(Math.max(ans, 3));
-  return Math.max(ans, 3);
+ //console.log(Math.max(ans, 3));
+  return Math.max(ans, 3+uniform())
 }
 
 startRound = (roomId, roundNum, gameId) => {
