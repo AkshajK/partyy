@@ -82,7 +82,7 @@ startRound = (roomId, roundNum, gameId) => {
   Room.findById(roomId).then((room) => {
     //console.log(room.gameId)
     if (room.gameId === "Waiting") return;
-    Game.findById(room.gameId).then((game) => {
+    let game = await Game.findById(room.gameId);
       //console.log(game._id + " " + gameId + " " + game.status + " " + game.roundNumber + " " + (!(game._id == gameId && game.status === "RoundStarting" && game.roundNumber === roundNum)))
       
       if (!((game._id+"" === gameId) && (game.status === "RoundStarting") && (game.roundNumber === roundNum)))
@@ -117,7 +117,7 @@ startRound = (roomId, roundNum, gameId) => {
 
 
 
-      });
+    
     });
   });
 };
@@ -126,16 +126,19 @@ endRound = (roomId, roundNum, gameId) => {
  // console.log("Ended round" + roundNum);
   Room.findById(roomId).then((room) => {
     if (room.gameId === "Waiting") return;
-    Game.findById(room.gameId).then((game) => {
+    let game = await Game.findById(room.gameId)
       if (
         !(game._id+"" === gameId && game.status === "RoundInProgress" && game.roundNumber === roundNum)
       )
         return;
-      let songHistory = game.songHistory;
-      songHistory.push(game.song);
-      game.songHistory = songHistory;
-      Song.aggregate([{$match:
+      
+    Song.aggregate([{$match:
         {categoryId: room.category._id+"" } }, { $sample: { size: 1 } }], (err, songs) => {
+
+       game = await Game.findById(room.gameId)
+       let songHistory = game.songHistory;
+        songHistory.push(game.song);
+        game.songHistory = songHistory;
         if (roundNum === NUM_ROUNDS) {
           game.status = "RoundFinished";
           room.status = "Finished"
@@ -171,7 +174,7 @@ endRound = (roomId, roundNum, gameId) => {
         });
       });
     });
-  });
+ 
 };
 
 var stringSimilarity = require('string-similarity');
@@ -180,7 +183,7 @@ let similarity = (a, b) => {
   return stringSimilarity.compareTwoStrings(a.toLowerCase(),b.toLowerCase());
 }
 const guessAnswer = (userId, name, gameId, msg, bot) => {
-  Game.findById(gameId).then((game)=>{
+  let game = await Game.findById(gameId);
     let correct = false
   let messageText = msg.message
   let title = game.song.title.replace(/ \([\s\S]*?\)/g, '')
@@ -255,7 +258,7 @@ const guessAnswer = (userId, name, gameId, msg, bot) => {
       .in("Room: " + game.roomId)
       .emit("message", msg);
   }
-  })
+  
   
 
   
