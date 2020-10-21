@@ -216,7 +216,7 @@ const guessAnswer = async (userId, name, gameId, msg, bot) => {
     let givenPoints =  Math.floor(((new Date(game.statusChangeTime)).getTime() - (new Date()).getTime()))/1000.0
     let numAnswered = game.correctAnswers
     let points = 40 + Math.floor(givenPoints) + (numAnswered === 0 ? 30 : (numAnswered === 1 ? 15 : (numAnswered === 2 ? 5 : 0)))
-    game.correctAnswers = numAnswered + 1
+    
     let usersAlreadyAnswered = game.usersAlreadyAnswered
     usersAlreadyAnswered.push({
       userId: userId,
@@ -224,7 +224,7 @@ const guessAnswer = async (userId, name, gameId, msg, bot) => {
       time: (30-givenPoints).toFixed(3),
       score: points
     })
-    game.usersAlreadyAnswered=usersAlreadyAnswered
+    
     let newPlayers = game.players
     let player = newPlayers.find((p)=>{return p.userId === userId+""})
     
@@ -239,6 +239,10 @@ const guessAnswer = async (userId, name, gameId, msg, bot) => {
       newPlayers = newPlayers.filter((p)=>{return p.userId !== userId+""})
       newPlayers.push(Object.assign(player, {score: player.score + points}))
     }
+
+    game = await Game.findById(gameId);
+    game.correctAnswers = numAnswered + 1
+    game.usersAlreadyAnswered=usersAlreadyAnswered
     game.players = newPlayers
 
     let savedGame = await game.save();
