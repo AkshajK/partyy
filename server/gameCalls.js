@@ -84,6 +84,7 @@ startRound = (roomId, roundNum, gameId) => {
     //console.log(room.gameId)
     if (room.gameId === "Waiting") return;
     let game = await Game.findById(room.gameId);
+
       //console.log(game._id + " " + gameId + " " + game.status + " " + game.roundNumber + " " + (!(game._id == gameId && game.status === "RoundStarting" && game.roundNumber === roundNum)))
       
       if (!((game._id+"" === gameId) && (game.status === "RoundStarting") && (game.roundNumber === roundNum)))
@@ -93,8 +94,9 @@ startRound = (roomId, roundNum, gameId) => {
       game.statusChangeTime = fromNow(30000);
       game.usersAlreadyAnswered=[]
       game.correctAnswers = 0
+
       let savedGame = await game.save();
-       console.log("saved")
+
         socket
           .getIo()
           .in("Room: " + room._id)
@@ -108,8 +110,8 @@ startRound = (roomId, roundNum, gameId) => {
           User.findById(userId).then((user)=> {
             if(!user.bot) return;
             let timeTaken = calculate(user.difficulty)*1000;
-            setTimeout(()=>{
-              guessAnswer(user._id, user.name, game._id, {message: game.song.title}, true)
+            setTimeout(async ()=>{
+              await guessAnswer(user._id, user.name, game._id, {message: game.song.title}, true)
             }, timeTaken)
           })
         })
@@ -160,6 +162,7 @@ endRound = (roomId, roundNum, gameId) => {
           game.roundNumber = game.roundNumber + 1;
           
         }
+      
         let savedGame = await game.save();
           let hideAnswer = savedGame 
           hideAnswer.song = {songUrl: hideAnswer.song.songUrl}
@@ -185,6 +188,7 @@ let similarity = (a, b) => {
 }
 const guessAnswer = async (userId, name, gameId, msg, bot) => {
   let game = await Game.findById(gameId);
+ 
     let correct = false
   let messageText = msg.message
   let title = game.song.title.replace(/ \([\s\S]*?\)/g, '')
@@ -236,13 +240,14 @@ const guessAnswer = async (userId, name, gameId, msg, bot) => {
       newPlayers.push(Object.assign(player, {score: player.score + points}))
     }
     game.players = newPlayers
+
     let savedGame = await game.save();
       let hideAnswer = savedGame 
       hideAnswer.song = {songUrl: hideAnswer.song.songUrl}
       socket.getIo()
       
       .in("Room: " + game.roomId)
-      .emit("game", game);
+      .emit("game", hideAnswer);
 
       let waitingOn = Math.ceil(1.0* game.originalLength/2.0 - 0.001)
       if(savedGame.correctAnswers >= waitingOn) {
@@ -269,7 +274,7 @@ const getLeaderboard = () => {
   return new Promise((resolve, reject) => {
     User.find({}, (err, users) => {
       Category.find({}, (err, categories) => {
-        console.log(categories);
+    
         var leaderboard = {};
         for (var j = 0; j < categories.length; j++) {
           leaderboard[""+categories[j]._id] = {
@@ -317,7 +322,7 @@ updateLeaderboard = (players, categoryId) => {
    let k = 60/ratedPlayers.length
    
    User.find({_id: {$in: players.map((p)=>{return ObjectId(p.userId)})}}, (err, users)=>{
-     console.log("players: " + users.length) 
+
      if(users.length === 0) {
        return;
      }

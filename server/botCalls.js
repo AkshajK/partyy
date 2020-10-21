@@ -15,6 +15,13 @@ User.find({bot: true}, (err, users)=> {
     socket.addUser(user, socket.getIo())
   })
 })
+Room.find({status: {$ne: "Waiting"}}).then((rooms)=> {
+  rooms.forEach((room) => {
+    room.status = "Waiting";
+    room.gameId = "Waiting";
+    room.save();
+  })
+})
 }
 
 botJoinRoom = (req,res)=>{

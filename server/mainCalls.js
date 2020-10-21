@@ -27,9 +27,9 @@ message = (req, res) => {
     if(user.roomId !== "Lobby") {
       Room.findById(user.roomId).then((room)=>{
         if(room.gameId !== "Waiting") {
-          Game.findById(room.gameId).then((game) => {
+          Game.findById(room.gameId).then(async (game) => {
             if(game.status === "RoundInProgress") {
-              gameCalls.guessAnswer(req.user._id+"",user.name, game._id, msg, false)
+              await gameCalls.guessAnswer(req.user._id+"",user.name, game._id, msg, false)
               
             }
             else {

@@ -6,7 +6,7 @@ class AudioDataContainer extends React.Component {
   constructor(props) {
     super(props);
     this.state = {}
-    this.frequencyBandArray = [...Array(12).keys()]
+    this.frequencyBandArray = [...Array(11).keys()]
   }
   componentDidMount = () => {
     // this.initializeAudioAnalyser();
