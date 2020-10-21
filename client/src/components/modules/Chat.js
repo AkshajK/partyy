@@ -116,8 +116,10 @@ export default function Chat(props) {
 
               post("api/message", {
                 text: messageText,
+              }).then(() => {
+                setMessageText("");
               });
-              setMessageText("");
+              
 
             }
           }
