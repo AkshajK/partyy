@@ -35,7 +35,8 @@ startGame = (req, res) => {
 
           statusChangeTime: fromNow(3000),
         });
-        game.save().then((savedGame) => {
+        let savedGame = await game.save();
+
           room.gameId = savedGame._id;
           room.save().then((savedRoom) => {
             
@@ -57,7 +58,7 @@ startGame = (req, res) => {
           });
         });
       });
-    });
+   
   });
 };
 
@@ -92,7 +93,7 @@ startRound = (roomId, roundNum, gameId) => {
       game.statusChangeTime = fromNow(30000);
       game.usersAlreadyAnswered=[]
       game.correctAnswers = 0
-      game.save().then((savedGame) => {
+      let savedGame = await game.save();
        console.log("saved")
         socket
           .getIo()
@@ -118,7 +119,7 @@ startRound = (roomId, roundNum, gameId) => {
 
 
     
-    });
+   
   });
 };
 
@@ -159,7 +160,7 @@ endRound = (roomId, roundNum, gameId) => {
           game.roundNumber = game.roundNumber + 1;
           
         }
-        game.save().then((savedGame) => {
+        let savedGame = await game.save();
           let hideAnswer = savedGame 
           hideAnswer.song = {songUrl: hideAnswer.song.songUrl}
           socket
@@ -173,7 +174,7 @@ endRound = (roomId, roundNum, gameId) => {
           }
         });
       });
-    });
+  
  
 };
 
@@ -235,7 +236,7 @@ const guessAnswer = async (userId, name, gameId, msg, bot) => {
       newPlayers.push(Object.assign(player, {score: player.score + points}))
     }
     game.players = newPlayers
-    game.save().then((savedGame) => {
+    let savedGame = await game.save();
       let hideAnswer = savedGame 
       hideAnswer.song = {songUrl: hideAnswer.song.songUrl}
       socket.getIo()
@@ -248,7 +249,7 @@ const guessAnswer = async (userId, name, gameId, msg, bot) => {
         endRound(game.roomId, game.roundNumber, game._id+"")
       }
 
-    })
+    
 
    
   }
