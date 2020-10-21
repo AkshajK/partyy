@@ -9,12 +9,13 @@ const roomCalls = require("./roomCalls");
 const gameCalls = require("./gameCalls");
 const socket = require("./server-socket");
 
+initializeBots = () => {
 User.find({bot: true}, (err, users)=> {
   users.forEach((user)=> {
     socket.addUser(user, socket.getIo())
   })
 })
-
+}
 
 botJoinRoom = (req,res)=>{
   if(!req.user.isSiteAdmin) return;
@@ -64,5 +65,6 @@ module.exports = {
   botLeaveRoom,
   addBot,
   deleteBot,
-  joinBotDashboard
+  joinBotDashboard,
+  initializeBots
 };

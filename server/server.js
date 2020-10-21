@@ -29,6 +29,8 @@ const path = require("path"); // provide utilities for working with file and dir
 const api = require("./api");
 const auth = require("./auth");
 
+const botCalls = require("./botCalls")
+
 // socket stuff
 const socket = require("./server-socket");
 
@@ -102,4 +104,6 @@ socket.init(server);
 
 server.listen(port, () => {
   console.log(`Server running on port: ${port}`);
+  botCalls.initializeBots()
+  console.log("Initialized Bots")
 });
