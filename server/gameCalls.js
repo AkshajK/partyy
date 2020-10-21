@@ -79,7 +79,7 @@ let calculate = (difficulty) => {
 
 startRound = (roomId, roundNum, gameId) => {
   //console.log("Started Round " + roundNum);
-  Room.findById(roomId).then((room) => {
+  Room.findById(roomId).then(async (room) => {
     //console.log(room.gameId)
     if (room.gameId === "Waiting") return;
     let game = await Game.findById(room.gameId);
@@ -124,7 +124,7 @@ startRound = (roomId, roundNum, gameId) => {
 
 endRound = (roomId, roundNum, gameId) => {
  // console.log("Ended round" + roundNum);
-  Room.findById(roomId).then((room) => {
+  Room.findById(roomId).then(async (room) => {
     if (room.gameId === "Waiting") return;
     let game = await Game.findById(room.gameId)
       if (
@@ -133,7 +133,7 @@ endRound = (roomId, roundNum, gameId) => {
         return;
       
     Song.aggregate([{$match:
-        {categoryId: room.category._id+"" } }, { $sample: { size: 1 } }], (err, songs) => {
+        {categoryId: room.category._id+"" } }, { $sample: { size: 1 } }], async (err, songs) => {
 
        game = await Game.findById(room.gameId)
        let songHistory = game.songHistory;
@@ -182,7 +182,7 @@ var stringSimilarity = require('string-similarity');
 let similarity = (a, b) => {
   return stringSimilarity.compareTwoStrings(a.toLowerCase(),b.toLowerCase());
 }
-const guessAnswer = (userId, name, gameId, msg, bot) => {
+const guessAnswer = async (userId, name, gameId, msg, bot) => {
   let game = await Game.findById(gameId);
     let correct = false
   let messageText = msg.message
