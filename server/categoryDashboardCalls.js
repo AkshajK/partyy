@@ -57,7 +57,7 @@ let getSongs = (playlistId, offSet, spotifyApi, categoryId) => {
           let song = new Song({
             artist: songApi.artists[0].name,
             title: songApi.name,
-            artUrl: songApi.album.images[0].url,
+            artUrl: songApi.album.images[0] ? songApi.album.images[0].url : undefined,
             songUrl: songApi.preview_url,
             categoryId: categoryId,
           });

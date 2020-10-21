@@ -124,7 +124,7 @@ class Room extends Component {
       
       if(songs.length > 0) {
         answer= songs[songs.length - 1]
-        img = answer.artUrl
+        if(answer.artUrl) img = answer.artUrl
       }
     }
     let header = "Waiting to Start"
