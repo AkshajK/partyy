@@ -162,8 +162,13 @@ endRound = (roomId, roundNum, gameId) => {
           game.roundNumber = game.roundNumber + 1;
           
         }
-      
-        let savedGame = await game.save();
+        let savedGame = undefined;
+        try {
+          savedGame = await game.save();
+        } 
+        catch(_){
+          return;
+        }
           let hideAnswer = savedGame 
           hideAnswer.song = {songUrl: hideAnswer.song.songUrl}
           socket
@@ -203,14 +208,7 @@ const guessAnswer = async (userId, name, gameId, msg, bot) => {
 
   if(correct) {
     
-      socket.getIo()
-      .in("Room: " + game.roomId)
-      .emit("message", {
-        roomId: game.roomId,
-
-        message: name + " guessed the title!",
-        style: "correct answer"
-      });
+      
     
 
     let givenPoints =  Math.floor(((new Date(game.statusChangeTime)).getTime() - (new Date()).getTime()))/1000.0
@@ -245,7 +243,24 @@ const guessAnswer = async (userId, name, gameId, msg, bot) => {
     game.usersAlreadyAnswered=usersAlreadyAnswered
     game.players = newPlayers
 
-    let savedGame = await game.save();
+    let savedGame = undefined;
+    try {
+      savedGame = await game.save();
+    } 
+    catch(_) {
+      return;
+    }
+    if(!savedGame) console.log("Fail")
+
+    socket.getIo()
+      .in("Room: " + game.roomId)
+      .emit("message", {
+        roomId: game.roomId,
+
+        message: name + " guessed the title!",
+        style: "correct answer"
+      });
+      
       let hideAnswer = savedGame 
       hideAnswer.song = {songUrl: hideAnswer.song.songUrl}
       socket.getIo()
