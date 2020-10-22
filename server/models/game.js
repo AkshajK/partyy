@@ -23,7 +23,7 @@ const GameSchema = new mongoose.Schema({
       userId: String,
       userName: String,
       time: Number,
-      score: Number
+      score: Number,
     }],
     default: []
   }
