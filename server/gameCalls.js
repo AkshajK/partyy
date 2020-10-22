@@ -8,6 +8,10 @@ const socket = require("./server-socket");
 var Promise = require("promise");
 const random = require('random')
 
+const lock = require("./lock").lock;
+
+
+
 var ObjectId = require('mongodb').ObjectId
 const NUM_ROUNDS = 5;
 let fromNow = (num) => {
@@ -127,13 +131,21 @@ startRound = (roomId, roundNum, gameId) => {
 
 endRound = (roomId, roundNum, gameId) => {
  // console.log("Ended round" + roundNum);
+ lock.acquire(gameId+"Guess", function(done) {
+
+ 
   Room.findById(roomId).then(async (room) => {
-    if (room.gameId === "Waiting") return;
+    if (room.gameId === "Waiting") {
+      done({}, {});
+      return;
+    }
     let game = await Game.findById(room.gameId)
       if (
         !(game._id+"" === gameId && game.status === "RoundInProgress" && game.roundNumber === roundNum)
-      )
+      ) {
+        done({}, {});
         return;
+      }
       
     Song.aggregate([{$match:
         {categoryId: room.category._id+"" } }, { $sample: { size: 1 } }], async (err, songs) => {
@@ -163,12 +175,8 @@ endRound = (roomId, roundNum, gameId) => {
           
         }
         let savedGame = undefined;
-        try {
-          savedGame = await game.save();
-        } 
-        catch(_){
-          return;
-        }
+        savedGame = await game.save();
+        
           let hideAnswer = savedGame 
           hideAnswer.song = {songUrl: hideAnswer.song.songUrl}
           socket
@@ -180,9 +188,10 @@ endRound = (roomId, roundNum, gameId) => {
               startRound(room._id, roundNum + 1, gameId, songs[0]);
             }, 3000);
           }
+          done({}, {});
         });
       });
-  
+    }, function(err, ret) {});
  
 };
 
@@ -192,6 +201,7 @@ let similarity = (a, b) => {
   return stringSimilarity.compareTwoStrings(a.toLowerCase(),b.toLowerCase());
 }
 const guessAnswer = async (userId, name, gameId, msg, bot) => {
+  lock.acquire(gameId+"Guess", async function(done) {
   let game = await Game.findById(gameId);
  
     let correct = false
@@ -238,40 +248,20 @@ const guessAnswer = async (userId, name, gameId, msg, bot) => {
       newPlayers.push(Object.assign(player, {score: player.score + points}))
     }
 
-    game = await Game.findById(gameId);
+    let savedGame = undefined;
+    
+   
     game.correctAnswers = numAnswered + 1
     game.usersAlreadyAnswered=usersAlreadyAnswered
     game.players = newPlayers
 
-    let savedGame = undefined;
-    try {
-      savedGame = await game.save();
-    } 
-    catch(_) {
-      return;
-    }
-    if(!savedGame) console.log("Fail")
-
-    socket.getIo()
-      .in("Room: " + game.roomId)
-      .emit("message", {
-        roomId: game.roomId,
-
-        message: name + " guessed the title!",
-        style: "correct answer"
-      });
-      
-      let hideAnswer = savedGame 
-      hideAnswer.song = {songUrl: hideAnswer.song.songUrl}
-      socket.getIo()
-      
-      .in("Room: " + game.roomId)
-      .emit("game", hideAnswer);
-
-      let waitingOn = Math.ceil(1.0* game.originalLength/2.0 - 0.001)
-      if(savedGame.correctAnswers >= waitingOn) {
-        endRound(game.roomId, game.roundNumber, game._id+"")
-      }
+   
+    savedGame = await game.save();
+    done(undefined, savedGame)
+    
+    
+    
+    
 
     
 
@@ -282,8 +272,40 @@ const guessAnswer = async (userId, name, gameId, msg, bot) => {
       
       .in("Room: " + game.roomId)
       .emit("message", msg);
+      done(undefined, undefined)
   }
+
+}, function(err, savedGame) {
+  if(!savedGame) {
+    //console.log("Fail")
+    return;
+  }
+
+socket.getIo()
+  .in("Room: " + savedGame.roomId)
+  .emit("message", {
+    roomId: savedGame.roomId,
+
+    message: name + " guessed the title!",
+    style: "correct answer"
+  });
   
+  let hideAnswer = savedGame 
+  hideAnswer.song = {songUrl: hideAnswer.song.songUrl}
+  socket.getIo()
+  
+  .in("Room: " + savedGame.roomId)
+  .emit("game", hideAnswer);
+
+  let waitingOn = Math.ceil(1.0* savedGame.originalLength/2.0 - 0.001)
+  if(savedGame.correctAnswers >= waitingOn) {
+    
+    endRound(savedGame.roomId, savedGame.roundNumber, savedGame._id+"");
+    
+  }
+})
+  
+
   
 
   
@@ -291,6 +313,7 @@ const guessAnswer = async (userId, name, gameId, msg, bot) => {
 
 const getLeaderboard = () => {
   return new Promise((resolve, reject) => {
+    lock.acquire("leaderboard", (done)=>{
     User.find({}, (err, users) => {
       Category.find({}, (err, categories) => {
     
@@ -330,8 +353,10 @@ const getLeaderboard = () => {
         //console.log("got here 3")
         let res={ leaderboard: leaderboard, categories: categories }
         resolve(res);
+        done({}, {});
       });
     });
+    }, (err, ret)=>{})
   })
   
 }

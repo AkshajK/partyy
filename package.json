@@ -25,6 +25,7 @@
     "adjectives": "^1.0.2",
     "animals": "0.0.3",
     "antd": "^4.6.6",
+    "async-lock": "^1.2.4",
     "connect-ensure-login": "^0.1.1",
     "core-js": "^3.3.6",
     "dotenv": "^8.2.0",

@@ -4,6 +4,7 @@ const userToSocketMap = {}; // maps user ID to socket object
 const socketToUserMap = {}; // maps socket ID to user object
 const User = require("./models/user");
 const Room = require("./models/room");
+const lock = require("./lock").lock;
 const getSocketFromUserID = (userid) => userToSocketMap[userid];
 const getUserFromSocketID = (socketid) => socketToUserMap[socketid];
 const getSocketFromSocketID = (socketid) => io.sockets.connected[socketid];
@@ -58,8 +59,9 @@ module.exports = {
                 userId: me._id,
                 roomId: me.roomId
               });*/
-
+              
               Room.findById(me.roomId).then((room) => {
+                lock.acquire("room"+room.roomId, function(done) {
                 let users = room.users.filter((id) => {
                   return id !== me._id+"";
                 });
@@ -69,10 +71,13 @@ module.exports = {
                   me.roomId="Offline"
                   me.save().then(() => {
                     removeUser(user, socket);
+                    done({}, {});
                   })
                   
                 });
+                }, function(err, ret) {});
               });
+              
             }
            
           });

@@ -7,6 +7,8 @@ const Category = require("./models/category");
 const socket = require("./server-socket");
 
 
+const lock = require("./lock").lock;
+
 
 /*
 createRoom
@@ -52,6 +54,7 @@ Returns:  {room: Room, game: Game, users: [{userId: String, userName: String, le
 Description: Checks to see if room name exists and is not closed. If it is closed, shows error message. Else, returns information associated with the room and game
 */
 joinRoom = (req, res) => {
+  lock.acquire("room"+req.body.name, function(done) {
   Room.findOne({ name: req.body.name }).then((room) => {
     if (!room) res.send({ exists: false });
     else {
@@ -113,6 +116,7 @@ joinRoom = (req, res) => {
                       }),
                       category: category,
                     });
+                    done({}, {});
                   });
                 });
               });
@@ -122,6 +126,7 @@ joinRoom = (req, res) => {
       );
     }
   });
+  }, function(err, ret){});
 };
 
 /*
@@ -133,6 +138,7 @@ Returns: {}
 Description: Does socket.leave("Room: roomId")
 */
 leaveRoom = (req, res) => {
+  lock.acquire("room"+req.body.name, function(done) {
   (socket
     .getSocketFromUserID(req.user._id) || socket.getIo())
     .to("Room: " + req.body.roomId)
@@ -165,15 +171,18 @@ leaveRoom = (req, res) => {
         user.roomId = "Offline"
         user.save().then(()=>{
           res.send({});
+          done({}, {});
         })
       })
       
     });
   });
+}, function(err, ret) {});
 };
 
 module.exports = {
   createRoom,
   joinRoom,
   leaveRoom,
+  
 };
