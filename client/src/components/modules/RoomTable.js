@@ -73,13 +73,11 @@ export default function RoomTable(props) {
             <StyledTableCell align="right">Players</StyledTableCell>
             <StyledTableCell align="right">Mode</StyledTableCell>
             <StyledTableCell align="right">Status</StyledTableCell>
-            <StyledTableCell align="right">Created</StyledTableCell>
+            <StyledTableCell align="right">Last Active</StyledTableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {props.rooms.sort((a,b)=>{
-            if(a.users.length < b.users.length) return 1;
-            if(a.users.length > b.users.length) return -1;
             return new Date(b.created).getTime()- new Date(a.created).getTime()
           }).map((room) => (
             <StyledTableRow key={room.name} hover onClick={()=>{

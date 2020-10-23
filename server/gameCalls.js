@@ -42,6 +42,7 @@ startGame = (req, res) => {
         let savedGame = await game.save();
 
           room.gameId = savedGame._id;
+          room.created = new Date();
           room.save().then((savedRoom) => {
             
               socket

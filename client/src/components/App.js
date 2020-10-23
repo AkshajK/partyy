@@ -137,7 +137,8 @@ let token = cookies.get("cookieToken");
     post("/api/googleLogin", { token: userToken , cookieToken: cookieToken}).then((user) => {
       this.setState({ userId: user._id , name: user.name, google:true});
       cookies.set("google", "true");
-      this.componentDidMount();
+      window.location.reload();
+      //this.componentDidMount();
     });
   }
   handleLogout = () => {
@@ -152,7 +153,8 @@ let token = cookies.get("cookieToken");
       google:false
     })
    post("/api/logout")
-   self.componentDidMount();
+   window.location.reload();
+   //self.componentDidMount();
 return false;
 
   } 
