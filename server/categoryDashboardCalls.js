@@ -55,7 +55,7 @@ let getSongs = (playlistId, offSet, spotifyApi, categoryId) => {
         for (var i = 0; i < tracks.length; i++) {
           let songApi = tracks[i].track;
           let song = new Song({
-            artist: songApi.artists[0].name,
+            artist: songApi.artists[0] ? songApi.artists[0].name : "Artist",
             title: songApi.name,
             artUrl: songApi.album.images[0] ? songApi.album.images[0].url : undefined,
             songUrl: songApi.preview_url,
