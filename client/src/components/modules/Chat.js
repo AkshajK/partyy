@@ -46,7 +46,7 @@ export default function Chat(props) {
     
   };
   return (
-    <Paper style={{ borderRadius: "0px", height: "calc(100% - 420px)"}} >
+    <Paper style={{ borderRadius: "0px", height: props.lobby ? "100%" : "calc(100% - 420px)"}} >
       <Box
         height={"calc(100% - 40px)"}
         style={{

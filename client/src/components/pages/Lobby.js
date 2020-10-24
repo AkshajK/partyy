@@ -20,7 +20,9 @@ class Lobby extends Component {
   constructor(props) {
     super(props);
     // Initialize Default State
-    this.state = {};
+    this.state = {
+      buttonColor: "#2e7d32"
+    };
   }
 
   componentDidMount() {
@@ -119,7 +121,7 @@ class Lobby extends Component {
         <Grid container direction="row" style={{ width: "100%", height: "100%", overflow:"auto" }}>
         <Box width="calc(100% - 320px)" height="100%" style={{padding: "30px 40px 40px 40px"}}>
           <Box height="50px" style={{display: "flex", justifyContent: "center", alignItems: "center", paddingBottom: "10px"}}>
-          {this.props.category ? <Button fullWidth style={{backgroundColor: "#1b5e20", color: "#FFFFFF"}} variant="contained" onClick={
+          {this.props.category ? <Button fullWidth style={{backgroundColor: this.state.buttonColor, color: "#FFFFFF"}} onMouseOver={()=>{this.setState({buttonColor:"#43a047"})}} onMouseOut={()=>{this.setState({buttonColor:"#2e7d32"})}} variant="contained" onClick={
             () => {
             post("api/createRoom", {categoryId: this.props.category._id}).then((data) => {
               this.props.redirect("/"+data.name)
@@ -133,8 +135,9 @@ class Lobby extends Component {
           <RoomTable users={this.state.users} rooms={this.state.rooms} redirect={this.props.redirect} categoryId={this.props.category ? this.props.category._id : undefined} />
           </Box>
         </Box>
-        <Box width="320px" height="100%" style={{overflow: "auto"}} bgcolor="sidebar">
-          <List style={{maxHeight: "300px", overflow: "auto"}}>
+        <Box width="320px" height="100%" style={{overflow: "auto"}} bgcolor="sidebar" >
+          {this.props.userInfo}
+          {/*<List style={{maxHeight: "300px", overflow: "auto"}}>
             {this.state.users.map((user)=>{
               return (<ListItem key={user.userId}>
                 <ListItemIcon>
@@ -142,8 +145,10 @@ class Lobby extends Component {
                 </ListItemIcon>
                 <ListItemText primaryTypographyProps={{variant: "h6", style: user.userId === this.props.userId ? {fontWeight: 900} : null} }  primary={user.userName} /></ListItem>)
             })}
-          </List>
-          <Chat messages={this.state.messages.concat(this.props.messages)} />
+          </List>*/}
+          <Box width="100%" height="calc(100% - 205px)" >
+          <Chat lobby={true} messages={this.state.messages.concat(this.props.messages)} />
+          </Box>
           
         </Box>
       </Grid>

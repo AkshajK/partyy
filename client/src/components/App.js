@@ -42,6 +42,7 @@ class App extends Component {
     let google = cookies.get("google")==="true"
     this.state = {
       userId: undefined,
+      userInfo: <></>,
       messages: [],
       showSidebar: true,
       rainbow: true,
@@ -50,6 +51,9 @@ class App extends Component {
       lobby: true,
       users: []
     };
+  }
+  setUserInfo=(info)=>{
+    this.setState({userInfo: info})
   }
   setLobby = (bool) => {
     this.setState({lobby: bool})
@@ -201,7 +205,7 @@ return false;
         
         {this.state.showSidebar ? <Box width="320px" height="100%" bgcolor="sidebar" style={{borderRight: "2px solid #3C3C3C"}}>
           <Box width="100%" height="calc(100% - 50px)">
-          <SideBar changeName={this.changeName} users={this.state.users} lobby={this.state.lobby} userName={this.state.userName} userId={this.state.userId} //userLeaderboardData={this.state.userLeaderboardData}
+          <SideBar changeName={this.changeName} setUserInfo = {this.setUserInfo} users={this.state.users} lobby={this.state.lobby} userName={this.state.userName} userId={this.state.userId} //userLeaderboardData={this.state.userLeaderboardData}
           category={this.state.category} setCategory={this.setCategory}  /></Box>
           <div className = "login" >
               { this.state.google ? (
@@ -242,7 +246,7 @@ return false;
           <Router>
             <Switch>
               
-              <Lobby exact path="/" setLobby={this.setLobby} setShowSidebar={this.setShowSidebar} url={window.location.pathname} name={this.state.name} userId={this.state.userId} category={this.state.category} redirect={this.redirect} messages={this.state.messages.filter((msg)=>{return msg.roomId === "Lobby"})} resetMessages={()=>{this.setState({messages: []})}} />
+              <Lobby exact path="/" userInfo = {this.state.userInfo} setLobby={this.setLobby} setShowSidebar={this.setShowSidebar} url={window.location.pathname} name={this.state.name} userId={this.state.userId} category={this.state.category} redirect={this.redirect} messages={this.state.messages.filter((msg)=>{return msg.roomId === "Lobby"})} resetMessages={()=>{this.setState({messages: []})}} />
               <CategoryDashboard exact path="/dashboard" category={this.state.category} />
               <BotDashboard exact path="/bots" category={this.state.category} />
 

@@ -75,7 +75,64 @@ changeName = {props.changeName} onSubmit={()=>{}} userName={props.userName} />
       if(!props.category) {
         props.setCategory(newCategories[0])
       }
+      props.setUserInfo((<Box bgcolor="#1D1D1D">
+      
+  <List dense>
+    <ListItem style={{marginBottom: "10px"}} key="1">
+    <Typography component={'div'} style={{fontWeight: 900}} variant="h5" color="secondary" >
+    {props.userName}
 
+  </Typography>
+  <IconButton onClick={() => {setEditModal(true)}} style={{color: "#444444"}}>
+    <CreateIcon />
+      </IconButton> 
+  
+    </ListItem>
+    <ListItem key="2">
+    <Typography component={'div'} variant="subtitle1" color="textSecondary" gutterBottom>
+    {"Rating: "}
+  </Typography>
+  <ListItemSecondaryAction>
+    <Grid container direction="row">
+    <Typography component={'div'} variant="h6" color="textSecondary" gutterBottom>
+    {leaderboardData.ratingRank}
+  </Typography>
+  
+  <Typography component={'div'} variant="h5" color="secondary" style={{width: "75px", textAlign: "right"}} gutterBottom>
+    {leaderboardData.rating}
+  </Typography>
+
+  
+  </Grid>
+  </ListItemSecondaryAction>
+    </ListItem>
+
+    <ListItem key="3">
+    
+    <Typography component={'div'} variant="subtitle1" color="textSecondary" gutterBottom>
+    {"High Score: "}
+  </Typography>
+  
+  <ListItemSecondaryAction>
+  <Grid container direction="row">
+  <Typography  component={'div'} variant="h6" color="textSecondary" gutterBottom >
+    {leaderboardData.highScoreRank}
+  </Typography>
+  
+  <Typography component={'div'} variant="h5" color="secondary" gutterBottom style={{width: "75px", textAlign: "right"}}>
+    {leaderboardData.highScore}
+  </Typography>
+  
+  </Grid>
+  </ListItemSecondaryAction>
+    </ListItem>
+  </List>
+  
+  
+  
+ 
+  
+</Box>))
      
     }
     post("api/getLeaderboard").then((data) => {
@@ -121,20 +178,26 @@ let rankify = (num) => {
     for(var i=0; i<props.users.length; i++) if(!leaderboardDataArr[props.users[i].userId]) leaderboardDataArr[props.users[i].userId] = {rank: "", rating: 1200};
   }
   
+  
+  
+
   return (
     <Grid container direction="column" style={{height: "100%", maxWidth: "100%", overflow:"auto"}} >
       {editNameModal}
       {props.lobby ? <React.Fragment>
-      <Typography  color="primary" component={'div'} style={{ fontFamily: "Permanent Marker", letterSpacing: "6px", width: "100%", padding: "15px 15px 15px 15px"}} align="center" variant="h4" gutterBottom>
+      <Typography  color="primary" component={'div'} style={{ fontFamily: "Permanent Marker", letterSpacing: "6px", width: "100%", padding: "10px 15px 5px 15px"}} align="center" variant="h4" gutterBottom>
         {"Partyy"}
       </Typography>
-      <FormControl variant="filled" >
-        <InputLabel id="demo-simple-select-filled-label">Game Mode</InputLabel>
+      <Box style={{marginBottom: props.lobby ? undefined : undefined, width:"100%"}}>
+      <FormControl variant="outlined" hiddenLabel fullWidth>
+      
         <Select
           labelId="demo-simple-select-filled-label"
           value={props.category ? ""+props.category._id : ""}
           onChange={(event)=>{
             props.setCategory(categories.find((c)=>{return c._id+""===event.target.value}))}}
+          fullWidth
+          
         >
           {categories.map((category)=>{
             return <MenuItem value={category._id+""}>{category.name}</MenuItem>
@@ -142,64 +205,8 @@ let rankify = (num) => {
           
         </Select>
       </FormControl>
-    <Box bgcolor="userinfo">
-      
-      <List dense>
-        <ListItem style={{marginBottom: "10px"}} key="1">
-        <Typography component={'div'} style={{fontWeight: 900}} variant="h5" color="textPrimary" >
-        {props.userName}
-
-      </Typography>
-      <IconButton onClick={() => {setEditModal(true)}} style={{color: "#444444"}}>
-        <CreateIcon />
-          </IconButton> 
-      
-        </ListItem>
-        <ListItem key="2">
-        <Typography component={'div'} variant="subtitle1" color="textSecondary" gutterBottom>
-        {"Rating: "}
-      </Typography>
-      <ListItemSecondaryAction>
-        <Grid container direction="row">
-        <Typography component={'div'} variant="h6" color="textSecondary" gutterBottom>
-        {leaderboardData.ratingRank}
-      </Typography>
-      
-      <Typography component={'div'} variant="h5" color="secondary" style={{width: "75px", textAlign: "right"}} gutterBottom>
-        {leaderboardData.rating}
-      </Typography>
+      </Box>
     
-      
-      </Grid>
-      </ListItemSecondaryAction>
-        </ListItem>
-
-        <ListItem key="3">
-        
-        <Typography component={'div'} variant="subtitle1" color="textSecondary" gutterBottom>
-        {"High Score: "}
-      </Typography>
-      
-      <ListItemSecondaryAction>
-      <Grid container direction="row">
-      <Typography  component={'div'} variant="h6" color="textSecondary" gutterBottom >
-        {leaderboardData.highScoreRank}
-      </Typography>
-      
-      <Typography component={'div'} variant="h5" color="secondary" gutterBottom style={{width: "75px", textAlign: "right"}}>
-        {leaderboardData.highScore}
-      </Typography>
-      
-      </Grid>
-      </ListItemSecondaryAction>
-        </ListItem>
-      </List>
-      
-      
-      
-     
-      
-    </Box>
     </React.Fragment> : <></>}
     {props.lobby ? <React.Fragment /> : <Typography component={'div'} variant="h5" color="textPrimary" gutterBottom align="center" style={{width: "100%", marginTop: "25px"}}>
                   {"Ratings"}
@@ -238,7 +245,7 @@ let rankify = (num) => {
     })}
   </List>
   }
-    <Leaderboard userId={props.userId} appbar={props.lobby} leaderboard={props.category ? leaderboard[props.category._id+""] : undefined} />
+    <Leaderboard userId={props.userId}  appbar={props.lobby} leaderboard={props.category ? leaderboard[props.category._id+""] : undefined} />
     
     </Grid>
 
