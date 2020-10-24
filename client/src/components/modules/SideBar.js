@@ -61,7 +61,25 @@ changeName = {props.changeName} onSubmit={()=>{}} userName={props.userName} />
 
 
 
+let rankify = (num) => {
+  if(num % 10 === 1) return num+"st"
+  else if(num%10 === 2) return num+"nd"
+  else if(num % 10 === 3) return num+"rd"
+  return num+"th"
+}
+  //if(!props.category || categories.length === 0 || (Object.entries(leaderboard).length === 0)) return <CircularProgress />
 
+  let leaderboardData = {rating: 1200, highScore: 0, ratingRank: "", highScoreRank: ""}//props.userLeaderboardData.find((data)=>{return data.categoryId === props.category._id}) || {rating: 1200, highScore: 0}
+  let leaderboardDataArr = undefined;
+  if(props.category && leaderboard[props.category._id] ) {
+    
+    leaderboardDataArr = {}
+    for(var i=0; i<leaderboard[props.category._id].topRatings.length; i++) {
+      var obj = leaderboard[props.category._id].topRatings[i]
+      leaderboardDataArr[obj.userId] = {name: obj.name, rating: Math.floor(obj.rating), rank: rankify(i+1)};
+    }
+    for(var i=0; i<props.users.length; i++) if(!leaderboardDataArr[props.users[i].userId]) leaderboardDataArr[props.users[i].userId] = {rank: "", rating: 1200};
+  }
 
 
   // get leaderboard again whenever our leaderboard data changes
@@ -74,6 +92,17 @@ changeName = {props.changeName} onSubmit={()=>{}} userName={props.userName} />
       setCategories(newCategories)
       if(!props.category) {
         props.setCategory(newCategories[0])
+      }
+      if(props.category && newLeaderboard[props.category._id] ) {
+        let r = newLeaderboard[props.category._id].topScores.find((user)=>{return user.userId === props.userId})
+        if(r) leaderboardData.highScore = r.score 
+        r = newLeaderboard[props.category._id].topRatings.find((user)=>{return user.userId === props.userId})
+        if(r) leaderboardData.rating = Math.floor(r.rating)
+    
+        r = newLeaderboard[props.category._id].topScores.findIndex((user)=>{return user.userId === props.userId})
+        if(r!== -1) leaderboardData.highScoreRank = rankify(r+1)
+        r = newLeaderboard[props.category._id].topRatings.findIndex((user)=>{return user.userId === props.userId})
+        if(r !== -1) leaderboardData.ratingRank = rankify(r+1)
       }
       props.setUserInfo((<Box bgcolor="#1D1D1D">
       
@@ -147,36 +176,9 @@ changeName = {props.changeName} onSubmit={()=>{}} userName={props.userName} />
     return () => {
       socket.off("leaderboard")
     }
-  }, [props.category, props.lobby]);
+  }, [props.category]);
   
-let rankify = (num) => {
-  if(num % 10 === 1) return num+"st"
-  else if(num%10 === 2) return num+"nd"
-  else if(num % 10 === 3) return num+"rd"
-  return num+"th"
-}
-  //if(!props.category || categories.length === 0 || (Object.entries(leaderboard).length === 0)) return <CircularProgress />
 
-  let leaderboardData = {rating: 1200, highScore: 0, ratingRank: "", highScoreRank: ""}//props.userLeaderboardData.find((data)=>{return data.categoryId === props.category._id}) || {rating: 1200, highScore: 0}
-  let leaderboardDataArr = undefined;
-  if(props.category && leaderboard[props.category._id] ) {
-    let r = leaderboard[props.category._id].topScores.find((user)=>{return user.userId === props.userId})
-    if(r) leaderboardData.highScore = r.score 
-    r = leaderboard[props.category._id].topRatings.find((user)=>{return user.userId === props.userId})
-    if(r) leaderboardData.rating = Math.floor(r.rating)
-
-    r = leaderboard[props.category._id].topScores.findIndex((user)=>{return user.userId === props.userId})
-    if(r!== -1) leaderboardData.highScoreRank = rankify(r+1)
-    r = leaderboard[props.category._id].topRatings.findIndex((user)=>{return user.userId === props.userId})
-    if(r !== -1) leaderboardData.ratingRank = rankify(r+1)
-    
-    leaderboardDataArr = {}
-    for(var i=0; i<leaderboard[props.category._id].topRatings.length; i++) {
-      var obj = leaderboard[props.category._id].topRatings[i]
-      leaderboardDataArr[obj.userId] = {name: obj.name, rating: Math.floor(obj.rating), rank: rankify(i+1)};
-    }
-    for(var i=0; i<props.users.length; i++) if(!leaderboardDataArr[props.users[i].userId]) leaderboardDataArr[props.users[i].userId] = {rank: "", rating: 1200};
-  }
   
   
   
