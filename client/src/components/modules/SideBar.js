@@ -147,7 +147,7 @@ changeName = {props.changeName} onSubmit={()=>{}} userName={props.userName} />
     return () => {
       socket.off("leaderboard")
     }
-  }, [props.category]);
+  }, [props.category, props.lobby]);
   
 let rankify = (num) => {
   if(num % 10 === 1) return num+"st"

@@ -53,7 +53,7 @@ function getOrCreateUser(token) {
     if (existingUser) return existingUser;
     const random = Math.floor(Math.random() * adjectives.length);
     const newUser = new User({
-      name: adjectives[random] + " " + animals(),
+      name: /*adjectives[random] + " " +*/ animals(),
       cookieToken: Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15),
     });
 
