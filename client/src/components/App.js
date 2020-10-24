@@ -199,7 +199,7 @@ return false;
         <CssBaseline />
       <Grid container direction="row" style={{ width: "100%", height: "100%" }}>
         
-        {this.state.showSidebar ? <Box width="320px" height="100%" bgcolor="sidebar">
+        {this.state.showSidebar ? <Box width="320px" height="100%" bgcolor="sidebar" style={{borderRight: "2px solid #3C3C3C"}}>
           <Box width="100%" height="calc(100% - 50px)">
           <SideBar changeName={this.changeName} users={this.state.users} lobby={this.state.lobby} userName={this.state.userName} userId={this.state.userId} //userLeaderboardData={this.state.userLeaderboardData}
           category={this.state.category} setCategory={this.setCategory}  /></Box>

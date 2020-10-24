@@ -27,7 +27,7 @@ const formatDate = (duedate) => {
 };
 const StyledTableCell = withStyles((theme) => ({
   head: {
-    backgroundColor: theme.palette.common.black,
+    backgroundColor: "#0d47a1",
     color: theme.palette.common.white,
     fontWeight: 900,
     fontSize: 14,

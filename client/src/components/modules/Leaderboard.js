@@ -79,7 +79,7 @@ export default function Leaderboard(props) {
              
                 <ListItemText primaryTypographyProps={{variant: "h6", style: entry.userId === props.userId ? {fontWeight: 900} : null} } primary={entry.name } />
                 <ListItemSecondaryAction>
-                <Typography component={'div'} variant="h5" color={"primary"} style={entry.userId === props.userId ? {fontWeight: 900} : null}>
+                <Typography component={'div'} variant="h5" color={"secondary"} style={entry.userId === props.userId ? {fontWeight: 900} : null}>
                   {Math.floor(entry.rating)}
                 </Typography>
                 </ListItemSecondaryAction>
@@ -96,7 +96,7 @@ export default function Leaderboard(props) {
               <ListItem key={entry.userId} selected={entry.userId === props.userId}>
                 <ListItemText primaryTypographyProps={{variant: "h6", style: entry.userId === props.userId ? {fontWeight: 900} : null}} primary= {entry.name } />
                 <ListItemSecondaryAction>
-                <Typography component={'div'} variant="h5" color="primary" style={entry.userId === props.userId ? {fontWeight: 900} : null}>
+                <Typography component={'div'} variant="h5" color="secondary" style={entry.userId === props.userId ? {fontWeight: 900} : null}>
                   {entry.score}
                 </Typography>
                 </ListItemSecondaryAction>

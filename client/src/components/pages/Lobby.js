@@ -117,8 +117,21 @@ class Lobby extends Component {
       
         
         <Grid container direction="row" style={{ width: "100%", height: "100%", overflow:"auto" }}>
-        <Box width="calc(100% - 320px)" height="100%" style={{padding: "40px"}}>
+        <Box width="calc(100% - 320px)" height="100%" style={{padding: "30px 40px 40px 40px"}}>
+          <Box height="50px" style={{display: "flex", justifyContent: "center", alignItems: "center", paddingBottom: "10px"}}>
+          {this.props.category ? <Button fullWidth style={{backgroundColor: "#1b5e20", color: "#FFFFFF"}} variant="contained" onClick={
+            () => {
+            post("api/createRoom", {categoryId: this.props.category._id}).then((data) => {
+              this.props.redirect("/"+data.name)
+            })
+            }
+          }>
+    New {this.props.category.name} Game
+          </Button> : <></>}
+          </Box>
+          <Box height="calc(100% - 50px)">
           <RoomTable users={this.state.users} rooms={this.state.rooms} redirect={this.props.redirect} categoryId={this.props.category ? this.props.category._id : undefined} />
+          </Box>
         </Box>
         <Box width="320px" height="100%" style={{overflow: "auto"}} bgcolor="sidebar">
           <List style={{maxHeight: "300px", overflow: "auto"}}>
@@ -131,15 +144,7 @@ class Lobby extends Component {
             })}
           </List>
           <Chat messages={this.state.messages.concat(this.props.messages)} />
-          {this.props.category ? <Button fullWidth onClick={
-            () => {
-            post("api/createRoom", {categoryId: this.props.category._id}).then((data) => {
-              this.props.redirect("/"+data.name)
-            })
-            }
-          }>
-    New {this.props.category.name} Game
-          </Button> : <></>}
+          
         </Box>
       </Grid>
         

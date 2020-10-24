@@ -125,8 +125,8 @@ let rankify = (num) => {
     <Grid container direction="column" style={{height: "100%", maxWidth: "100%", overflow:"auto"}} >
       {editNameModal}
       {props.lobby ? <React.Fragment>
-      <Typography  component={'div'} style={{fontWeight: 900, fontFamily: "Permanent Marker", width: "100%", padding: "20px 20px 20px 20px"}} align="center" variant="h4" color="textPrimary" gutterBottom>
-        {"Partyy.Life 2.0"}
+      <Typography  color="primary" component={'div'} style={{ fontFamily: "Permanent Marker", letterSpacing: "6px", width: "100%", padding: "15px 15px 15px 15px"}} align="center" variant="h4" gutterBottom>
+        {"Partyy"}
       </Typography>
       <FormControl variant="filled" >
         <InputLabel id="demo-simple-select-filled-label">Game Mode</InputLabel>
@@ -165,7 +165,7 @@ let rankify = (num) => {
         {leaderboardData.ratingRank}
       </Typography>
       
-      <Typography component={'div'} variant="h5" color="primary" style={{width: "75px", textAlign: "right"}} gutterBottom>
+      <Typography component={'div'} variant="h5" color="secondary" style={{width: "75px", textAlign: "right"}} gutterBottom>
         {leaderboardData.rating}
       </Typography>
     
@@ -186,7 +186,7 @@ let rankify = (num) => {
         {leaderboardData.highScoreRank}
       </Typography>
       
-      <Typography component={'div'} variant="h5" color="primary" gutterBottom style={{width: "75px", textAlign: "right"}}>
+      <Typography component={'div'} variant="h5" color="secondary" gutterBottom style={{width: "75px", textAlign: "right"}}>
         {leaderboardData.highScore}
       </Typography>
       
@@ -227,7 +227,7 @@ let rankify = (num) => {
         {leaderboardDataArr[user.userId].rank}
       </Typography>
       
-      <Typography component={'div'} variant="h5" color="primary" style={{width: "75px", textAlign: "right", fontWeight: user.userId === props.userId ? 900 : undefined}}>
+      <Typography component={'div'} variant="h5" color="secondary" style={{width: "75px", textAlign: "right", fontWeight: user.userId === props.userId ? 900 : undefined}}>
           {leaderboardDataArr[user.userId].rating}
         </Typography>
       
