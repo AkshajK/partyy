@@ -66,6 +66,7 @@ module.exports = {
                   return id !== me._id+"";
                 });
                 room.users = users;
+                
                 room.save().then((savedRoom)=>{
                   io.in("Room: Lobby").emit("room", savedRoom);
                   me.roomId="Offline"

@@ -159,7 +159,8 @@ leaveRoom = (req, res) => {
       return id !== req.user._id+"";
     });
     room.users = users;
-
+    
+    
     room.save().then((savedRoom) => {
       
       (socket

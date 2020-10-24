@@ -43,6 +43,10 @@ startGame = (req, res) => {
 
           room.gameId = savedGame._id;
           room.created = new Date();
+          room.host = {
+            userId: req.user._id,
+            name: user.name
+          }
           room.save().then((savedRoom) => {
             
               socket
