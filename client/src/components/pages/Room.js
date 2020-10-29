@@ -202,7 +202,7 @@ class Room extends Component {
             </Button>
             <Button fullWidth
               onClick={() => {
-                post("api/leaveRoom", { roomId: this.state.roomId }).then((data) => {
+                post("api/leaveRoom", { roomId: this.state.roomId, name: this.state.name }).then((data) => {
                   this.props.redirect("/");
                 });
               }}
