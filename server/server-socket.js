@@ -70,7 +70,8 @@ module.exports = {
                 room.users = users;
                 
                 room.save().then((savedRoom)=>{
-                  io.in("Room: Lobby").emit("room", savedRoom);
+                  if(!savedRoom.private) 
+                    io.in("Room: Lobby").emit("room", savedRoom);
                   me.roomId="Offline"
                   me.save().then(() => {
                     removeUser(user, socket, reason === "server namespace disconnect");

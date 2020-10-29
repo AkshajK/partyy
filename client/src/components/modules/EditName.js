@@ -50,6 +50,17 @@ return (
           onChange={(event) => {
            setNewName(event.target.value.substring(0, 15));
           }}
+
+          onKeyPress={(event) => {
+            if (event.charCode === 13) {
+              post("api/changeName", {name: newName}).then(()=>{
+                props.changeName(newName)
+                props.onSubmit()
+                props.onClose()
+              })
+            }
+          }}
+
         />
        
        

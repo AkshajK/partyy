@@ -49,10 +49,12 @@ startGame = (req, res) => {
           }
           room.save().then((savedRoom) => {
             
-              socket
+              if(!savedRoom.private) {
+                socket
               .getIo()
               .in("Room: Lobby")
               .emit("room", savedRoom);
+              }
             
             let hideAnswer = savedGame 
             hideAnswer.song = {songUrl: hideAnswer.song.songUrl}
@@ -164,10 +166,12 @@ endRound = (roomId, roundNum, gameId) => {
           room.status = "Finished"
 
           room.save().then((savedRoom)=>{
+            if(!savedRoom.private) {
             socket
             .getIo()
             .in("Room: Lobby")
             .emit("room", savedRoom);
+            }
           }) 
           updateLeaderboard(game.players, ""+room.category._id)
         }

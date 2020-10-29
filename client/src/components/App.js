@@ -264,7 +264,7 @@ class App extends Component {
               bgcolor="sidebar"
               style={{ borderRight: "2px solid #3C3C3C" }}
             >
-              <Box width="100%" height="calc(100% - 50px)">
+              <Box width="100%" height="calc(100% - 80px)">
                 <SideBar
                   changeName={this.changeName}
                   setUserInfo={this.setUserInfo}

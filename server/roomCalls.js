@@ -37,7 +37,8 @@ createRoom = (req, res) => {
       });
       newRoom.save().then((daroom) => {
         //socket.getSocketFromUserID(req.user._id).to("Room: Lobby").emit("createdRoom", daroom);
-         socket.getSocketFromUserID(req.user._id).to("Room: Lobby").emit("room", daroom);
+         if(!daroom.private)
+            socket.getSocketFromUserID(req.user._id).to("Room: Lobby").emit("room", daroom);
 
         res.send({ name: name });
       });
@@ -99,10 +100,12 @@ joinRoom = (req, res) => {
                       console.log(savedRoom.users);
                       console.log(users);
                     }
+                    if(!savedRoom.private) {
                     (socket
                     .getSocketFromUserID(req.user._id) || socket.getIo())
                     .to("Room: Lobby")
                     .emit("room", savedRoom)
+                    }
                     res.send({
                       exists: true,
                       room: savedRoom,
@@ -163,10 +166,12 @@ leaveRoom = (req, res) => {
     
     room.save().then((savedRoom) => {
       
+      if(!savedRoom.private) {
       (socket
     .getSocketFromUserID(req.user._id) || socket.getIo())
     .to("Room: " + "Lobby")
     .emit("room", savedRoom);
+      }
       if(!req.user.bot) socket.getSocketFromUserID(req.user._id).leave("Room: " + req.body.roomId);
       User.findById(req.user._id).then((user)=>{
         user.roomId = "Offline"

@@ -86,14 +86,16 @@ export default function RoomTable(props) {
               })
               }}>
               <StyledTableCell component="th" scope="row">
-              <Typography component={'div'} variant="h5" color="primary" style={{fontWeight: 900}}>
+              <Typography component={'div'} variant="h6" color="primary" style={{fontWeight: 900}}>
               {room.host.name}
                 </Typography>
                 
               </StyledTableCell>
               <StyledTableCell align="right">
-             
+              <Typography component={'div'} variant="h5" color="secondary" style={{fontWeight: 900}}>
               {room.users.length}
+                </Typography>
+              
               </StyledTableCell>
               <StyledTableCell align="right">{room.category.name}</StyledTableCell>
               <StyledTableCell align="right">{room.closed ? "Completed" : room.status === "Finished" ? "Waiting" : (room.status === "InProgress" ? "In Progress" : room.status) }</StyledTableCell>

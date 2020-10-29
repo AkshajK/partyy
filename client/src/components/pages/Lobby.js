@@ -12,7 +12,7 @@ import Paper from "@material-ui/core/Paper";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
-import ListItemIcon from "@material-ui/core/ListItemIcon";
+import Typography from "@material-ui/core/Typography";
 import RoomTable from "../modules/RoomTable.js"
 import Chat from "../modules/Chat.js"
 import { get, post } from "../../utilities.js";
@@ -124,16 +124,32 @@ class Lobby extends Component {
           {this.props.category ? 
           <React.Fragment>
 
-         
-          <Button fullWidth style={{backgroundColor: this.state.buttonColor, color: "#FFFFFF"}} onMouseOver={()=>{this.setState({buttonColor:"#43a047"})}} onMouseOut={()=>{this.setState({buttonColor:"#2e7d32"})}} variant="contained" onClick={
+            <Grid container direction="row" spacing={1}>
+              <Grid item xs={6}>
+              <Button fullWidth style={{backgroundColor: this.state.buttonColor, color: "#FFFFFF"}} onMouseOver={()=>{this.setState({buttonColor:"#43a047"})}} onMouseOut={()=>{this.setState({buttonColor:"#2e7d32"})}} variant="contained" onClick={
             () => {
             post("api/createRoom", {categoryId: this.props.category._id}).then((data) => {
               this.props.redirect("/"+data.name)
             })
             }
           }>
-    New {this.props.category.name} Game
+   <Typography noWrap variant="button"> New {this.props.category.name} Game </Typography>
           </Button> 
+              </Grid>
+              <Grid item xs={6}>
+              <Button fullWidth color="secondary" variant="outlined" onClick={
+            () => {
+            post("api/createRoom", {categoryId: this.props.category._id, private: true}).then((data) => {
+              this.props.redirect("/"+data.name)
+            })
+            }
+          }>
+            <Typography noWrap variant="button"> Private Game </Typography>
+    
+          </Button> 
+              </Grid>
+            </Grid>
+          
           
           </React.Fragment>: <></>}
           </Box>
