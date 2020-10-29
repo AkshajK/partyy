@@ -109,9 +109,13 @@ let token = cookies.get("cookieToken");
       else {
         console.log("DISCONNECTED")
         console.log(reason)
-        this.setState({ disconnect: true });
+        
       }
      
+    });
+    socket.on('reconnect_error', function () {
+      /* handle reconnect error events - possible retry? */
+      this.setState({ disconnect: true });
     });
 
     socket.on("message", (msg) => {
@@ -128,7 +132,7 @@ let token = cookies.get("cookieToken");
       }, 10000)
   })*/
     socket.on("reconnect", (attemptNumber) => {
-       // this.componentDidMount();
+      this.componentDidMount();
       console.log("RECONNECTED");
     })
     
