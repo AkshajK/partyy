@@ -14,7 +14,7 @@ export const theme =
             default: '#161616'
          
           },
-          sidebar: "#161616",
+          sidebar: "#121212",
           //tablerow: {
            //   odd: '#102755',
           //    even: '#0A1C3D'

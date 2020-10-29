@@ -104,7 +104,7 @@ let rankify = (num) => {
         r = newLeaderboard[props.category._id].topRatings.findIndex((user)=>{return user.userId === props.userId})
         if(r !== -1) leaderboardData.ratingRank = rankify(r+1)
       }
-      props.setUserInfo((<Box bgcolor="#1D1D1D">
+      props.setUserInfo((<Box bgcolor="#121212">
       
   <List dense>
     <ListItem style={{marginBottom: "10px"}} key="1">
