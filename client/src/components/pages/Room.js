@@ -190,7 +190,7 @@ class Room extends Component {
               {roundMessage}
             </Typography>
             
-            <Chat messages={this.props.messages.filter((msg)=>{return msg.roomId === this.state.roomId})}  />
+            <Chat messages={this.props.messages.filter((msg)=>{return msg.roomId === this.state.roomId})} inGame={this.state.game && this.state.game.status === "RoundInProgress"}  />
             
             <Button fullWidth
               onClick={() => {

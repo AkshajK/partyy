@@ -114,12 +114,12 @@ class Lobby extends Component {
   render() {
     if (!this.state.doneLoading) return <CircularProgress />;
   
-
+    let rightbar = this.props.width > 1000;
     return (
       
         
         <Grid container direction="row" style={{ width: "100%", height: "100%", overflow:"auto" }}>
-        <Box width="calc(100% - 320px)" height="100%" style={{padding: "30px 40px 40px 40px"}}>
+        <Box width={rightbar ? "calc(100% - 320px)" : "100%" } height="100%" style={{padding: "30px 40px 40px 40px"}}>
           <Box height="50px" style={{display: "flex", justifyContent: "center", alignItems: "center", paddingBottom: "10px"}}>
           {this.props.category ? <Button fullWidth style={{backgroundColor: this.state.buttonColor, color: "#FFFFFF"}} onMouseOver={()=>{this.setState({buttonColor:"#43a047"})}} onMouseOut={()=>{this.setState({buttonColor:"#2e7d32"})}} variant="contained" onClick={
             () => {
@@ -135,6 +135,7 @@ class Lobby extends Component {
           <RoomTable users={this.state.users} rooms={this.state.rooms} redirect={this.props.redirect} categoryId={this.props.category ? this.props.category._id : undefined} />
           </Box>
         </Box>
+        {rightbar ? 
         <Box width="320px" height="100%" style={{overflow: "auto"}} bgcolor="sidebar" >
           {this.props.userInfo}
           {/*<List style={{maxHeight: "300px", overflow: "auto"}}>
@@ -150,7 +151,7 @@ class Lobby extends Component {
           <Chat lobby={true} messages={this.state.messages.concat(this.props.messages)} />
           </Box>
           
-        </Box>
+        </Box> : <React.Fragment />}
       </Grid>
         
       

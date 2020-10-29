@@ -176,7 +176,7 @@ let rankify = (num) => {
     return () => {
       socket.off("leaderboard")
     }
-  }, [props.category]);
+  }, [props.category, props.userName]);
   
 
   

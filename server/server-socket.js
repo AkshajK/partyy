@@ -24,7 +24,7 @@ const addUser = (user, socket) => {
 
 const removeUser = (user, socket) => {
   if (user) delete userToSocketMap[user._id];
-  if(user && !user.bot) delete socketToUserMap[socket.id];
+  if(!user || (user && !user.bot)) delete socketToUserMap[socket.id];
 };
 
 module.exports = {

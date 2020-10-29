@@ -100,7 +100,8 @@ export default function Chat(props) {
         </List>
       </Box>
       <TextField
-        label="Message"
+        label={props.inGame ? "Guess" : "Message"}
+        color={props.inGame ? "secondary" : "primary"}
         variant="outlined"
         size="small"
         value={messageText}

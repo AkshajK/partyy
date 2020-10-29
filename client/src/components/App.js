@@ -49,8 +49,11 @@ class App extends Component {
       redirect: "",
       google:google,
       lobby: true,
-      users: []
+      users: [],
+      width: 0,
+      height: 0
     };
+    this.updateWindowDimensions = this.updateWindowDimensions.bind(this);
   }
   setUserInfo=(info)=>{
     this.setState({userInfo: info})
@@ -71,7 +74,10 @@ class App extends Component {
     this.setState({rainbow: !this.state.rainbow});
   }
   componentDidMount() {
+    this.updateWindowDimensions();
+    window.addEventListener('resize', this.updateWindowDimensions);
     // login
+    
 let token = cookies.get("cookieToken");
     post("/api/whoami", {}).then((user) => {
       if(user._id) {
@@ -133,7 +139,13 @@ let token = cookies.get("cookieToken");
     // socket.off("joinRoomLobby")
     // socket.off("leftRoomLobby")
     socket.off("message");
-   }
+    window.removeEventListener('resize', this.updateWindowDimensions);
+  }
+  
+  updateWindowDimensions() {
+    this.setState({ width: window.innerWidth, height: window.innerHeight });
+    console.log(window.innerWidth);
+  }
   handleGoogleLogin = (res) => {
     console.log(`Logged in as ${res.profileObj.name}`);
     const userToken = res.tokenObj.id_token;
@@ -196,6 +208,7 @@ return false;
       );
     }
     
+    let showSidebar = this.state.showSidebar;
     
     return (
 
@@ -203,7 +216,7 @@ return false;
         <CssBaseline />
       <Grid container direction="row" style={{ width: "100%", height: "100%" }}>
         
-        {this.state.showSidebar ? <Box width="320px" height="100%" bgcolor="sidebar" style={{borderRight: "2px solid #3C3C3C"}}>
+        {showSidebar ? <Box width="320px" height="100%" bgcolor="sidebar" style={{borderRight: "2px solid #3C3C3C"}}>
           <Box width="100%" height="calc(100% - 50px)">
           <SideBar changeName={this.changeName} setUserInfo = {this.setUserInfo} users={this.state.users} lobby={this.state.lobby} userName={this.state.userName} userId={this.state.userId} //userLeaderboardData={this.state.userLeaderboardData}
           category={this.state.category} setCategory={this.setCategory}  /></Box>
@@ -241,16 +254,16 @@ return false;
             )}
           </div>
         </Box> : <React.Fragment />}
-        <Box width={this.state.showSidebar ? "calc(100% - 320px)" : "100%"} height="100%" >
+        <Box width={showSidebar ? "calc(100% - 320px)" : "100%"} height="100%" >
           
           <Router>
             <Switch>
               
-              <Lobby exact path="/" userInfo = {this.state.userInfo} setLobby={this.setLobby} setShowSidebar={this.setShowSidebar} url={window.location.pathname} name={this.state.name} userId={this.state.userId} category={this.state.category} redirect={this.redirect} messages={this.state.messages.filter((msg)=>{return msg.roomId === "Lobby"})} resetMessages={()=>{this.setState({messages: []})}} />
+              <Lobby exact path="/" userInfo = {this.state.userInfo} setLobby={this.setLobby} setShowSidebar={this.setShowSidebar} url={window.location.pathname} name={this.state.name} userId={this.state.userId} category={this.state.category} redirect={this.redirect} messages={this.state.messages.filter((msg)=>{return msg.roomId === "Lobby"})} resetMessages={()=>{this.setState({messages: []})}} width={this.state.width} />
               <CategoryDashboard exact path="/dashboard" category={this.state.category} />
               <BotDashboard exact path="/bots" category={this.state.category} />
 
-              <Room exact path="/:roomName" setUsers={this.setUsers} setLobby={this.setLobby} rainbow={this.state.rainbow} changeName={this.changeName} toggleRainbow = {this.toggleRainbow} setCategory={this.setCategory} showSidebar={this.state.showSidebar} setShowSidebar={this.setShowSidebar} url={window.location.pathname} name={this.state.userName} userId={this.state.userId} redirect={this.redirect} messages={this.state.messages} />
+              <Room exact path="/:roomName" setUsers={this.setUsers} setLobby={this.setLobby} rainbow={this.state.rainbow} changeName={this.changeName} toggleRainbow = {this.toggleRainbow} setCategory={this.setCategory} showSidebar={showSidebar} setShowSidebar={this.setShowSidebar} url={window.location.pathname} name={this.state.userName} userId={this.state.userId} redirect={this.redirect} messages={this.state.messages} />
               
               <NotFound default />
             </Switch>
