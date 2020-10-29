@@ -144,7 +144,7 @@ let token = cookies.get("cookieToken");
   
   updateWindowDimensions() {
     this.setState({ width: window.innerWidth, height: window.innerHeight });
-    console.log(window.innerWidth);
+ 
   }
   handleGoogleLogin = (res) => {
     console.log(`Logged in as ${res.profileObj.name}`);
