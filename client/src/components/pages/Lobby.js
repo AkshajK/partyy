@@ -121,7 +121,11 @@ class Lobby extends Component {
         <Grid container direction="row" style={{ width: "100%", height: "100%", overflow:"auto" }}>
         <Box width={rightbar ? "calc(100% - 320px)" : "100%" } height="100%" style={{padding: "30px 40px 40px 40px"}}>
           <Box height="50px" style={{display: "flex", justifyContent: "center", alignItems: "center", paddingBottom: "10px"}}>
-          {this.props.category ? <Button fullWidth style={{backgroundColor: this.state.buttonColor, color: "#FFFFFF"}} onMouseOver={()=>{this.setState({buttonColor:"#43a047"})}} onMouseOut={()=>{this.setState({buttonColor:"#2e7d32"})}} variant="contained" onClick={
+          {this.props.category ? 
+          <React.Fragment>
+
+         
+          <Button fullWidth style={{backgroundColor: this.state.buttonColor, color: "#FFFFFF"}} onMouseOver={()=>{this.setState({buttonColor:"#43a047"})}} onMouseOut={()=>{this.setState({buttonColor:"#2e7d32"})}} variant="contained" onClick={
             () => {
             post("api/createRoom", {categoryId: this.props.category._id}).then((data) => {
               this.props.redirect("/"+data.name)
@@ -129,7 +133,9 @@ class Lobby extends Component {
             }
           }>
     New {this.props.category.name} Game
-          </Button> : <></>}
+          </Button> 
+          
+          </React.Fragment>: <></>}
           </Box>
           <Box height="calc(100% - 50px)">
           <RoomTable users={this.state.users} rooms={this.state.rooms} redirect={this.props.redirect} categoryId={this.props.category ? this.props.category._id : undefined} />

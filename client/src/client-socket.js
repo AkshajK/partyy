@@ -7,6 +7,8 @@ export const socket = socketIOClient(endpoint, {
   reconnectionAttempts: 10,
 
 });
+/*
 socket.on("connect", () => {
   post("/api/initsocket", { socketid: socket.id });
 });
+*/

@@ -53,7 +53,7 @@ deleteBot = (req,res)=>{
   if(!req.user.isSiteAdmin) return;
   User.findByIdAndRemove(req.body.botId).then(() => {
     res.send({});
-    socket.removeUser({_id: req.body.botId, bot: true}, "");
+    socket.removeUser({_id: req.body.botId, bot: true}, "", false);
   })
 }
 

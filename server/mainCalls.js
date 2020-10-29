@@ -92,7 +92,7 @@ Description: Adds message to database if it is from lobby. Emits socket with mes
 */
 joinLobby = (req, res) => {
   
-  Room.find({$or: [{created: {$gte: new Date(new Date().getTime() - 1000*60*60*12)}}, { users: {$ne: []} }]}, (err, rooms) => {
+  Room.find({private: false, $or: [{created: {$gte: new Date(new Date().getTime() - 1000*60*60*12)}}, { users: {$ne: []} }]}, (err, rooms) => {
     Message.find({}, (err, messages) => {
       User.findById(req.user._id).then((me) => {
         me.roomId = "Lobby";

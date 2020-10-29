@@ -20,11 +20,13 @@ const addUser = (user, socket) => {
 
   userToSocketMap[user._id] = socket;
   if(!user.bot) socketToUserMap[socket.id] = user;
+  //console.log("addedUser " + user._id + " " + socket.id);
 };
 
-const removeUser = (user, socket) => {
-  if (user) delete userToSocketMap[user._id];
+const removeUser = (user, socket, server) => {
+  if (user && !server) delete userToSocketMap[user._id];
   if(!user || (user && !user.bot)) delete socketToUserMap[socket.id];
+ // console.log("remove user")
 };
 
 module.exports = {
@@ -45,7 +47,7 @@ module.exports = {
               });
               me.roomId="Offline"
               me.save().then(() => {
-                  removeUser(user, socket);
+                removeUser(user, socket, reason === "server namespace disconnect");
               })
             } else if (me.roomId === "Offline") {
               
@@ -71,7 +73,7 @@ module.exports = {
                   io.in("Room: Lobby").emit("room", savedRoom);
                   me.roomId="Offline"
                   me.save().then(() => {
-                    removeUser(user, socket);
+                    removeUser(user, socket, reason === "server namespace disconnect");
                     done({}, {});
                   })
                   
@@ -83,7 +85,7 @@ module.exports = {
            
           });
         }
-        else removeUser(user, socket);
+        else removeUser(user, socket, reason === "server namespace disconnect");
       });
     });
   },

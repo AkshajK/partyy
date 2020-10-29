@@ -25,8 +25,13 @@ function getOrCreateUserGoogle(user, token) {
   return User.findOne({ googleid: user.sub }).then((existingGoogleUser) => {
     if (existingGoogleUser) return existingGoogleUser;
     return User.findOne({cookieToken: token}).then((existingUser) => {
-      existingUser.googleid = user.sub;
-      return existingUser.save();
+      if(existingUser.googleid) {
+        return getOrCreateUser("!!!!!!!!!", user.sub);
+      } 
+      else {
+        existingUser.googleid = user.sub;
+        return existingUser.save();
+      }
     });
   });
 }
@@ -47,7 +52,7 @@ function googleLogin(req, res) {
 }
 
 // gets user from DB, or makes a new account if it doesn't exist yet
-function getOrCreateUser(token) {
+function getOrCreateUser(token, googleid) {
   // the "sub" field means "subject", which is a unique identifier for each user
   return User.findOne({ cookieToken: token }).then((existingUser) => {
     if (existingUser) return existingUser;
@@ -55,6 +60,7 @@ function getOrCreateUser(token) {
     const newUser = new User({
       name: /*adjectives[random] + " " +*/ animals(),
       cookieToken: Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15),
+      googleid: googleid
     });
 
     return newUser.save();
@@ -69,7 +75,7 @@ Returns: {user: User}
 Description: If req.body.cookieToken, log them in as the user with that cookieToken. Else, create a new User object for them and log them in as that. Return the user object
 */
 function login(req, res) {
-  getOrCreateUser(req.body.cookieToken)
+  getOrCreateUser(req.body.cookieToken, undefined)
     .then((user) => {
       // persist user in the session
       req.session.user = user;
