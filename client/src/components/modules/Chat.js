@@ -64,12 +64,26 @@ export default function Chat(props) {
             props.messages
           ).map((message) => {
             let text = ""
-            if (message.style==="system messagee") {
+            if (message.style==="system message") {
               text = message.message;
             }
             else if (message.style === "correct answer") {
                 text = (
                   <div style={{ color: "#78cb48", display: "inline", fontWeight: "900" }}>
+                    {message.message}
+                  </div>
+                );
+              }
+              else if (message.style === "correct artist") {
+                text = (
+                  <div style={{ color: "#e25141", display: "inline", fontWeight: "900" }}>
+                    {message.message}
+                  </div>
+                );
+              }
+              else if (message.style === "skip") {
+                text = (
+                  <div style={{ color: "#4595EC", display: "inline", fontWeight: "900" }}>
                     {message.message}
                   </div>
                 );

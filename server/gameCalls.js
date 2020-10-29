@@ -209,11 +209,17 @@ var stringSimilarity = require('string-similarity');
 let similarity = (a, b) => {
   return stringSimilarity.compareTwoStrings(a.toLowerCase(),b.toLowerCase());
 }
+let similar = (messageText, title) => {
+  return (similarity(messageText, title) > 0.7) || (similarity(messageText.toLowerCase().replace("fuck", "forget"), title) > 0.7) ||
+  (similarity(messageText.toLowerCase().replace(" and ", " & "), title) > 0.7);
+}
 const guessAnswer = async (userId, name, gameId, msg, bot) => {
   lock.acquire(gameId+"Guess", async function(done) {
   let game = await Game.findById(gameId);
  
     let correct = false
+    let correctArtist = false;
+    let skip = false;
   let messageText = msg.message
   let title = game.song.title.replace(/ \([\s\S]*?\)/g, '')
   if(title.includes("-")) {
@@ -221,9 +227,12 @@ const guessAnswer = async (userId, name, gameId, msg, bot) => {
       title = title.split("-")[0]
     }
   }
-  if(!game.usersAlreadyAnswered.map((e)=>{return e.userId}).includes(userId) && (game.status==="RoundInProgress")&&((game.song.title === messageText)||(similarity(messageText, title) > 0.7) || (similarity(messageText.toLowerCase().replace("fuck", "forget"), title) > 0.7) ||
-  (similarity(messageText.toLowerCase().replace(" and ", " & "), title) > 0.7)))
+  if(!game.usersAlreadyAnswered.filter((e)=>{return e.style === "correct answer" || e.style === "skip"}).map((e)=>{return e.userId}).includes(userId) && (game.status==="RoundInProgress")&&((game.song.title === messageText)|| similar(title, messageText)))
     correct = true;
+  if(!game.usersAlreadyAnswered.filter((e)=>{return e.style === "correct artist" || e.style === "correct answer" || e.style === "skip"}).map((e)=>{return e.userId}).includes(userId) && (game.status==="RoundInProgress")&&((game.song.title === messageText)|| similar(game.song.artist, messageText)))
+    correctArtist = true;
+  if(!game.usersAlreadyAnswered.filter((e)=>{return e.style === "skip" || e.style === "correct answer"}).map((e)=>{return e.userId}).includes(userId) && (game.status==="RoundInProgress")&&((messageText.toLowerCase() === "skip")))
+    skip = true;
 
   if(correct) {
     
@@ -235,11 +244,60 @@ const guessAnswer = async (userId, name, gameId, msg, bot) => {
     let points = 40 + Math.floor(givenPoints) + (numAnswered === 0 ? 30 : (numAnswered === 1 ? 15 : (numAnswered === 2 ? 5 : 0)))
     
     let usersAlreadyAnswered = game.usersAlreadyAnswered
+    let origScore = 0;
+    let myAuthor = usersAlreadyAnswered.find((r)=>{return r.userId === userId});
+    if(myAuthor) {
+      origScore = myAuthor.score;
+      usersAlreadyAnswered = usersAlreadyAnswered.filter((r)=>{return r.userId !== userId})
+    }
     usersAlreadyAnswered.push({
       userId: userId,
       userName: name,
       time: (30-givenPoints).toFixed(3),
-      score: points
+      score: points,
+      style: "correct answer"
+    })
+    
+    let newPlayers = game.players
+    let player = newPlayers.find((p)=>{return p.userId === userId+""})
+    
+    if(!player) {
+      newPlayers.push({
+        userId: userId,
+        score: points-origScore,
+        rated: false
+      })
+    }
+    else {
+      newPlayers = newPlayers.filter((p)=>{return p.userId !== userId+""})
+      newPlayers.push(Object.assign(player, {score: player.score + points-origScore}))
+    }
+
+    let savedGame = undefined;
+    
+   
+    game.correctAnswers = numAnswered + 1
+    game.usersAlreadyAnswered=usersAlreadyAnswered
+    game.players = newPlayers
+
+   
+    savedGame = await game.save();
+    done(undefined, {game: savedGame, style: "correct answer"})
+
+   
+  }
+  else if(correctArtist) {
+    let givenPoints =  Math.floor(((new Date(game.statusChangeTime)).getTime() - (new Date()).getTime()))/1000.0
+   
+    let points = 10 + Math.floor(givenPoints)
+    
+    let usersAlreadyAnswered = game.usersAlreadyAnswered
+    usersAlreadyAnswered.push({
+      userId: userId,
+      userName: name,
+      time: (30-givenPoints).toFixed(3),
+      score: points,
+      style: "correct artist"
     })
     
     let newPlayers = game.players
@@ -258,23 +316,27 @@ const guessAnswer = async (userId, name, gameId, msg, bot) => {
     }
 
     let savedGame = undefined;
-    
-   
-    game.correctAnswers = numAnswered + 1
+
     game.usersAlreadyAnswered=usersAlreadyAnswered
     game.players = newPlayers
 
    
     savedGame = await game.save();
-    done(undefined, savedGame)
-    
-    
-    
-    
+    done(undefined, {game: savedGame, style: "correct artist"})
 
-    
-
-   
+  }
+  else if(skip) {
+    let usersAlreadyAnswered = game.usersAlreadyAnswered
+    usersAlreadyAnswered.push({
+      userId: userId,
+      userName: name,
+      time: 0,
+      score: 0,
+      style: "skip"
+    })
+    game.usersAlreadyAnswered=usersAlreadyAnswered
+    savedGame = await game.save();
+    done(undefined, {game: savedGame, style: "skip"})
   }
   else {
     if(!bot) socket.getIo()
@@ -284,20 +346,21 @@ const guessAnswer = async (userId, name, gameId, msg, bot) => {
       done(undefined, undefined)
   }
 
-}, function(err, savedGame) {
-  if(!savedGame) {
+}, function(err, data) {
+  if(!data) {
     //console.log("Fail")
     return;
   }
+let savedGame = data.game
+let anotherMsg = new Message({
+  roomId: savedGame.roomId,
 
+  message: name + (data.style === "correct answer" ?  " guessed the title!" : (data.style === "correct artist" ? " guessed the artist!" : " skipped")),
+  style: data.style
+});
 socket.getIo()
   .in("Room: " + savedGame.roomId)
-  .emit("message", {
-    roomId: savedGame.roomId,
-
-    message: name + " guessed the title!",
-    style: "correct answer"
-  });
+  .emit("message", anotherMsg);
   
   let hideAnswer = savedGame 
   hideAnswer.song = {songUrl: hideAnswer.song.songUrl}
@@ -307,7 +370,7 @@ socket.getIo()
   .emit("game", hideAnswer);
 
   let waitingOn = Math.ceil(1.0* savedGame.originalLength/2.0 - 0.001)
-  if(savedGame.correctAnswers >= waitingOn) {
+  if(savedGame.correctAnswers + savedGame.usersAlreadyAnswered.filter((r)=>{return r.style==="skip"}).length >= waitingOn) {
     
     endRound(savedGame.roomId, savedGame.roundNumber, savedGame._id+"");
     

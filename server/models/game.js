@@ -24,6 +24,7 @@ const GameSchema = new mongoose.Schema({
       userName: String,
       time: Number,
       score: Number,
+      style: String, //"correct answer", "skip", "correct artist"
     }],
     default: []
   }

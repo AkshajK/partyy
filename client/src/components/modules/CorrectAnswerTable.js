@@ -51,7 +51,9 @@ export default function CorrectAnswerTable(props) {
          
         </TableHead>
         <TableBody>
-          {props.correctAnswers.map((entry) => {return (
+          {props.correctAnswers.filter((entry)=>{return entry.style !== "skip"}).map((entry) => {
+            let color = entry.style === "correct answer" ? "primary" : "error"
+            return (
             <StyledTableRow key={entry.userId} hover >
               <StyledTableCell component="th" scope="row">
               <Typography component={'div'} variant="h5" color="textPrimary">
@@ -59,12 +61,12 @@ export default function CorrectAnswerTable(props) {
               </Typography>
               </StyledTableCell>
               <StyledTableCell align="right">
-                <Typography component={'div'} variant="h5" color="primary">
+                <Typography component={'div'} variant="h5" color={color}>
                 {entry.time + " sec"}
               </Typography>
               </StyledTableCell>
               <StyledTableCell align="right">
-                <Typography component={'div'} variant="h5" color="primary">
+                <Typography component={'div'} variant="h5" color={color}>
                 {"+"+entry.score}
               </Typography>
               </StyledTableCell>
