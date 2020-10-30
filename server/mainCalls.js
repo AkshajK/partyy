@@ -117,10 +117,10 @@ joinLobby = (req, res) => {
               rooms: rooms,
               messages: messages
                 .sort((a, b) => {
-                  b.timestamp - a.timestamp;
+                  a.timestamp - b.timestamp;
                 })
                 .filter((msg, i) => {
-                  return i < 100;
+                  return i >= messages.length - 100;
                 }),
             });
           });

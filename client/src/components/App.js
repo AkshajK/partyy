@@ -226,7 +226,7 @@ class App extends Component {
         </div>
       ),
       onOk() {
-        window.location.href = "/";
+        window.location.reload();
       },
     });
   };

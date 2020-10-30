@@ -31,7 +31,10 @@ botJoinRoom = (req,res)=>{
 
 botLeaveRoom = (req,res)=>{
   if(!req.user.isSiteAdmin) return;
-  roomCalls.leaveRoom({body: {roomId: req.body.roomId}, user: {_id: req.body.botId, bot: true}}, res)
+  Room.findById(req.body.roomId).then((room)=> {
+    roomCalls.leaveRoom({body: {roomId: req.body.roomId, name: room.name}, user: {_id: req.body.botId, bot: true}}, res)
+  })
+  
 }
 
 addBot = (req,res)=>{

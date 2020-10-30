@@ -7,13 +7,17 @@ import ListItem from "@material-ui/core/ListItem";
 import TextField from "@material-ui/core/TextField";
 import Tooltip from "@material-ui/core/Tooltip"
 import ListItemText from "@material-ui/core/ListItemText";
+import {  notification, Space } from 'antd';
 import "../../utilities.css";
 
 //import { redirectPage } from "@reach/router";
 
 import { get, post } from "../../utilities.js";
-
+/*
+(props.categoryName && props.messages.length === 0 ? [{style: "welcome", message: "This is a " + props.categoryName + " room"}, {style: "welcome", message: "Guess the title or artist, or type \'skip\' to skip."}] : []).concat(
+  */
 export default function Chat(props) {
+  
   let crop = (str) => {
     if (str.length > 140) {
       str = str.substring(0, 140);
@@ -21,6 +25,7 @@ export default function Chat(props) {
     return str;
   };
   let getLastFew = (number, array) => {
+    let sortedArray = array.sort((a,b) => {new Date(a.timestamp).getTime() - new Date(b.timestamp).getTime()})
     let newArray = [];
     for (var i = Math.max(array.length - number, 0); i < array.length; i++) {
       newArray.push(array[i]);
@@ -59,10 +64,10 @@ export default function Chat(props) {
         }}
       >
         <List>
-          {(props.messages.length === 0 ? [{style: "welcome", message: "This is a " + props.categoryName + " room"}, {style: "welcome", message: "Guess the title or artist, or type \'skip\' to skip."}] : []).concat(getLastFew(
+          {getLastFew(
             50,
             props.messages
-          )).map((message) => {
+          ).map((message) => {
             let text = ""
             if (message.style==="system message") {
               text = message.message;

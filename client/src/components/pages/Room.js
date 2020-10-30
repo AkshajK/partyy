@@ -25,7 +25,7 @@ class Room extends Component {
     super(props);
     // Initialize Default State
     this.state = {
-
+      buttonColor: "#1565c0"
     };
   }
 
@@ -138,8 +138,19 @@ class Room extends Component {
     }
 
     let playingMusic = this.state.game && (this.state.game.status === "RoundInProgress")
-
-    let editName = <EditName open={this.state.modal} onClose={()=>{this.setState({modal: false})}} title={"Enter your Name"} submitText={"Join the Partyy!"} 
+    let disabled = this.state.game && this.state.game.status !== "RoundFinished"
+    let editName = <EditName open={this.state.modal} onClose={()=>{
+      this.setState({modal: false})
+      if(this.state.category && this.state.category.name) {
+       
+          notification.success({
+            message: 'This is a ' + this.state.category.name + " room",
+            description: 'Guess the title or artist, or type \'skip\' to skip'
+            
+          });
+    
+      }
+    }} title={"Enter your Name"} submitText={"Join the Partyy!"} 
     changeName = {this.props.changeName} onSubmit={()=>{}} userName={this.props.name} />
     
       return (
@@ -150,7 +161,7 @@ class Room extends Component {
         <Typography component={'div'} variant="h5" align="center" color="textPrimary" gutterBottom style={{marginTop: "10px", overflow: "auto", width: "100%"}} noWrap>
           {header}
         </Typography>
-        <Grid container direction="row" style={{width:"calc(100% - 40px)", margin: "20px 20px 20px 20px", height: "calc(100% - 160px)", overflow: "auto"}}   >
+        <Grid container direction="row" style={{width:"calc(100% - 40px)", margin: "20px 20px 20px 20px", height: "calc(100% - 180px)", overflow: "auto"}}   >
           {!(this.state.game && (this.state.game.status === "RoundInProgress" || (this.state.game.correctAnswers > 0))) ?
               <Box width="100%">
               <PlayerTable users={this.state.users} players={(this.state.game || {}).players} />
@@ -166,14 +177,17 @@ class Room extends Component {
           </Box></React.Fragment>}
           
         </Grid>
-        <Button fullWidth 
+        <Box style={{margin: "0px 20px 0px 20px"}}>
+        <Button fullWidth size="large" color="primary" variant="outlined"
               onClick={() => {
                 post("api/startGame")
               }}
-              disabled={this.state.game && this.state.game.status !== "RoundFinished"}
+              disabled={disabled}
             >
-              {"Start " + (this.state.category ? this.state.category.name : "") + " Game"}
+              <Typography noWrap variant="button"> {"Start " + (this.state.category ? this.state.category.name : "") + " Game"} </Typography>
+              
             </Button>
+            </Box>
         </Grid>
         <Box width="320px" height="100%" bgcolor="sidebar">
             <Box  style={Object.assign({height: "240px", overflow: "auto"}, playingMusic?{}:{width: "100%",  display: "flex", justifyContent:"center", alignItems: "center"})}>
