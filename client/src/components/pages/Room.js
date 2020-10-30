@@ -164,16 +164,16 @@ class Room extends Component {
         <Grid container direction="row" style={{width:"calc(100% - 40px)", margin: "20px 20px 20px 20px", height: "calc(100% - 180px)", overflow: "auto"}}   >
           {!(this.state.game && (this.state.game.status === "RoundInProgress" || (this.state.game.correctAnswers > 0))) ?
               <Box width="100%">
-              <PlayerTable users={this.state.users} players={(this.state.game || {}).players} />
+              <PlayerTable userId = {this.props.userId} users={this.state.users} players={(this.state.game || {}).players} />
               </Box>
           :
           <React.Fragment>
           <Box width="calc(40% - 10px)">
-          <PlayerTable users={this.state.users} players={(this.state.game || {}).players} />
+          <PlayerTable userId = {this.props.userId} users={this.state.users} players={(this.state.game || {}).players} />
           </Box>
           <Box width="20px"></Box>
           <Box width="calc(60% - 10px)">
-          <CorrectAnswerTable correctAnswers={this.state.game ? this.state.game.usersAlreadyAnswered : []} />
+          <CorrectAnswerTable userId = {this.props.userId}  correctAnswers={this.state.game ? this.state.game.usersAlreadyAnswered : []} />
           </Box></React.Fragment>}
           
         </Grid>

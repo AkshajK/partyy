@@ -27,6 +27,11 @@ const StyledTableCell = withStyles((theme) => ({
 }))(TableCell);
 
 const StyledTableRow = withStyles((theme) => ({
+  root: {
+    "&.Mui-selected": {
+      backgroundColor: theme.palette.action.hover
+    }
+  }
   /*
   root: {
     '&:nth-of-type(odd)': {
@@ -40,6 +45,7 @@ const useStyles = makeStyles({
     minWidth: 150,
 
   },
+
 });
 export default function PlayerTable(props) {
   const classes = useStyles();
@@ -54,6 +60,8 @@ export default function PlayerTable(props) {
   }
   return 0
   }
+
+
   return (
     <TableContainer component={Paper} style={{maxHeight: "100%", width: "100%"}}>
       <Table className={classes.table} stickyHeader>
@@ -61,8 +69,8 @@ export default function PlayerTable(props) {
          
         </TableHead>
         <TableBody>
-          {props.users.map((user) => (
-            <StyledTableRow key={user.userId} hover >
+          {props.users.map((user)=>{return Object.assign(user, {score: score(user)})}).sort((a,b)=>{return b.score-a.score}).map((user) => (
+            <StyledTableRow key={user.userId} hover selected={props.userId === user.userId} >
               <StyledTableCell component="th" scope="row">
               <Typography component={'div'} variant="h5" color="textPrimary">
                 {user.userName}
@@ -70,7 +78,7 @@ export default function PlayerTable(props) {
               </StyledTableCell>
               <StyledTableCell align="right">
                 <Typography component={'div'} variant="h4" color="primary" style={{fontWeight: 900}}>
-                {score(user)}
+                {user.score}
               </Typography>
                 
               </StyledTableCell>

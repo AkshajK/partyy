@@ -27,6 +27,11 @@ const StyledTableCell = withStyles((theme) => ({
 }))(TableCell);
 
 const StyledTableRow = withStyles((theme) => ({
+  root: {
+    "&.Mui-selected": {
+      backgroundColor: theme.palette.action.hover
+    }
+  }
   /*
   root: {
     '&:nth-of-type(odd)': {
@@ -54,7 +59,7 @@ export default function CorrectAnswerTable(props) {
           {props.correctAnswers.filter((entry)=>{return entry.style !== "skip"}).map((entry) => {
             let color = entry.style === "correct answer" ? "primary" : "error"
             return (
-            <StyledTableRow key={entry.userId} hover >
+            <StyledTableRow key={entry.userId} hover selected={props.userId === entry.userId}>
               <StyledTableCell component="th" scope="row">
               <Typography component={'div'} variant="h5" color="textPrimary">
                 {entry.userName}
