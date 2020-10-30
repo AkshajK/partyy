@@ -63,7 +63,7 @@ module.exports = {
               });*/
               
               Room.findById(me.roomId).then((room) => {
-                lock.acquire("room"+room.roomId, function(done) {
+                lock.acquire("room"+room.name, function(done) {
                 let users = room.users.filter((id) => {
                   return id !== me._id+"";
                 });
