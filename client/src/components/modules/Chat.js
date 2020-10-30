@@ -59,7 +59,7 @@ export default function Chat(props) {
         }}
       >
         <List>
-          {(props.messages.length === 0 ? [{style: "welcome", message: "This is a " + props.categoryName + " room"}, {style: "welcome", message: "Guess a song or artist, or type \'skip\' to skip."}] : []).concat(getLastFew(
+          {(props.messages.length === 0 ? [{style: "welcome", message: "This is a " + props.categoryName + " room"}, {style: "welcome", message: "Guess the title or artist, or type \'skip\' to skip."}] : []).concat(getLastFew(
             50,
             props.messages
           )).map((message) => {
