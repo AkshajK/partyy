@@ -1,9 +1,11 @@
 import React, { Component, useState, useEffect} from "react";
 import Box from "@material-ui/core/Box";
 import Grid from "@material-ui/core/Grid";
-
+import ReplayIcon from '@material-ui/icons/Replay';
+import MusicNoteIcon from '@material-ui/icons/MusicNote';
 import { withStyles, makeStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
+import Tooltip from "@material-ui/core/Tooltip"
 import Typography from '@material-ui/core/Typography';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -17,9 +19,9 @@ import "../../utilities.css";
 import { get, post } from "../../utilities.js";
 const formatDate = (duedate) => {
   const seconds = Math.floor((new Date().getTime() - new Date(duedate).getTime())/1000);
-  if (seconds < 60) return seconds + (seconds===1?" second ago":" seconds ago")
+  if (seconds < 60) return seconds + (seconds===1?" sec ago":" sec ago")
   const minutes = Math.floor(seconds/60)
-  if (minutes < 60) return minutes + (minutes===1?" minute ago":" minutes ago")
+  if (minutes < 60) return minutes + (minutes===1?" min":" min ago")
   const hours = Math.floor(minutes/60)
   if (hours < 24) return hours + (hours===1?" hour ago":" hours ago")
   const days = Math.floor(hours/24)
@@ -81,7 +83,10 @@ export default function RoomTable(props) {
             if(a.users.length > 0 && b.users.length === 0) return -1;
             if(b.users.length > 0 && a.users.length === 0) return 1;
             return new Date(b.created).getTime()- new Date(a.created).getTime()
-          }).map((room) => (
+          }).map((room) => {
+            let iconText = room.closed ? "Completed" : room.status === "Finished" ? "Waiting" : (room.status === "InProgress" ? "In Progress" : room.status);
+            let icon = iconText === "In Progress" ? <MusicNoteIcon /> : <ReplayIcon />
+            return  (
             <StyledTableRow key={room.name} hover onClick={()=>{
               post("api/leaveLobby",{}).then(()=>{
                 props.redirect("/"+room.name)
@@ -101,10 +106,10 @@ export default function RoomTable(props) {
               </StyledTableCell>
               <StyledTableCell align="right">{room.category.name}</StyledTableCell>
               <StyledTableCell align="right">{formatDate(room.created)}</StyledTableCell>
-              <StyledTableCell align="right">{room.closed ? "Completed" : room.status === "Finished" ? "Waiting" : (room.status === "InProgress" ? "In Progress" : room.status) }</StyledTableCell>
+              <StyledTableCell align="right"><Tooltip title={iconText}>{icon}</Tooltip></StyledTableCell>
               
             </StyledTableRow>
-          ))}
+            )})}
         </TableBody>
       </Table>
     </TableContainer>
