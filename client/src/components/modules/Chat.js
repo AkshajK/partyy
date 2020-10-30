@@ -59,10 +59,10 @@ export default function Chat(props) {
         }}
       >
         <List>
-          {getLastFew(
+          {(props.messages.length === 0 ? [{style: "welcome", message: "This is a " + props.categoryName + " room"}, {style: "welcome", message: "Guess a song or artist, or type \'skip\' to skip."}] : []).concat(getLastFew(
             50,
             props.messages
-          ).map((message) => {
+          )).map((message) => {
             let text = ""
             if (message.style==="system message") {
               text = message.message;
@@ -84,6 +84,13 @@ export default function Chat(props) {
               else if (message.style === "skip") {
                 text = (
                   <div style={{ color: "#4595EC", display: "inline", fontWeight: "900" }}>
+                    {message.message}
+                  </div>
+                );
+              }
+              else if (message.style === "welcome") {
+                text = (
+                  <div style={{ color: "#A0A0A0", display: "inline", fontWeight: "900" }}>
                     {message.message}
                   </div>
                 );

@@ -370,7 +370,7 @@ socket.getIo()
   .emit("game", hideAnswer);
 
   let waitingOn = Math.ceil(1.0* savedGame.originalLength/2.0 - 0.001)
-  if(savedGame.correctAnswers + savedGame.usersAlreadyAnswered.filter((r)=>{return r.style==="skip"}).length >= waitingOn) {
+  if(savedGame.correctAnswers >= waitingOn  ||  (savedGame.correctAnswers + savedGame.usersAlreadyAnswered.filter((r)=>{return r.style==="skip"}).length >= savedGame.originalLength)) {
     
     endRound(savedGame.roomId, savedGame.roundNumber, savedGame._id+"");
     
