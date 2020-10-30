@@ -72,8 +72,8 @@ export default function RoomTable(props) {
             <StyledTableCell>Host</StyledTableCell>
             <StyledTableCell align="right">Players</StyledTableCell>
             <StyledTableCell align="right">Mode</StyledTableCell>
-            <StyledTableCell align="right">Status</StyledTableCell>
             <StyledTableCell align="right">Last Active</StyledTableCell>
+            <StyledTableCell align="right">Status</StyledTableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -100,8 +100,9 @@ export default function RoomTable(props) {
               
               </StyledTableCell>
               <StyledTableCell align="right">{room.category.name}</StyledTableCell>
-              <StyledTableCell align="right">{room.closed ? "Completed" : room.status === "Finished" ? "Waiting" : (room.status === "InProgress" ? "In Progress" : room.status) }</StyledTableCell>
               <StyledTableCell align="right">{formatDate(room.created)}</StyledTableCell>
+              <StyledTableCell align="right">{room.closed ? "Completed" : room.status === "Finished" ? "Waiting" : (room.status === "InProgress" ? "In Progress" : room.status) }</StyledTableCell>
+              
             </StyledTableRow>
           ))}
         </TableBody>
