@@ -78,6 +78,8 @@ export default function RoomTable(props) {
         </TableHead>
         <TableBody>
           {props.rooms.sort((a,b)=>{
+            if(a.users.length > 0 && b.users.length === 0) return -1;
+            if(b.users.length > 0 && a.users.length === 0) return 1;
             return new Date(b.created).getTime()- new Date(a.created).getTime()
           }).map((room) => (
             <StyledTableRow key={room.name} hover onClick={()=>{
