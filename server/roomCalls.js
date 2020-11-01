@@ -102,9 +102,19 @@ joinRoom = (req, res) => {
                   room.users = roomUsers;
                   room.save().then((savedRoom) => {
                     if (savedRoom.users.length !== users.length) {
-                      console.log("ERROR: USERS DIFFER");
-                      console.log(savedRoom.users);
-                      console.log(users);
+                      console.log("ERROR: USERS DIFFER " + savedRoom.users.length + " " + users.length);
+                      users.forEach((o)=>{
+                        if(!savedRoom.users.includes(o._id+"")) {
+                          User.findById(o._id).then((u)=>{
+                            u.roomId = "Offline"
+                            u.save().then(()=>{
+                              console.log("Set " + o._id + " to Inactive");
+                            });
+                          })
+                        }
+                      })
+                     // console.log(savedRoom.users);
+                     // console.log(users);
                     }
                     if(!savedRoom.private) {
                     (socket

@@ -291,7 +291,7 @@ const guessAnswer = async (userId, name, gameId, msg, bot) => {
   else if(correctArtist) {
     let givenPoints =  Math.floor(((new Date(game.statusChangeTime)).getTime() - (new Date()).getTime()))/1000.0
    
-    let points = 10 + Math.floor(givenPoints)
+    let points = 25 + Math.floor(givenPoints)
     
     let usersAlreadyAnswered = game.usersAlreadyAnswered
     usersAlreadyAnswered.push({

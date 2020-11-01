@@ -33,6 +33,7 @@ class Room extends Component {
 
     post("api/joinRoom", { name: this.props.computedMatch.params.roomName }).then((data) => {
       if (!data.exists) {
+        this.props.error();
         return;
       }
       

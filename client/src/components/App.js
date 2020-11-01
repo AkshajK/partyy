@@ -335,6 +335,7 @@ class App extends Component {
                   userId={this.state.userId}
                   category={this.state.category}
                   redirect={this.redirect}
+                  error={this.error}
                   messages={this.state.messages.filter((msg) => {
                     return msg.roomId === "Lobby";
                   })}
@@ -353,6 +354,7 @@ class App extends Component {
                   setLobby={this.setLobby}
                   rainbow={this.state.rainbow}
                   changeName={this.changeName}
+                  error={this.error}
                   toggleRainbow={this.toggleRainbow}
                   setCategory={this.setCategory}
                   showSidebar={showSidebar}

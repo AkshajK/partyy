@@ -30,6 +30,7 @@ class Lobby extends Component {
     this.props.setShowSidebar(true)
     post("api/joinLobby", {}).then((data) => {
       if(data.disconnect) {
+        this.props.error();
         return;
       }
 
