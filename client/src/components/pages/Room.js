@@ -156,7 +156,7 @@ class Room extends Component {
       }
     }} title={"Enter your Name"} submitText={"Join the Partyy!"} 
     changeName = {this.props.changeName} onSubmit={()=>{}} userName={this.props.name} />
-    let music =  <Music modal={this.state.modal} setModal={()=>{this.setState({modal: false})}} url = {this.state.game.song.songUrl} visual={window.AudioContext && !this.props.mobile ? true : false} mobile={this.props.mobile} pauseButton={window.AudioContext && !this.props.mobile ? false : true} rainbow={this.props.rainbow} toggleRainbow={()=>{
+    let music =  <Music modal={this.state.modal} setModal={()=>{this.setState({modal: false})}} url = {this.state.game ? (this.state.game.song ? this.state.game.song.songUrl : undefined) : undefined} visual={window.AudioContext && !this.props.mobile ? true : false} mobile={this.props.mobile} pauseButton={window.AudioContext && !this.props.mobile ? false : true} rainbow={this.props.rainbow} toggleRainbow={()=>{
       notification.success({
         message: 'Switched to ' + (!this.props.rainbow ? 'Rainbow' : 'Blue') + ' Mode',
         
