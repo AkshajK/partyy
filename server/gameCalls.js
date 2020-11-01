@@ -222,8 +222,10 @@ const guessAnswer = async (userId, name, gameId, msg, bot) => {
     let skip = false;
   let messageText = msg.message
   let title = game.song.title.replace(/ \([\s\S]*?\)/g, '')
+  let title = game.song.title.replace(/ \[[\s\S]*?\]/g, '')
   if(title.includes("-")) {
-    if(title.split("-")[1].includes("Radio Edit") || title.split("-")[1].includes("Remix") || title.split("-")[1].includes("Remastered") || title.split("-")[1].includes("Cover") || title.split("-")[1].includes("From")) {
+    let lowercase = title.split("-")[1].toLowerCase();
+    if(lowercase.includes("radio edit") || lowercase.includes("remix") || lowercase.includes("remastered") || lowercase.includes("cover") || lowercase.includes("from") || lowercase.includes("version") || lowercase.includes("track") || lowercase.includes("recorded")) {
       title = title.split("-")[0]
     }
   }
