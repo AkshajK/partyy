@@ -156,7 +156,13 @@ class Room extends Component {
       }
     }} title={"Enter your Name"} submitText={"Join the Partyy!"} 
     changeName = {this.props.changeName} onSubmit={()=>{}} userName={this.props.name} />
-    
+    let music =  <Music modal={this.state.modal} setModal={()=>{this.setState({modal: false})}} url = {this.state.game.song.songUrl} visual={window.AudioContext && !this.props.mobile ? true : false} mobile={this.props.mobile} pauseButton={window.AudioContext && !this.props.mobile ? false : true} rainbow={this.props.rainbow} toggleRainbow={()=>{
+      notification.success({
+        message: 'Switched to ' + (!this.props.rainbow ? 'Rainbow' : 'Blue') + ' Mode',
+        
+      });
+      this.props.toggleRainbow()
+    }}   />
       return (
       <Grid container direction="row" style={{ width: "100%", height: "100%", overflow:"auto" }}>
         <Grid container direction="column" style={{width: this.props.mobile ? "100%" : "calc(100% - 320px)", height: "100%"}}>
@@ -189,6 +195,9 @@ class Room extends Component {
         {this.props.mobile ? 
         <Grid container fullWidth spacing={2} direction="row">
           <Grid  item xs={6}>
+            {playingMusic ? 
+            music
+            :
           <Button fullWidth size="large" color="primary" variant="outlined"
               onClick={() => {
                 post("api/startGame")
@@ -198,7 +207,7 @@ class Room extends Component {
               
               <Typography noWrap variant="button"> {"Start Game"} </Typography>
              
-            </Button>
+            </Button>}
           </Grid>
           <Grid item xs={6}>
           <Button fullWidth size="large" color="primary" variant="outlined"
@@ -232,13 +241,7 @@ class Room extends Component {
         
         <Box width={this.props.mobile ? "0px" : "320px"} height="100%" bgcolor="sidebar">
             <Box  style={Object.assign({height: "240px", overflow: "auto"}, playingMusic?{}:{width: "100%",  display: "flex", justifyContent:"center", alignItems: "center"})}>
-              {playingMusic && !this.state.modal ?                 <Music modal={this.state.modal} setModal={()=>{this.setState({modal: false})}} url = {this.state.game.song.songUrl} visual={window.AudioContext && !this.props.mobile ? true : false} mobile={this.props.mobile} pauseButton={false} rainbow={this.props.rainbow} toggleRainbow={()=>{
-                notification.success({
-                  message: 'Switched to ' + (!this.props.rainbow ? 'Rainbow' : 'Blue') + ' Mode',
-                  
-                });
-                this.props.toggleRainbow()
-              }}   />
+              {playingMusic && !this.state.modal ?  (this.props.mobile ? <></>:music)
 : <img src = {img} height={"240px"} />}
             </Box> 
             {this.props.mobile ? <React.Fragment /> : <React.Fragment>
