@@ -211,7 +211,7 @@ class Room extends Component {
               onClick={() => {
                 this.props.setShowSidebar(!this.props.showSidebar)
               }}
-              disabled={!this.state.game || !this.state.game.song}
+           
             >
               {this.props.showSidebar ? "Hide Leaderboard" : "Show Leaderboard"}
             </Button>
