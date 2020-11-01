@@ -98,6 +98,10 @@ joinLobby = (req, res) => {
         me.roomId = "Lobby";
         me.save().then(() => {
           User.find({ roomId: "Lobby" }, (err, users) => {
+            if(!socket.getSocketFromUserID(req.user._id)) {
+              res.send({disconnect: true});
+              return;
+            }
             socket.getSocketFromUserID(req.user._id).join("Room: Lobby");
             socket.getSocketFromUserID(req.user._id).to("Room: Lobby").emit("joinedLobby", {
               userId: me._id,

@@ -66,7 +66,13 @@ joinRoom = (req, res) => {
             me.save().then(() => {
               User.find({ roomId: room._id }, (err, users) => {
                 Category.findById(room.category._id).then((category) => {
-                  if(!req.user.bot) socket.getSocketFromUserID(req.user._id).join("Room: " + room._id);
+                  if(!req.user.bot) {
+                    if(!socket.getSocketFromUserID(req.user._id)) {
+                      res.send({exists: false});
+                      return;
+                    }
+                    socket.getSocketFromUserID(req.user._id).join("Room: " + room._id);
+                  }
 
                   
                   (socket

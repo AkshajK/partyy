@@ -29,7 +29,9 @@ class Lobby extends Component {
     // remember -- api calls go here!
     this.props.setShowSidebar(true)
     post("api/joinLobby", {}).then((data) => {
-      
+      if(data.disconnect) {
+        return;
+      }
 
       this.props.resetMessages()
       this.setState({
