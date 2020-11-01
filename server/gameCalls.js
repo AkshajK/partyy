@@ -22,6 +22,10 @@ startGame = (req, res) => {
   
     //console.log(songs)
   User.findById(req.user._id).then((user) => {
+    if(user.roomId === "Offline") {
+      res.send({error: true});
+      return;
+    }
     Room.findById(user.roomId).then((room) => {
       Song.aggregate([{$match:
         {categoryId: room.category._id+"" } }, { $sample: { size: 1 } }], async (err, songs) => {

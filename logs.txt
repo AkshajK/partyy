@@ -1,0 +1,1500 @@
+2020-11-01T21:15:45.379367+00:00 app[web.1]: 
+2020-11-01T21:15:45.379386+00:00 app[web.1]: /app/node_modules/mongoose/lib/error/cast.js:39
+2020-11-01T21:15:45.379387+00:00 app[web.1]: Error.captureStackTrace(this);
+2020-11-01T21:15:45.379388+00:00 app[web.1]: ^
+2020-11-01T21:15:45.421672+00:00 app[web.1]: MongooseError [CastError]: Cast to ObjectId failed for value "Offline" at path "_id" for model "room"
+2020-11-01T21:15:45.421674+00:00 app[web.1]: at new CastError (/app/node_modules/mongoose/lib/error/cast.js:39:11)
+2020-11-01T21:15:45.421674+00:00 app[web.1]: at ObjectId.cast (/app/node_modules/mongoose/lib/schema/objectid.js:246:11)
+2020-11-01T21:15:45.421675+00:00 app[web.1]: at ObjectId.SchemaType.applySetters (/app/node_modules/mongoose/lib/schematype.js:975:12)
+2020-11-01T21:15:45.421675+00:00 app[web.1]: at ObjectId.SchemaType._castForQuery (/app/node_modules/mongoose/lib/schematype.js:1389:15)
+2020-11-01T21:15:45.421675+00:00 app[web.1]: at ObjectId.SchemaType.castForQuery (/app/node_modules/mongoose/lib/schematype.js:1379:15)
+2020-11-01T21:15:45.421676+00:00 app[web.1]: at ObjectId.SchemaType.castForQueryWrapper (/app/node_modules/mongoose/lib/schematype.js:1358:15)
+2020-11-01T21:15:45.421676+00:00 app[web.1]: at cast (/app/node_modules/mongoose/lib/cast.js:315:32)
+2020-11-01T21:15:45.421677+00:00 app[web.1]: at model.Query.Query.cast (/app/node_modules/mongoose/lib/query.js:4683:12)
+2020-11-01T21:15:45.421677+00:00 app[web.1]: at model.Query.Query._castConditions (/app/node_modules/mongoose/lib/query.js:1861:10)
+2020-11-01T21:15:45.421677+00:00 app[web.1]: at model.Query.<anonymous> (/app/node_modules/mongoose/lib/query.js:2116:8)
+2020-11-01T21:15:45.421678+00:00 app[web.1]: at model.Query._wrappedThunk [as _findOne] (/app/node_modules/mongoose/lib/helpers/query/wrapThunk.js:16:8)
+2020-11-01T21:15:45.421678+00:00 app[web.1]: at /app/node_modules/kareem/index.js:369:33
+2020-11-01T21:15:45.421678+00:00 app[web.1]: at processTicksAndRejections (node:internal/process/task_queues:75:11) {
+2020-11-01T21:15:45.421679+00:00 app[web.1]: stringValue: '"Offline"',
+2020-11-01T21:15:45.421679+00:00 app[web.1]: kind: 'ObjectId',
+2020-11-01T21:15:45.421679+00:00 app[web.1]: value: 'Offline',
+2020-11-01T21:15:45.421680+00:00 app[web.1]: path: '_id',
+2020-11-01T21:15:45.421680+00:00 app[web.1]: reason: Error: Argument passed in must be a single String of 12 bytes or a string of 24 hex characters
+2020-11-01T21:15:45.421680+00:00 app[web.1]: at new ObjectID (/app/node_modules/bson/lib/bson/objectid.js:59:11)
+2020-11-01T21:15:45.421680+00:00 app[web.1]: at castObjectId (/app/node_modules/mongoose/lib/cast/objectid.js:25:12)
+2020-11-01T21:15:45.421681+00:00 app[web.1]: at ObjectId.cast (/app/node_modules/mongoose/lib/schema/objectid.js:244:12)
+2020-11-01T21:15:45.421681+00:00 app[web.1]: at ObjectId.SchemaType.applySetters (/app/node_modules/mongoose/lib/schematype.js:975:12)
+2020-11-01T21:15:45.421681+00:00 app[web.1]: at ObjectId.SchemaType._castForQuery (/app/node_modules/mongoose/lib/schematype.js:1389:15)
+2020-11-01T21:15:45.421681+00:00 app[web.1]: at ObjectId.SchemaType.castForQuery (/app/node_modules/mongoose/lib/schematype.js:1379:15)
+2020-11-01T21:15:45.421682+00:00 app[web.1]: at ObjectId.SchemaType.castForQueryWrapper (/app/node_modules/mongoose/lib/schematype.js:1358:15)
+2020-11-01T21:15:45.421682+00:00 app[web.1]: at cast (/app/node_modules/mongoose/lib/cast.js:315:32)
+2020-11-01T21:15:45.421682+00:00 app[web.1]: at model.Query.Query.cast (/app/node_modules/mongoose/lib/query.js:4683:12)
+2020-11-01T21:15:45.421682+00:00 app[web.1]: at model.Query.Query._castConditions (/app/node_modules/mongoose/lib/query.js:1861:10)
+2020-11-01T21:15:45.421682+00:00 app[web.1]: at model.Query.<anonymous> (/app/node_modules/mongoose/lib/query.js:2116:8)
+2020-11-01T21:15:45.421683+00:00 app[web.1]: at model.Query._wrappedThunk [as _findOne] (/app/node_modules/mongoose/lib/helpers/query/wrapThunk.js:16:8)
+2020-11-01T21:15:45.421683+00:00 app[web.1]: at /app/node_modules/kareem/index.js:369:33
+2020-11-01T21:15:45.421683+00:00 app[web.1]: at processTicksAndRejections (node:internal/process/task_queues:75:11),
+2020-11-01T21:15:45.421683+00:00 app[web.1]: model: <ref *2> [Function: model] {
+2020-11-01T21:15:45.421684+00:00 app[web.1]: hooks: Kareem {
+2020-11-01T21:15:45.421684+00:00 app[web.1]: _pres: Map(2) {
+2020-11-01T21:15:45.421684+00:00 app[web.1]: 'save' => [
+2020-11-01T21:15:45.421684+00:00 app[web.1]: { fn: [Function: validateBeforeSave], isAsync: false },
+2020-11-01T21:15:45.421685+00:00 app[web.1]: { fn: [Function (anonymous)], isAsync: false },
+2020-11-01T21:15:45.421685+00:00 app[web.1]: { fn: [Function (anonymous)], isAsync: false },
+2020-11-01T21:15:45.421685+00:00 app[web.1]: numAsync: undefined
+2020-11-01T21:15:45.421686+00:00 app[web.1]: ],
+2020-11-01T21:15:45.421686+00:00 app[web.1]: 'remove' => [
+2020-11-01T21:15:45.421686+00:00 app[web.1]: { fn: [Function (anonymous)], isAsync: false },
+2020-11-01T21:15:45.421686+00:00 app[web.1]: { fn: [Function (anonymous)], isAsync: false },
+2020-11-01T21:15:45.421687+00:00 app[web.1]: numAsync: undefined
+2020-11-01T21:15:45.421687+00:00 app[web.1]: ]
+2020-11-01T21:15:45.421687+00:00 app[web.1]: },
+2020-11-01T21:15:45.421687+00:00 app[web.1]: _posts: Map(2) {
+2020-11-01T21:15:45.421687+00:00 app[web.1]: 'save' => [
+2020-11-01T21:15:45.421688+00:00 app[web.1]: { fn: [Function (anonymous)] },
+2020-11-01T21:15:45.421688+00:00 app[web.1]: { fn: [Function (anonymous)] }
+2020-11-01T21:15:45.421688+00:00 app[web.1]: ],
+2020-11-01T21:15:45.421688+00:00 app[web.1]: 'init' => [ { fn: [Function (anonymous)] } ]
+2020-11-01T21:15:45.421688+00:00 app[web.1]: }
+2020-11-01T21:15:45.421689+00:00 app[web.1]: },
+2020-11-01T21:15:45.421689+00:00 app[web.1]: base: <ref *1> Mongoose {
+2020-11-01T21:15:45.421713+00:00 app[web.1]: connections: [
+2020-11-01T21:15:45.421713+00:00 app[web.1]: <ref *3> NativeConnection {
+2020-11-01T21:15:45.421713+00:00 app[web.1]: base: [Circular *1],
+2020-11-01T21:15:45.421713+00:00 app[web.1]: collections: {
+2020-11-01T21:15:45.421714+00:00 app[web.1]: users: [NativeCollection],
+2020-11-01T21:15:45.421714+00:00 app[web.1]: games: [NativeCollection],
+2020-11-01T21:15:45.421714+00:00 app[web.1]: songs: [NativeCollection],
+2020-11-01T21:15:45.421714+00:00 app[web.1]: messages: [NativeCollection],
+2020-11-01T21:15:45.421715+00:00 app[web.1]: rooms: [NativeCollection],
+2020-11-01T21:15:45.421715+00:00 app[web.1]: categories: [NativeCollection]
+2020-11-01T21:15:45.421715+00:00 app[web.1]: },
+2020-11-01T21:15:45.421715+00:00 app[web.1]: models: {
+2020-11-01T21:15:45.421716+00:00 app[web.1]: user: [Function],
+2020-11-01T21:15:45.421716+00:00 app[web.1]: game: [Function],
+2020-11-01T21:15:45.421716+00:00 app[web.1]: song: [Function],
+2020-11-01T21:15:45.421716+00:00 app[web.1]: message: [Function],
+2020-11-01T21:15:45.421716+00:00 app[web.1]: room: [Circular *2],
+2020-11-01T21:15:45.421717+00:00 app[web.1]: category: [Function]
+2020-11-01T21:15:45.421717+00:00 app[web.1]: },
+2020-11-01T21:15:45.421717+00:00 app[web.1]: config: { autoIndex: true },
+2020-11-01T21:15:45.421717+00:00 app[web.1]: replica: false,
+2020-11-01T21:15:45.421717+00:00 app[web.1]: options: null,
+2020-11-01T21:15:45.421717+00:00 app[web.1]: otherDbs: [],
+2020-11-01T21:15:45.421718+00:00 app[web.1]: relatedDbs: {},
+2020-11-01T21:15:45.421719+00:00 app[web.1]: states: [Object: null prototype] {
+2020-11-01T21:15:45.421723+00:00 app[web.1]: '0': 'disconnected',
+2020-11-01T21:15:45.421724+00:00 app[web.1]: '1': 'connected',
+2020-11-01T21:15:45.421724+00:00 app[web.1]: '2': 'connecting',
+2020-11-01T21:15:45.421724+00:00 app[web.1]: '3': 'disconnecting',
+2020-11-01T21:15:45.421724+00:00 app[web.1]: '99': 'uninitialized',
+2020-11-01T21:15:45.421725+00:00 app[web.1]: disconnected: 0,
+2020-11-01T21:15:45.421725+00:00 app[web.1]: connected: 1,
+2020-11-01T21:15:45.421725+00:00 app[web.1]: connecting: 2,
+2020-11-01T21:15:45.421726+00:00 app[web.1]: disconnecting: 3,
+2020-11-01T21:15:45.421726+00:00 app[web.1]: uninitialized: 99
+2020-11-01T21:15:45.421726+00:00 app[web.1]: },
+2020-11-01T21:15:45.421726+00:00 app[web.1]: _readyState: 1,
+2020-11-01T21:15:45.421727+00:00 app[web.1]: _closeCalled: false,
+2020-11-01T21:15:45.421727+00:00 app[web.1]: _hasOpened: true,
+2020-11-01T21:15:45.421727+00:00 app[web.1]: plugins: [],
+2020-11-01T21:15:45.421727+00:00 app[web.1]: _listening: false,
+2020-11-01T21:15:45.421728+00:00 app[web.1]: _connectionOptions: {
+2020-11-01T21:15:45.421728+00:00 app[web.1]: useNewUrlParser: true,
+2020-11-01T21:15:45.421728+00:00 app[web.1]: useUnifiedTopology: true,
+2020-11-01T21:15:45.421728+00:00 app[web.1]: promiseLibrary: [Function: Promise],
+2020-11-01T21:15:45.421728+00:00 app[web.1]: driverInfo: [Object]
+2020-11-01T21:15:45.421729+00:00 app[web.1]: },
+2020-11-01T21:15:45.421729+00:00 app[web.1]: '$dbName': 'prod',
+2020-11-01T21:15:45.421729+00:00 app[web.1]: client: MongoClient {
+2020-11-01T21:15:45.421729+00:00 app[web.1]: _events: [Object: null prototype],
+2020-11-01T21:15:45.421729+00:00 app[web.1]: _eventsCount: 2,
+2020-11-01T21:15:45.421729+00:00 app[web.1]: _maxListeners: undefined,
+2020-11-01T21:15:45.421730+00:00 app[web.1]: s: [Object],
+2020-11-01T21:15:45.421730+00:00 app[web.1]: topology: [NativeTopology],
+2020-11-01T21:15:45.421730+00:00 app[web.1]: [Symbol(kCapture)]: false
+2020-11-01T21:15:45.421730+00:00 app[web.1]: },
+2020-11-01T21:15:45.421730+00:00 app[web.1]: '$initialConnection': Promise { [Circular *3] },
+2020-11-01T21:15:45.421731+00:00 app[web.1]: name: 'prod',
+2020-11-01T21:15:45.421731+00:00 app[web.1]: host: 'cluster0-shard-00-02.qsh1v.mongodb.net',
+2020-11-01T21:15:45.421731+00:00 app[web.1]: port: 27017,
+2020-11-01T21:15:45.421731+00:00 app[web.1]: user: 'PartyyAdmins',
+2020-11-01T21:15:45.421731+00:00 app[web.1]: pass: 'Pv1j5EsP0kpn29rj',
+2020-11-01T21:15:45.421731+00:00 app[web.1]: db: Db {
+2020-11-01T21:15:45.421732+00:00 app[web.1]: _events: [Object: null prototype],
+2020-11-01T21:15:45.421732+00:00 app[web.1]: _eventsCount: 3,
+2020-11-01T21:15:45.421732+00:00 app[web.1]: _maxListeners: undefined,
+2020-11-01T21:15:45.421732+00:00 app[web.1]: s: [Object],
+2020-11-01T21:15:45.421732+00:00 app[web.1]: serverConfig: [Getter],
+2020-11-01T21:15:45.421732+00:00 app[web.1]: bufferMaxEntries: [Getter],
+2020-11-01T21:15:45.421732+00:00 app[web.1]: databaseName: [Getter],
+2020-11-01T21:15:45.421733+00:00 app[web.1]: [Symbol(kCapture)]: false
+2020-11-01T21:15:45.421733+00:00 app[web.1]: }
+2020-11-01T21:15:45.421733+00:00 app[web.1]: }
+2020-11-01T21:15:45.421733+00:00 app[web.1]: ],
+2020-11-01T21:15:45.421733+00:00 app[web.1]: models: <ref *4> {
+2020-11-01T21:15:45.421733+00:00 app[web.1]: user: <ref *5> [Function: model] {
+2020-11-01T21:15:45.421734+00:00 app[web.1]: hooks: Kareem { _pres: [Map], _posts: [Map] },
+2020-11-01T21:15:45.421734+00:00 app[web.1]: base: [Circular *1],
+2020-11-01T21:15:45.421734+00:00 app[web.1]: modelName: 'user',
+2020-11-01T21:15:45.421734+00:00 app[web.1]: model: [Function: model],
+2020-11-01T21:15:45.421734+00:00 app[web.1]: db: <ref *3> NativeConnection {
+2020-11-01T21:15:45.421734+00:00 app[web.1]: base: [Circular *1],
+2020-11-01T21:15:45.421735+00:00 app[web.1]: collections: [Object],
+2020-11-01T21:15:45.421735+00:00 app[web.1]: models: [Circular *4],
+2020-11-01T21:15:45.421735+00:00 app[web.1]: config: [Object],
+2020-11-01T21:15:45.421735+00:00 app[web.1]: replica: false,
+2020-11-01T21:15:45.421735+00:00 app[web.1]: options: null,
+2020-11-01T21:15:45.421735+00:00 app[web.1]: otherDbs: [],
+2020-11-01T21:15:45.421736+00:00 app[web.1]: relatedDbs: {},
+2020-11-01T21:15:45.421736+00:00 app[web.1]: states: [Object: null prototype],
+2020-11-01T21:15:45.421736+00:00 app[web.1]: _readyState: 1,
+2020-11-01T21:15:45.421736+00:00 app[web.1]: _closeCalled: false,
+2020-11-01T21:15:45.421736+00:00 app[web.1]: _hasOpened: true,
+2020-11-01T21:15:45.421736+00:00 app[web.1]: plugins: [],
+2020-11-01T21:15:45.421736+00:00 app[web.1]: _listening: false,
+2020-11-01T21:15:45.421737+00:00 app[web.1]: _connectionOptions: [Object],
+2020-11-01T21:15:45.421737+00:00 app[web.1]: '$dbName': 'prod',
+2020-11-01T21:15:45.421737+00:00 app[web.1]: client: [MongoClient],
+2020-11-01T21:15:45.421737+00:00 app[web.1]: '$initialConnection': [Promise],
+2020-11-01T21:15:45.421737+00:00 app[web.1]: name: 'prod',
+2020-11-01T21:15:45.421737+00:00 app[web.1]: host: 'cluster0-shard-00-02.qsh1v.mongodb.net',
+2020-11-01T21:15:45.421738+00:00 app[web.1]: port: 27017,
+2020-11-01T21:15:45.421738+00:00 app[web.1]: user: 'PartyyAdmins',
+2020-11-01T21:15:45.421738+00:00 app[web.1]: pass: 'Pv1j5EsP0kpn29rj',
+2020-11-01T21:15:45.421738+00:00 app[web.1]: db: [Db]
+2020-11-01T21:15:45.421738+00:00 app[web.1]: },
+2020-11-01T21:15:45.421738+00:00 app[web.1]: discriminators: undefined,
+2020-11-01T21:15:45.421738+00:00 app[web.1]: events: EventEmitter {
+2020-11-01T21:15:45.421739+00:00 app[web.1]: _events: [Object: null prototype] {},
+2020-11-01T21:15:45.421739+00:00 app[web.1]: _eventsCount: 0,
+2020-11-01T21:15:45.421739+00:00 app[web.1]: _maxListeners: undefined,
+2020-11-01T21:15:45.421739+00:00 app[web.1]: [Symbol(kCapture)]: false
+2020-11-01T21:15:45.421740+00:00 app[web.1]: },
+2020-11-01T21:15:45.421740+00:00 app[web.1]: '$appliedMethods': true,
+2020-11-01T21:15:45.421740+00:00 app[web.1]: '$appliedHooks': true,
+2020-11-01T21:15:45.421740+00:00 app[web.1]: _middleware: Kareem { _pres: [Map], _posts: [Map] },
+2020-11-01T21:15:45.421741+00:00 app[web.1]: '$__insertMany': [Function (anonymous)],
+2020-11-01T21:15:45.421741+00:00 app[web.1]: schema: Schema {
+2020-11-01T21:15:45.421741+00:00 app[web.1]: obj: [Object],
+2020-11-01T21:15:45.421741+00:00 app[web.1]: paths: [Object],
+2020-11-01T21:15:45.421742+00:00 app[web.1]: aliases: {},
+2020-11-01T21:15:45.421742+00:00 app[web.1]: subpaths: [Object],
+2020-11-01T21:15:45.421742+00:00 app[web.1]: virtuals: [Object],
+2020-11-01T21:15:45.421742+00:00 app[web.1]: singleNestedPaths: {},
+2020-11-01T21:15:45.421742+00:00 app[web.1]: nested: {},
+2020-11-01T21:15:45.421743+00:00 app[web.1]: inherits: {},
+2020-11-01T21:15:45.421743+00:00 app[web.1]: callQueue: [],
+2020-11-01T21:15:45.421743+00:00 app[web.1]: _indexes: [],
+2020-11-01T21:15:45.421743+00:00 app[web.1]: methods: {},
+2020-11-01T21:15:45.421743+00:00 app[web.1]: methodOptions: {},
+2020-11-01T21:15:45.421743+00:00 app[web.1]: statics: {},
+2020-11-01T21:15:45.421743+00:00 app[web.1]: tree: [Object],
+2020-11-01T21:15:45.421744+00:00 app[web.1]: query: {},
+2020-11-01T21:15:45.421744+00:00 app[web.1]: childSchemas: [Array],
+2020-11-01T21:15:45.421744+00:00 app[web.1]: plugins: [Array],
+2020-11-01T21:15:45.421744+00:00 app[web.1]: '$id': 1,
+2020-11-01T21:15:45.421744+00:00 app[web.1]: s: [Object],
+2020-11-01T21:15:45.421744+00:00 app[web.1]: _userProvidedOptions: {},
+2020-11-01T21:15:45.421744+00:00 app[web.1]: options: [Object],
+2020-11-01T21:15:45.421745+00:00 app[web.1]: '$globalPluginsApplied': true,
+2020-11-01T21:15:45.421745+00:00 app[web.1]: _requiredpaths: []
+2020-11-01T21:15:45.421745+00:00 app[web.1]: },
+2020-11-01T21:15:45.421745+00:00 app[web.1]: collection: NativeCollection {
+2020-11-01T21:15:45.421745+00:00 app[web.1]: collection: [Collection],
+2020-11-01T21:15:45.421745+00:00 app[web.1]: Promise: [Function: Promise],
+2020-11-01T21:15:45.421746+00:00 app[web.1]: opts: [Object],
+2020-11-01T21:15:45.421746+00:00 app[web.1]: name: 'users',
+2020-11-01T21:15:45.421746+00:00 app[web.1]: collectionName: 'users',
+2020-11-01T21:15:45.421746+00:00 app[web.1]: conn: [NativeConnection],
+2020-11-01T21:15:45.421746+00:00 app[web.1]: queue: [],
+2020-11-01T21:15:45.421746+00:00 app[web.1]: buffer: false,
+2020-11-01T21:15:45.421746+00:00 app[web.1]: emitter: [EventEmitter]
+2020-11-01T21:15:45.421747+00:00 app[web.1]: },
+2020-11-01T21:15:45.421755+00:00 app[web.1]: Query: [Function (anonymous)] { base: [Object] },
+2020-11-01T21:15:45.421755+00:00 app[web.1]: '$init': Promise { [Circular *5] },
+2020-11-01T21:15:45.421755+00:00 app[web.1]: '$caught': true,
+2020-11-01T21:15:45.421756+00:00 app[web.1]: [Symbol(mongoose#Model)]: true
+2020-11-01T21:15:45.421756+00:00 app[web.1]: },
+2020-11-01T21:15:45.421756+00:00 app[web.1]: game: <ref *6> [Function: model] {
+2020-11-01T21:15:45.421756+00:00 app[web.1]: hooks: Kareem { _pres: [Map], _posts: [Map] },
+2020-11-01T21:15:45.421756+00:00 app[web.1]: base: [Circular *1],
+2020-11-01T21:15:45.421756+00:00 app[web.1]: modelName: 'game',
+2020-11-01T21:15:45.421757+00:00 app[web.1]: model: [Function: model],
+2020-11-01T21:15:45.421757+00:00 app[web.1]: db: <ref *3> NativeConnection {
+2020-11-01T21:15:45.421757+00:00 app[web.1]: base: [Circular *1],
+2020-11-01T21:15:45.421757+00:00 app[web.1]: collections: [Object],
+2020-11-01T21:15:45.421757+00:00 app[web.1]: models: [Circular *4],
+2020-11-01T21:15:45.421758+00:00 app[web.1]: config: [Object],
+2020-11-01T21:15:45.421758+00:00 app[web.1]: replica: false,
+2020-11-01T21:15:45.421759+00:00 app[web.1]: options: null,
+2020-11-01T21:15:45.421759+00:00 app[web.1]: otherDbs: [],
+2020-11-01T21:15:45.421759+00:00 app[web.1]: relatedDbs: {},
+2020-11-01T21:15:45.421759+00:00 app[web.1]: states: [Object: null prototype],
+2020-11-01T21:15:45.421759+00:00 app[web.1]: _readyState: 1,
+2020-11-01T21:15:45.421760+00:00 app[web.1]: _closeCalled: false,
+2020-11-01T21:15:45.421760+00:00 app[web.1]: _hasOpened: true,
+2020-11-01T21:15:45.421760+00:00 app[web.1]: plugins: [],
+2020-11-01T21:15:45.421760+00:00 app[web.1]: _listening: false,
+2020-11-01T21:15:45.421760+00:00 app[web.1]: _connectionOptions: [Object],
+2020-11-01T21:15:45.421761+00:00 app[web.1]: '$dbName': 'prod',
+2020-11-01T21:15:45.421761+00:00 app[web.1]: client: [MongoClient],
+2020-11-01T21:15:45.421761+00:00 app[web.1]: '$initialConnection': [Promise],
+2020-11-01T21:15:45.421761+00:00 app[web.1]: name: 'prod',
+2020-11-01T21:15:45.421762+00:00 app[web.1]: host: 'cluster0-shard-00-02.qsh1v.mongodb.net',
+2020-11-01T21:15:45.421762+00:00 app[web.1]: port: 27017,
+2020-11-01T21:15:45.421762+00:00 app[web.1]: user: 'PartyyAdmins',
+2020-11-01T21:15:45.421762+00:00 app[web.1]: pass: 'Pv1j5EsP0kpn29rj',
+2020-11-01T21:15:45.421763+00:00 app[web.1]: db: [Db]
+2020-11-01T21:15:45.421763+00:00 app[web.1]: },
+2020-11-01T21:15:45.421763+00:00 app[web.1]: discriminators: undefined,
+2020-11-01T21:15:45.421764+00:00 app[web.1]: events: EventEmitter {
+2020-11-01T21:15:45.421764+00:00 app[web.1]: _events: [Object: null prototype] {},
+2020-11-01T21:15:45.421764+00:00 app[web.1]: _eventsCount: 0,
+2020-11-01T21:15:45.421764+00:00 app[web.1]: _maxListeners: undefined,
+2020-11-01T21:15:45.421765+00:00 app[web.1]: [Symbol(kCapture)]: false
+2020-11-01T21:15:45.421765+00:00 app[web.1]: },
+2020-11-01T21:15:45.421765+00:00 app[web.1]: '$appliedMethods': true,
+2020-11-01T21:15:45.421765+00:00 app[web.1]: '$appliedHooks': true,
+2020-11-01T21:15:45.421766+00:00 app[web.1]: _middleware: Kareem { _pres: [Map], _posts: [Map] },
+2020-11-01T21:15:45.421766+00:00 app[web.1]: '$__insertMany': [Function (anonymous)],
+2020-11-01T21:15:45.421766+00:00 app[web.1]: schema: Schema {
+2020-11-01T21:15:45.421766+00:00 app[web.1]: obj: [Object],
+2020-11-01T21:15:45.421767+00:00 app[web.1]: paths: [Object],
+2020-11-01T21:15:45.421767+00:00 app[web.1]: aliases: {},
+2020-11-01T21:15:45.421767+00:00 app[web.1]: subpaths: [Object],
+2020-11-01T21:15:45.421767+00:00 app[web.1]: virtuals: [Object],
+2020-11-01T21:15:45.421768+00:00 app[web.1]: singleNestedPaths: {},
+2020-11-01T21:15:45.421768+00:00 app[web.1]: nested: {},
+2020-11-01T21:15:45.421768+00:00 app[web.1]: inherits: {},
+2020-11-01T21:15:45.421768+00:00 app[web.1]: callQueue: [],
+2020-11-01T21:15:45.421768+00:00 app[web.1]: _indexes: [],
+2020-11-01T21:15:45.421768+00:00 app[web.1]: methods: {},
+2020-11-01T21:15:45.421769+00:00 app[web.1]: methodOptions: {},
+2020-11-01T21:15:45.421769+00:00 app[web.1]: statics: {},
+2020-11-01T21:15:45.421769+00:00 app[web.1]: tree: [Object],
+2020-11-01T21:15:45.421769+00:00 app[web.1]: query: {},
+2020-11-01T21:15:45.421769+00:00 app[web.1]: childSchemas: [Array],
+2020-11-01T21:15:45.421769+00:00 app[web.1]: plugins: [Array],
+2020-11-01T21:15:45.421770+00:00 app[web.1]: '$id': 3,
+2020-11-01T21:15:45.421770+00:00 app[web.1]: s: [Object],
+2020-11-01T21:15:45.421770+00:00 app[web.1]: _userProvidedOptions: {},
+2020-11-01T21:15:45.421770+00:00 app[web.1]: options: [Object],
+2020-11-01T21:15:45.421770+00:00 app[web.1]: '$globalPluginsApplied': true,
+2020-11-01T21:15:45.421770+00:00 app[web.1]: _requiredpaths: [],
+2020-11-01T21:15:45.421771+00:00 app[web.1]: _indexedpaths: []
+2020-11-01T21:15:45.421771+00:00 app[web.1]: },
+2020-11-01T21:15:45.421771+00:00 app[web.1]: collection: NativeCollection {
+2020-11-01T21:15:45.421771+00:00 app[web.1]: collection: [Collection],
+2020-11-01T21:15:45.421771+00:00 app[web.1]: Promise: [Function: Promise],
+2020-11-01T21:15:45.421771+00:00 app[web.1]: opts: [Object],
+2020-11-01T21:15:45.421772+00:00 app[web.1]: name: 'games',
+2020-11-01T21:15:45.421772+00:00 app[web.1]: collectionName: 'games',
+2020-11-01T21:15:45.421772+00:00 app[web.1]: conn: [NativeConnection],
+2020-11-01T21:15:45.421772+00:00 app[web.1]: queue: [],
+2020-11-01T21:15:45.421772+00:00 app[web.1]: buffer: false,
+2020-11-01T21:15:45.421772+00:00 app[web.1]: emitter: [EventEmitter]
+2020-11-01T21:15:45.421772+00:00 app[web.1]: },
+2020-11-01T21:15:45.421773+00:00 app[web.1]: Query: [Function (anonymous)] { base: [Object] },
+2020-11-01T21:15:45.421773+00:00 app[web.1]: '$init': Promise { [Circular *6] },
+2020-11-01T21:15:45.421773+00:00 app[web.1]: '$caught': true,
+2020-11-01T21:15:45.421773+00:00 app[web.1]: [Symbol(mongoose#Model)]: true
+2020-11-01T21:15:45.421773+00:00 app[web.1]: },
+2020-11-01T21:15:45.421774+00:00 app[web.1]: song: <ref *7> [Function: model] {
+2020-11-01T21:15:45.421774+00:00 app[web.1]: hooks: Kareem { _pres: [Map], _posts: [Map] },
+2020-11-01T21:15:45.421774+00:00 app[web.1]: base: [Circular *1],
+2020-11-01T21:15:45.421774+00:00 app[web.1]: modelName: 'song',
+2020-11-01T21:15:45.421774+00:00 app[web.1]: model: [Function: model],
+2020-11-01T21:15:45.421774+00:00 app[web.1]: db: <ref *3> NativeConnection {
+2020-11-01T21:15:45.421775+00:00 app[web.1]: base: [Circular *1],
+2020-11-01T21:15:45.421775+00:00 app[web.1]: collections: [Object],
+2020-11-01T21:15:45.421775+00:00 app[web.1]: models: [Circular *4],
+2020-11-01T21:15:45.421775+00:00 app[web.1]: config: [Object],
+2020-11-01T21:15:45.421775+00:00 app[web.1]: replica: false,
+2020-11-01T21:15:45.421775+00:00 app[web.1]: options: null,
+2020-11-01T21:15:45.421776+00:00 app[web.1]: otherDbs: [],
+2020-11-01T21:15:45.421776+00:00 app[web.1]: relatedDbs: {},
+2020-11-01T21:15:45.421776+00:00 app[web.1]: states: [Object: null prototype],
+2020-11-01T21:15:45.421776+00:00 app[web.1]: _readyState: 1,
+2020-11-01T21:15:45.421776+00:00 app[web.1]: _closeCalled: false,
+2020-11-01T21:15:45.421776+00:00 app[web.1]: _hasOpened: true,
+2020-11-01T21:15:45.421776+00:00 app[web.1]: plugins: [],
+2020-11-01T21:15:45.421777+00:00 app[web.1]: _listening: false,
+2020-11-01T21:15:45.421777+00:00 app[web.1]: _connectionOptions: [Object],
+2020-11-01T21:15:45.421777+00:00 app[web.1]: '$dbName': 'prod',
+2020-11-01T21:15:45.421777+00:00 app[web.1]: client: [MongoClient],
+2020-11-01T21:15:45.421777+00:00 app[web.1]: '$initialConnection': [Promise],
+2020-11-01T21:15:45.421777+00:00 app[web.1]: name: 'prod',
+2020-11-01T21:15:45.421778+00:00 app[web.1]: host: 'cluster0-shard-00-02.qsh1v.mongodb.net',
+2020-11-01T21:15:45.421778+00:00 app[web.1]: port: 27017,
+2020-11-01T21:15:45.421778+00:00 app[web.1]: user: 'PartyyAdmins',
+2020-11-01T21:15:45.421778+00:00 app[web.1]: pass: 'Pv1j5EsP0kpn29rj',
+2020-11-01T21:15:45.421778+00:00 app[web.1]: db: [Db]
+2020-11-01T21:15:45.421778+00:00 app[web.1]: },
+2020-11-01T21:15:45.421779+00:00 app[web.1]: discriminators: undefined,
+2020-11-01T21:15:45.421779+00:00 app[web.1]: events: EventEmitter {
+2020-11-01T21:15:45.421820+00:00 app[web.1]: _events: [Object: null prototype] {},
+2020-11-01T21:15:45.421828+00:00 app[web.1]: _eventsCount: 0,
+2020-11-01T21:15:45.421828+00:00 app[web.1]: _maxListeners: undefined,
+2020-11-01T21:15:45.421829+00:00 app[web.1]: [Symbol(kCapture)]: false
+2020-11-01T21:15:45.421829+00:00 app[web.1]: },
+2020-11-01T21:15:45.421829+00:00 app[web.1]: '$appliedMethods': true,
+2020-11-01T21:15:45.421829+00:00 app[web.1]: '$appliedHooks': true,
+2020-11-01T21:15:45.421830+00:00 app[web.1]: _middleware: Kareem { _pres: [Map], _posts: [Map] },
+2020-11-01T21:15:45.421830+00:00 app[web.1]: '$__insertMany': [Function (anonymous)],
+2020-11-01T21:15:45.421830+00:00 app[web.1]: schema: Schema {
+2020-11-01T21:15:45.421830+00:00 app[web.1]: obj: [Object],
+2020-11-01T21:15:45.421831+00:00 app[web.1]: paths: [Object],
+2020-11-01T21:15:45.421831+00:00 app[web.1]: aliases: {},
+2020-11-01T21:15:45.421831+00:00 app[web.1]: subpaths: {},
+2020-11-01T21:15:45.421832+00:00 app[web.1]: virtuals: [Object],
+2020-11-01T21:15:45.421832+00:00 app[web.1]: singleNestedPaths: {},
+2020-11-01T21:15:45.421832+00:00 app[web.1]: nested: {},
+2020-11-01T21:15:45.421832+00:00 app[web.1]: inherits: {},
+2020-11-01T21:15:45.421833+00:00 app[web.1]: callQueue: [],
+2020-11-01T21:15:45.421833+00:00 app[web.1]: _indexes: [],
+2020-11-01T21:15:45.421833+00:00 app[web.1]: methods: {},
+2020-11-01T21:15:45.421833+00:00 app[web.1]: methodOptions: {},
+2020-11-01T21:15:45.421833+00:00 app[web.1]: statics: {},
+2020-11-01T21:15:45.421833+00:00 app[web.1]: tree: [Object],
+2020-11-01T21:15:45.421834+00:00 app[web.1]: query: {},
+2020-11-01T21:15:45.421834+00:00 app[web.1]: childSchemas: [],
+2020-11-01T21:15:45.421834+00:00 app[web.1]: plugins: [Array],
+2020-11-01T21:15:45.421834+00:00 app[web.1]: '$id': 6,
+2020-11-01T21:15:45.421834+00:00 app[web.1]: s: [Object],
+2020-11-01T21:15:45.421834+00:00 app[web.1]: _userProvidedOptions: {},
+2020-11-01T21:15:45.421835+00:00 app[web.1]: options: [Object],
+2020-11-01T21:15:45.421835+00:00 app[web.1]: '$globalPluginsApplied': true
+2020-11-01T21:15:45.421835+00:00 app[web.1]: },
+2020-11-01T21:15:45.421835+00:00 app[web.1]: collection: NativeCollection {
+2020-11-01T21:15:45.421835+00:00 app[web.1]: collection: [Collection],
+2020-11-01T21:15:45.421835+00:00 app[web.1]: Promise: [Function: Promise],
+2020-11-01T21:15:45.421835+00:00 app[web.1]: opts: [Object],
+2020-11-01T21:15:45.421836+00:00 app[web.1]: name: 'songs',
+2020-11-01T21:15:45.421836+00:00 app[web.1]: collectionName: 'songs',
+2020-11-01T21:15:45.421836+00:00 app[web.1]: conn: [NativeConnection],
+2020-11-01T21:15:45.421836+00:00 app[web.1]: queue: [],
+2020-11-01T21:15:45.421836+00:00 app[web.1]: buffer: false,
+2020-11-01T21:15:45.421836+00:00 app[web.1]: emitter: [EventEmitter]
+2020-11-01T21:15:45.421837+00:00 app[web.1]: },
+2020-11-01T21:15:45.421837+00:00 app[web.1]: Query: [Function (anonymous)] { base: [Object] },
+2020-11-01T21:15:45.421837+00:00 app[web.1]: '$init': Promise { [Circular *7] },
+2020-11-01T21:15:45.421837+00:00 app[web.1]: '$caught': true,
+2020-11-01T21:15:45.421837+00:00 app[web.1]: [Symbol(mongoose#Model)]: true
+2020-11-01T21:15:45.421837+00:00 app[web.1]: },
+2020-11-01T21:15:45.421838+00:00 app[web.1]: message: <ref *8> [Function: model] {
+2020-11-01T21:15:45.421838+00:00 app[web.1]: hooks: Kareem { _pres: [Map], _posts: [Map] },
+2020-11-01T21:15:45.421838+00:00 app[web.1]: base: [Circular *1],
+2020-11-01T21:15:45.421838+00:00 app[web.1]: modelName: 'message',
+2020-11-01T21:15:45.421838+00:00 app[web.1]: model: [Function: model],
+2020-11-01T21:15:45.421838+00:00 app[web.1]: db: <ref *3> NativeConnection {
+2020-11-01T21:15:45.421839+00:00 app[web.1]: base: [Circular *1],
+2020-11-01T21:15:45.421839+00:00 app[web.1]: collections: [Object],
+2020-11-01T21:15:45.421839+00:00 app[web.1]: models: [Circular *4],
+2020-11-01T21:15:45.421839+00:00 app[web.1]: config: [Object],
+2020-11-01T21:15:45.421839+00:00 app[web.1]: replica: false,
+2020-11-01T21:15:45.421839+00:00 app[web.1]: options: null,
+2020-11-01T21:15:45.421840+00:00 app[web.1]: otherDbs: [],
+2020-11-01T21:15:45.421840+00:00 app[web.1]: relatedDbs: {},
+2020-11-01T21:15:45.421840+00:00 app[web.1]: states: [Object: null prototype],
+2020-11-01T21:15:45.421840+00:00 app[web.1]: _readyState: 1,
+2020-11-01T21:15:45.421840+00:00 app[web.1]: _closeCalled: false,
+2020-11-01T21:15:45.421840+00:00 app[web.1]: _hasOpened: true,
+2020-11-01T21:15:45.421840+00:00 app[web.1]: plugins: [],
+2020-11-01T21:15:45.421841+00:00 app[web.1]: _listening: false,
+2020-11-01T21:15:45.421841+00:00 app[web.1]: _connectionOptions: [Object],
+2020-11-01T21:15:45.421841+00:00 app[web.1]: '$dbName': 'prod',
+2020-11-01T21:15:45.421841+00:00 app[web.1]: client: [MongoClient],
+2020-11-01T21:15:45.421841+00:00 app[web.1]: '$initialConnection': [Promise],
+2020-11-01T21:15:45.421841+00:00 app[web.1]: name: 'prod',
+2020-11-01T21:15:45.421842+00:00 app[web.1]: host: 'cluster0-shard-00-02.qsh1v.mongodb.net',
+2020-11-01T21:15:45.421842+00:00 app[web.1]: port: 27017,
+2020-11-01T21:15:45.421842+00:00 app[web.1]: user: 'PartyyAdmins',
+2020-11-01T21:15:45.421842+00:00 app[web.1]: pass: 'Pv1j5EsP0kpn29rj',
+2020-11-01T21:15:45.421842+00:00 app[web.1]: db: [Db]
+2020-11-01T21:15:45.421842+00:00 app[web.1]: },
+2020-11-01T21:15:45.421843+00:00 app[web.1]: discriminators: undefined,
+2020-11-01T21:15:45.421843+00:00 app[web.1]: events: EventEmitter {
+2020-11-01T21:15:45.421843+00:00 app[web.1]: _events: [Object: null prototype] {},
+2020-11-01T21:15:45.421843+00:00 app[web.1]: _eventsCount: 0,
+2020-11-01T21:15:45.421843+00:00 app[web.1]: _maxListeners: undefined,
+2020-11-01T21:15:45.421843+00:00 app[web.1]: [Symbol(kCapture)]: false
+2020-11-01T21:15:45.421844+00:00 app[web.1]: },
+2020-11-01T21:15:45.421844+00:00 app[web.1]: '$appliedMethods': true,
+2020-11-01T21:15:45.421844+00:00 app[web.1]: '$appliedHooks': true,
+2020-11-01T21:15:45.421844+00:00 app[web.1]: _middleware: Kareem { _pres: [Map], _posts: [Map] },
+2020-11-01T21:15:45.421844+00:00 app[web.1]: '$__insertMany': [Function (anonymous)],
+2020-11-01T21:15:45.421844+00:00 app[web.1]: schema: Schema {
+2020-11-01T21:15:45.421845+00:00 app[web.1]: obj: [Object],
+2020-11-01T21:15:45.421845+00:00 app[web.1]: paths: [Object],
+2020-11-01T21:15:45.421845+00:00 app[web.1]: aliases: {},
+2020-11-01T21:15:45.421845+00:00 app[web.1]: subpaths: {},
+2020-11-01T21:15:45.421845+00:00 app[web.1]: virtuals: [Object],
+2020-11-01T21:15:45.421846+00:00 app[web.1]: singleNestedPaths: {},
+2020-11-01T21:15:45.421846+00:00 app[web.1]: nested: [Object],
+2020-11-01T21:15:45.421846+00:00 app[web.1]: inherits: {},
+2020-11-01T21:15:45.421846+00:00 app[web.1]: callQueue: [],
+2020-11-01T21:15:45.421847+00:00 app[web.1]: _indexes: [],
+2020-11-01T21:15:45.421847+00:00 app[web.1]: methods: {},
+2020-11-01T21:15:45.421847+00:00 app[web.1]: methodOptions: {},
+2020-11-01T21:15:45.421847+00:00 app[web.1]: statics: {},
+2020-11-01T21:15:45.421847+00:00 app[web.1]: tree: [Object],
+2020-11-01T21:15:45.421847+00:00 app[web.1]: query: {},
+2020-11-01T21:15:45.421848+00:00 app[web.1]: childSchemas: [],
+2020-11-01T21:15:45.421848+00:00 app[web.1]: plugins: [Array],
+2020-11-01T21:15:45.421848+00:00 app[web.1]: '$id': 7,
+2020-11-01T21:15:45.421848+00:00 app[web.1]: s: [Object],
+2020-11-01T21:15:45.421848+00:00 app[web.1]: _userProvidedOptions: {},
+2020-11-01T21:15:45.421848+00:00 app[web.1]: options: [Object],
+2020-11-01T21:15:45.421849+00:00 app[web.1]: '$globalPluginsApplied': true,
+2020-11-01T21:15:45.421849+00:00 app[web.1]: _requiredpaths: []
+2020-11-01T21:15:45.421849+00:00 app[web.1]: },
+2020-11-01T21:15:45.421850+00:00 app[web.1]: collection: NativeCollection {
+2020-11-01T21:15:45.421850+00:00 app[web.1]: collection: [Collection],
+2020-11-01T21:15:45.421850+00:00 app[web.1]: Promise: [Function: Promise],
+2020-11-01T21:15:45.421850+00:00 app[web.1]: opts: [Object],
+2020-11-01T21:15:45.421850+00:00 app[web.1]: name: 'messages',
+2020-11-01T21:15:45.421850+00:00 app[web.1]: collectionName: 'messages',
+2020-11-01T21:15:45.421851+00:00 app[web.1]: conn: [NativeConnection],
+2020-11-01T21:15:45.421851+00:00 app[web.1]: queue: [],
+2020-11-01T21:15:45.421851+00:00 app[web.1]: buffer: false,
+2020-11-01T21:15:45.421851+00:00 app[web.1]: emitter: [EventEmitter]
+2020-11-01T21:15:45.421851+00:00 app[web.1]: },
+2020-11-01T21:15:45.421852+00:00 app[web.1]: Query: [Function (anonymous)] { base: [Object] },
+2020-11-01T21:15:45.421860+00:00 app[web.1]: '$init': Promise { [Circular *8] },
+2020-11-01T21:15:45.421860+00:00 app[web.1]: '$caught': true,
+2020-11-01T21:15:45.421861+00:00 app[web.1]: [Symbol(mongoose#Model)]: true
+2020-11-01T21:15:45.421861+00:00 app[web.1]: },
+2020-11-01T21:15:45.421861+00:00 app[web.1]: room: [Circular *2],
+2020-11-01T21:15:45.421861+00:00 app[web.1]: category: <ref *9> [Function: model] {
+2020-11-01T21:15:45.421861+00:00 app[web.1]: hooks: Kareem { _pres: [Map], _posts: [Map] },
+2020-11-01T21:15:45.421862+00:00 app[web.1]: base: [Circular *1],
+2020-11-01T21:15:45.421862+00:00 app[web.1]: modelName: 'category',
+2020-11-01T21:15:45.421862+00:00 app[web.1]: model: [Function: model],
+2020-11-01T21:15:45.421862+00:00 app[web.1]: db: <ref *3> NativeConnection {
+2020-11-01T21:15:45.421863+00:00 app[web.1]: base: [Circular *1],
+2020-11-01T21:15:45.421863+00:00 app[web.1]: collections: [Object],
+2020-11-01T21:15:45.421863+00:00 app[web.1]: models: [Circular *4],
+2020-11-01T21:15:45.421863+00:00 app[web.1]: config: [Object],
+2020-11-01T21:15:45.421864+00:00 app[web.1]: replica: false,
+2020-11-01T21:15:45.421864+00:00 app[web.1]: options: null,
+2020-11-01T21:15:45.421864+00:00 app[web.1]: otherDbs: [],
+2020-11-01T21:15:45.421864+00:00 app[web.1]: relatedDbs: {},
+2020-11-01T21:15:45.421864+00:00 app[web.1]: states: [Object: null prototype],
+2020-11-01T21:15:45.421865+00:00 app[web.1]: _readyState: 1,
+2020-11-01T21:15:45.421865+00:00 app[web.1]: _closeCalled: false,
+2020-11-01T21:15:45.421865+00:00 app[web.1]: _hasOpened: true,
+2020-11-01T21:15:45.421865+00:00 app[web.1]: plugins: [],
+2020-11-01T21:15:45.421865+00:00 app[web.1]: _listening: false,
+2020-11-01T21:15:45.421866+00:00 app[web.1]: _connectionOptions: [Object],
+2020-11-01T21:15:45.421866+00:00 app[web.1]: '$dbName': 'prod',
+2020-11-01T21:15:45.421866+00:00 app[web.1]: client: [MongoClient],
+2020-11-01T21:15:45.421866+00:00 app[web.1]: '$initialConnection': [Promise],
+2020-11-01T21:15:45.421866+00:00 app[web.1]: name: 'prod',
+2020-11-01T21:15:45.421867+00:00 app[web.1]: host: 'cluster0-shard-00-02.qsh1v.mongodb.net',
+2020-11-01T21:15:45.421867+00:00 app[web.1]: port: 27017,
+2020-11-01T21:15:45.421867+00:00 app[web.1]: user: 'PartyyAdmins',
+2020-11-01T21:15:45.421867+00:00 app[web.1]: pass: 'Pv1j5EsP0kpn29rj',
+2020-11-01T21:15:45.421868+00:00 app[web.1]: db: [Db]
+2020-11-01T21:15:45.421868+00:00 app[web.1]: },
+2020-11-01T21:15:45.423119+00:00 app[web.1]: name: 'users',
+2020-11-01T21:15:45.423120+00:00 app[web.1]: collectionName: 'users',
+2020-11-01T21:15:45.423120+00:00 app[web.1]: conn: [Circular *3],
+2020-11-01T21:15:45.423120+00:00 app[web.1]: queue: [],
+2020-11-01T21:15:45.423120+00:00 app[web.1]: buffer: false,
+2020-11-01T21:15:45.423121+00:00 app[web.1]: emitter: EventEmitter {
+2020-11-01T21:15:45.423121+00:00 app[web.1]: _events: [Object: null prototype] {},
+2020-11-01T21:15:45.423121+00:00 app[web.1]: _eventsCount: 0,
+2020-11-01T21:15:45.423121+00:00 app[web.1]: _maxListeners: undefined,
+2020-11-01T21:15:45.423121+00:00 app[web.1]: [Symbol(kCapture)]: false
+2020-11-01T21:15:45.423122+00:00 app[web.1]: }
+2020-11-01T21:15:45.423122+00:00 app[web.1]: },
+2020-11-01T21:15:45.423122+00:00 app[web.1]: games: NativeCollection {
+2020-11-01T21:15:45.423122+00:00 app[web.1]: collection: Collection { s: [Object] },
+2020-11-01T21:15:45.423122+00:00 app[web.1]: Promise: [Function: Promise],
+2020-11-01T21:15:45.423122+00:00 app[web.1]: opts: {
+2020-11-01T21:15:45.423123+00:00 app[web.1]: bufferCommands: true,
+2020-11-01T21:15:45.423123+00:00 app[web.1]: capped: false,
+2020-11-01T21:15:45.423123+00:00 app[web.1]: Promise: [Function: Promise],
+2020-11-01T21:15:45.423123+00:00 app[web.1]: '$wasForceClosed': undefined
+2020-11-01T21:15:45.423123+00:00 app[web.1]: },
+2020-11-01T21:15:45.423123+00:00 app[web.1]: name: 'games',
+2020-11-01T21:15:45.423124+00:00 app[web.1]: collectionName: 'games',
+2020-11-01T21:15:45.423124+00:00 app[web.1]: conn: [Circular *3],
+2020-11-01T21:15:45.423124+00:00 app[web.1]: queue: [],
+2020-11-01T21:15:45.423124+00:00 app[web.1]: buffer: false,
+2020-11-01T21:15:45.423124+00:00 app[web.1]: emitter: EventEmitter {
+2020-11-01T21:15:45.423124+00:00 app[web.1]: _events: [Object: null prototype] {},
+2020-11-01T21:15:45.423125+00:00 app[web.1]: _eventsCount: 0,
+2020-11-01T21:15:45.423125+00:00 app[web.1]: _maxListeners: undefined,
+2020-11-01T21:15:45.423125+00:00 app[web.1]: [Symbol(kCapture)]: false
+2020-11-01T21:15:45.423125+00:00 app[web.1]: }
+2020-11-01T21:15:45.423125+00:00 app[web.1]: },
+2020-11-01T21:15:45.423125+00:00 app[web.1]: songs: NativeCollection {
+2020-11-01T21:15:45.423126+00:00 app[web.1]: collection: Collection { s: [Object] },
+2020-11-01T21:15:45.423126+00:00 app[web.1]: Promise: [Function: Promise],
+2020-11-01T21:15:45.423126+00:00 app[web.1]: opts: {
+2020-11-01T21:15:45.423126+00:00 app[web.1]: bufferCommands: true,
+2020-11-01T21:15:45.423126+00:00 app[web.1]: capped: false,
+2020-11-01T21:15:45.423127+00:00 app[web.1]: Promise: [Function: Promise],
+2020-11-01T21:15:45.423127+00:00 app[web.1]: '$wasForceClosed': undefined
+2020-11-01T21:15:45.423127+00:00 app[web.1]: },
+2020-11-01T21:15:45.423127+00:00 app[web.1]: name: 'songs',
+2020-11-01T21:15:45.423127+00:00 app[web.1]: collectionName: 'songs',
+2020-11-01T21:15:45.423127+00:00 app[web.1]: conn: [Circular *3],
+2020-11-01T21:15:45.423127+00:00 app[web.1]: queue: [],
+2020-11-01T21:15:45.423128+00:00 app[web.1]: buffer: false,
+2020-11-01T21:15:45.423128+00:00 app[web.1]: emitter: EventEmitter {
+2020-11-01T21:15:45.423128+00:00 app[web.1]: _events: [Object: null prototype] {},
+2020-11-01T21:15:45.423128+00:00 app[web.1]: _eventsCount: 0,
+2020-11-01T21:15:45.423128+00:00 app[web.1]: _maxListeners: undefined,
+2020-11-01T21:15:45.423128+00:00 app[web.1]: [Symbol(kCapture)]: false
+2020-11-01T21:15:45.423129+00:00 app[web.1]: }
+2020-11-01T21:15:45.423129+00:00 app[web.1]: },
+2020-11-01T21:15:45.423129+00:00 app[web.1]: messages: NativeCollection {
+2020-11-01T21:15:45.423129+00:00 app[web.1]: collection: Collection { s: [Object] },
+2020-11-01T21:15:45.423129+00:00 app[web.1]: Promise: [Function: Promise],
+2020-11-01T21:15:45.423129+00:00 app[web.1]: opts: {
+2020-11-01T21:15:45.423130+00:00 app[web.1]: bufferCommands: true,
+2020-11-01T21:15:45.423130+00:00 app[web.1]: capped: false,
+2020-11-01T21:15:45.423130+00:00 app[web.1]: Promise: [Function: Promise],
+2020-11-01T21:15:45.423130+00:00 app[web.1]: '$wasForceClosed': undefined
+2020-11-01T21:15:45.423130+00:00 app[web.1]: },
+2020-11-01T21:15:45.423131+00:00 app[web.1]: name: 'messages',
+2020-11-01T21:15:45.423131+00:00 app[web.1]: collectionName: 'messages',
+2020-11-01T21:15:45.423131+00:00 app[web.1]: conn: [Circular *3],
+2020-11-01T21:15:45.423131+00:00 app[web.1]: queue: [],
+2020-11-01T21:15:45.423131+00:00 app[web.1]: buffer: false,
+2020-11-01T21:15:45.423131+00:00 app[web.1]: emitter: EventEmitter {
+2020-11-01T21:15:45.423132+00:00 app[web.1]: _events: [Object: null prototype] {},
+2020-11-01T21:15:45.423132+00:00 app[web.1]: _eventsCount: 0,
+2020-11-01T21:15:45.423132+00:00 app[web.1]: _maxListeners: undefined,
+2020-11-01T21:15:45.423132+00:00 app[web.1]: [Symbol(kCapture)]: false
+2020-11-01T21:15:45.423132+00:00 app[web.1]: }
+2020-11-01T21:15:45.423132+00:00 app[web.1]: },
+2020-11-01T21:15:45.423132+00:00 app[web.1]: rooms: NativeCollection {
+2020-11-01T21:15:45.423133+00:00 app[web.1]: collection: Collection { s: [Object] },
+2020-11-01T21:15:45.423133+00:00 app[web.1]: Promise: [Function: Promise],
+2020-11-01T21:15:45.423133+00:00 app[web.1]: opts: {
+2020-11-01T21:15:45.423133+00:00 app[web.1]: bufferCommands: true,
+2020-11-01T21:15:45.423133+00:00 app[web.1]: capped: false,
+2020-11-01T21:15:45.423133+00:00 app[web.1]: Promise: [Function: Promise],
+2020-11-01T21:15:45.423134+00:00 app[web.1]: '$wasForceClosed': undefined
+2020-11-01T21:15:45.423134+00:00 app[web.1]: },
+2020-11-01T21:15:45.423134+00:00 app[web.1]: name: 'rooms',
+2020-11-01T21:15:45.423134+00:00 app[web.1]: collectionName: 'rooms',
+2020-11-01T21:15:45.423134+00:00 app[web.1]: conn: [Circular *3],
+2020-11-01T21:15:45.423134+00:00 app[web.1]: queue: [],
+2020-11-01T21:15:45.423135+00:00 app[web.1]: buffer: false,
+2020-11-01T21:15:45.423135+00:00 app[web.1]: emitter: EventEmitter {
+2020-11-01T21:15:45.423135+00:00 app[web.1]: _events: [Object: null prototype] {},
+2020-11-01T21:15:45.423135+00:00 app[web.1]: _eventsCount: 0,
+2020-11-01T21:15:45.423135+00:00 app[web.1]: _maxListeners: undefined,
+2020-11-01T21:15:45.423135+00:00 app[web.1]: [Symbol(kCapture)]: false
+2020-11-01T21:15:45.423136+00:00 app[web.1]: }
+2020-11-01T21:15:45.423136+00:00 app[web.1]: },
+2020-11-01T21:15:45.423136+00:00 app[web.1]: categories: NativeCollection {
+2020-11-01T21:15:45.423136+00:00 app[web.1]: collection: Collection { s: [Object] },
+2020-11-01T21:15:45.423136+00:00 app[web.1]: Promise: [Function: Promise],
+2020-11-01T21:15:45.423136+00:00 app[web.1]: opts: {
+2020-11-01T21:15:45.423137+00:00 app[web.1]: bufferCommands: true,
+2020-11-01T21:15:45.423137+00:00 app[web.1]: capped: false,
+2020-11-01T21:15:45.423137+00:00 app[web.1]: Promise: [Function: Promise],
+2020-11-01T21:15:45.423137+00:00 app[web.1]: '$wasForceClosed': undefined
+2020-11-01T21:15:45.423137+00:00 app[web.1]: },
+2020-11-01T21:15:45.423137+00:00 app[web.1]: name: 'categories',
+2020-11-01T21:15:45.423138+00:00 app[web.1]: collectionName: 'categories',
+2020-11-01T21:15:45.423138+00:00 app[web.1]: conn: [Circular *3],
+2020-11-01T21:15:45.423138+00:00 app[web.1]: queue: [],
+2020-11-01T21:15:45.423138+00:00 app[web.1]: buffer: false,
+2020-11-01T21:15:45.423138+00:00 app[web.1]: emitter: EventEmitter {
+2020-11-01T21:15:45.423138+00:00 app[web.1]: _events: [Object: null prototype] {},
+2020-11-01T21:15:45.423138+00:00 app[web.1]: _eventsCount: 0,
+2020-11-01T21:15:45.423139+00:00 app[web.1]: _maxListeners: undefined,
+2020-11-01T21:15:45.423139+00:00 app[web.1]: [Symbol(kCapture)]: false
+2020-11-01T21:15:45.423139+00:00 app[web.1]: }
+2020-11-01T21:15:45.423139+00:00 app[web.1]: }
+2020-11-01T21:15:45.423139+00:00 app[web.1]: },
+2020-11-01T21:15:45.423139+00:00 app[web.1]: models: <ref *4> {
+2020-11-01T21:15:45.423140+00:00 app[web.1]: user: <ref *5> [Function: model] {
+2020-11-01T21:15:45.423140+00:00 app[web.1]: hooks: Kareem { _pres: [Map], _posts: [Map] },
+2020-11-01T21:15:45.423140+00:00 app[web.1]: base: <ref *1> Mongoose {
+2020-11-01T21:15:45.423146+00:00 app[web.1]: connections: [Array],
+2020-11-01T21:15:45.423146+00:00 app[web.1]: models: [Circular *4],
+2020-11-01T21:15:45.423146+00:00 app[web.1]: modelSchemas: [Object],
+2020-11-01T21:15:45.423146+00:00 app[web.1]: options: [Object],
+2020-11-01T21:15:45.423146+00:00 app[web.1]: _pluralize: [Function: pluralize],
+2020-11-01T21:15:45.423146+00:00 app[web.1]: Schema: [Function],
+2020-11-01T21:15:45.423147+00:00 app[web.1]: model: [Function (anonymous)],
+2020-11-01T21:15:45.423147+00:00 app[web.1]: plugins: [Array]
+2020-11-01T21:15:45.423147+00:00 app[web.1]: },
+2020-11-01T21:15:45.423147+00:00 app[web.1]: modelName: 'user',
+2020-11-01T21:15:45.423147+00:00 app[web.1]: model: [Function: model],
+2020-11-01T21:15:45.423147+00:00 app[web.1]: db: [Circular *3],
+2020-11-01T21:15:45.423148+00:00 app[web.1]: discriminators: undefined,
+2020-11-01T21:15:45.423148+00:00 app[web.1]: events: EventEmitter {
+2020-11-01T21:15:45.423148+00:00 app[web.1]: _events: [Object: null prototype] {},
+2020-11-01T21:15:45.423148+00:00 app[web.1]: _eventsCount: 0,
+2020-11-01T21:15:45.423148+00:00 app[web.1]: _maxListeners: undefined,
+2020-11-01T21:15:45.423148+00:00 app[web.1]: [Symbol(kCapture)]: false
+2020-11-01T21:15:45.423149+00:00 app[web.1]: },
+2020-11-01T21:15:45.423149+00:00 app[web.1]: '$appliedMethods': true,
+2020-11-01T21:15:45.423149+00:00 app[web.1]: '$appliedHooks': true,
+2020-11-01T21:15:45.423149+00:00 app[web.1]: _middleware: Kareem { _pres: [Map], _posts: [Map] },
+2020-11-01T21:15:45.423149+00:00 app[web.1]: '$__insertMany': [Function (anonymous)],
+2020-11-01T21:15:45.423149+00:00 app[web.1]: schema: Schema {
+2020-11-01T21:15:45.423149+00:00 app[web.1]: obj: [Object],
+2020-11-01T21:15:45.423150+00:00 app[web.1]: paths: [Object],
+2020-11-01T21:15:45.423150+00:00 app[web.1]: aliases: {},
+2020-11-01T21:15:45.423150+00:00 app[web.1]: subpaths: [Object],
+2020-11-01T21:15:45.423150+00:00 app[web.1]: virtuals: [Object],
+2020-11-01T21:15:45.423150+00:00 app[web.1]: singleNestedPaths: {},
+2020-11-01T21:15:45.423150+00:00 app[web.1]: nested: {},
+2020-11-01T21:15:45.423151+00:00 app[web.1]: inherits: {},
+2020-11-01T21:15:45.423151+00:00 app[web.1]: callQueue: [],
+2020-11-01T21:15:45.423151+00:00 app[web.1]: _indexes: [],
+2020-11-01T21:15:45.423151+00:00 app[web.1]: methods: {},
+2020-11-01T21:15:45.423151+00:00 app[web.1]: methodOptions: {},
+2020-11-01T21:15:45.423151+00:00 app[web.1]: statics: {},
+2020-11-01T21:15:45.423151+00:00 app[web.1]: tree: [Object],
+2020-11-01T21:15:45.423152+00:00 app[web.1]: query: {},
+2020-11-01T21:15:45.423152+00:00 app[web.1]: childSchemas: [Array],
+2020-11-01T21:15:45.423152+00:00 app[web.1]: plugins: [Array],
+2020-11-01T21:15:45.423152+00:00 app[web.1]: '$id': 1,
+2020-11-01T21:15:45.423152+00:00 app[web.1]: s: [Object],
+2020-11-01T21:15:45.423152+00:00 app[web.1]: _userProvidedOptions: {},
+2020-11-01T21:15:45.423153+00:00 app[web.1]: options: [Object],
+2020-11-01T21:15:45.423153+00:00 app[web.1]: '$globalPluginsApplied': true,
+2020-11-01T21:15:45.423153+00:00 app[web.1]: _requiredpaths: []
+2020-11-01T21:15:45.423153+00:00 app[web.1]: },
+2020-11-01T21:15:45.423153+00:00 app[web.1]: collection: NativeCollection {
+2020-11-01T21:15:45.423153+00:00 app[web.1]: collection: [Collection],
+2020-11-01T21:15:45.423154+00:00 app[web.1]: Promise: [Function: Promise],
+2020-11-01T21:15:45.423154+00:00 app[web.1]: opts: [Object],
+2020-11-01T21:15:45.423154+00:00 app[web.1]: name: 'users',
+2020-11-01T21:15:45.423154+00:00 app[web.1]: collectionName: 'users',
+2020-11-01T21:15:45.423154+00:00 app[web.1]: conn: [Circular *3],
+2020-11-01T21:15:45.423154+00:00 app[web.1]: queue: [],
+2020-11-01T21:15:45.423155+00:00 app[web.1]: buffer: false,
+2020-11-01T21:15:45.423155+00:00 app[web.1]: emitter: [EventEmitter]
+2020-11-01T21:15:45.423155+00:00 app[web.1]: },
+2020-11-01T21:15:45.423155+00:00 app[web.1]: Query: [Function (anonymous)] { base: [Object] },
+2020-11-01T21:15:45.423155+00:00 app[web.1]: '$init': Promise { [Circular *5] },
+2020-11-01T21:15:45.423156+00:00 app[web.1]: '$caught': true,
+2020-11-01T21:15:45.423156+00:00 app[web.1]: [Symbol(mongoose#Model)]: true
+2020-11-01T21:15:45.423156+00:00 app[web.1]: },
+2020-11-01T21:15:45.423156+00:00 app[web.1]: game: <ref *6> [Function: model] {
+2020-11-01T21:15:45.423156+00:00 app[web.1]: hooks: Kareem { _pres: [Map], _posts: [Map] },
+2020-11-01T21:15:45.423156+00:00 app[web.1]: base: <ref *1> Mongoose {
+2020-11-01T21:15:45.423156+00:00 app[web.1]: connections: [Array],
+2020-11-01T21:15:45.423157+00:00 app[web.1]: models: [Circular *4],
+2020-11-01T21:15:45.423157+00:00 app[web.1]: modelSchemas: [Object],
+2020-11-01T21:15:45.423157+00:00 app[web.1]: options: [Object],
+2020-11-01T21:15:45.423157+00:00 app[web.1]: _pluralize: [Function: pluralize],
+2020-11-01T21:15:45.423157+00:00 app[web.1]: Schema: [Function],
+2020-11-01T21:15:45.423157+00:00 app[web.1]: model: [Function (anonymous)],
+2020-11-01T21:15:45.423158+00:00 app[web.1]: plugins: [Array]
+2020-11-01T21:15:45.423158+00:00 app[web.1]: },
+2020-11-01T21:15:45.423158+00:00 app[web.1]: modelName: 'game',
+2020-11-01T21:15:45.423158+00:00 app[web.1]: model: [Function: model],
+2020-11-01T21:15:45.423158+00:00 app[web.1]: db: [Circular *3],
+2020-11-01T21:15:45.423158+00:00 app[web.1]: discriminators: undefined,
+2020-11-01T21:15:45.423159+00:00 app[web.1]: events: EventEmitter {
+2020-11-01T21:15:45.423159+00:00 app[web.1]: _events: [Object: null prototype] {},
+2020-11-01T21:15:45.423159+00:00 app[web.1]: _eventsCount: 0,
+2020-11-01T21:15:45.423159+00:00 app[web.1]: _maxListeners: undefined,
+2020-11-01T21:15:45.423159+00:00 app[web.1]: [Symbol(kCapture)]: false
+2020-11-01T21:15:45.423159+00:00 app[web.1]: },
+2020-11-01T21:15:45.423160+00:00 app[web.1]: '$appliedMethods': true,
+2020-11-01T21:15:45.423160+00:00 app[web.1]: '$appliedHooks': true,
+2020-11-01T21:15:45.423160+00:00 app[web.1]: _middleware: Kareem { _pres: [Map], _posts: [Map] },
+2020-11-01T21:15:45.423160+00:00 app[web.1]: '$__insertMany': [Function (anonymous)],
+2020-11-01T21:15:45.423169+00:00 app[web.1]: schema: Schema {
+2020-11-01T21:15:45.423169+00:00 app[web.1]: obj: [Object],
+2020-11-01T21:15:45.423170+00:00 app[web.1]: paths: [Object],
+2020-11-01T21:15:45.423170+00:00 app[web.1]: aliases: {},
+2020-11-01T21:15:45.423170+00:00 app[web.1]: subpaths: [Object],
+2020-11-01T21:15:45.423170+00:00 app[web.1]: virtuals: [Object],
+2020-11-01T21:15:45.423170+00:00 app[web.1]: singleNestedPaths: {},
+2020-11-01T21:15:45.423170+00:00 app[web.1]: nested: {},
+2020-11-01T21:15:45.423171+00:00 app[web.1]: inherits: {},
+2020-11-01T21:15:45.423171+00:00 app[web.1]: callQueue: [],
+2020-11-01T21:15:45.423171+00:00 app[web.1]: _indexes: [],
+2020-11-01T21:15:45.423171+00:00 app[web.1]: methods: {},
+2020-11-01T21:15:45.423171+00:00 app[web.1]: methodOptions: {},
+2020-11-01T21:15:45.423171+00:00 app[web.1]: statics: {},
+2020-11-01T21:15:45.423171+00:00 app[web.1]: tree: [Object],
+2020-11-01T21:15:45.423172+00:00 app[web.1]: query: {},
+2020-11-01T21:15:45.423172+00:00 app[web.1]: childSchemas: [Array],
+2020-11-01T21:15:45.423172+00:00 app[web.1]: plugins: [Array],
+2020-11-01T21:15:45.423172+00:00 app[web.1]: '$id': 3,
+2020-11-01T21:15:45.423172+00:00 app[web.1]: s: [Object],
+2020-11-01T21:15:45.423172+00:00 app[web.1]: _userProvidedOptions: {},
+2020-11-01T21:15:45.423172+00:00 app[web.1]: options: [Object],
+2020-11-01T21:15:45.423173+00:00 app[web.1]: '$globalPluginsApplied': true,
+2020-11-01T21:15:45.423173+00:00 app[web.1]: _requiredpaths: [],
+2020-11-01T21:15:45.423173+00:00 app[web.1]: _indexedpaths: []
+2020-11-01T21:15:45.423173+00:00 app[web.1]: },
+2020-11-01T21:15:45.423173+00:00 app[web.1]: collection: NativeCollection {
+2020-11-01T21:15:45.423173+00:00 app[web.1]: collection: [Collection],
+2020-11-01T21:15:45.423174+00:00 app[web.1]: Promise: [Function: Promise],
+2020-11-01T21:15:45.423174+00:00 app[web.1]: opts: [Object],
+2020-11-01T21:15:45.423174+00:00 app[web.1]: name: 'games',
+2020-11-01T21:15:45.423174+00:00 app[web.1]: collectionName: 'games',
+2020-11-01T21:15:45.423174+00:00 app[web.1]: conn: [Circular *3],
+2020-11-01T21:15:45.423174+00:00 app[web.1]: queue: [],
+2020-11-01T21:15:45.423174+00:00 app[web.1]: buffer: false,
+2020-11-01T21:15:45.423175+00:00 app[web.1]: emitter: [EventEmitter]
+2020-11-01T21:15:45.423175+00:00 app[web.1]: },
+2020-11-01T21:15:45.423177+00:00 app[web.1]: Query: [Function (anonymous)] { base: [Object] },
+2020-11-01T21:15:45.423178+00:00 app[web.1]: '$init': Promise { [Circular *6] },
+2020-11-01T21:15:45.423178+00:00 app[web.1]: '$caught': true,
+2020-11-01T21:15:45.423178+00:00 app[web.1]: [Symbol(mongoose#Model)]: true
+2020-11-01T21:15:45.423178+00:00 app[web.1]: },
+2020-11-01T21:15:45.423178+00:00 app[web.1]: song: <ref *7> [Function: model] {
+2020-11-01T21:15:45.423178+00:00 app[web.1]: hooks: Kareem { _pres: [Map], _posts: [Map] },
+2020-11-01T21:15:45.423179+00:00 app[web.1]: base: <ref *1> Mongoose {
+2020-11-01T21:15:45.423179+00:00 app[web.1]: connections: [Array],
+2020-11-01T21:15:45.423179+00:00 app[web.1]: models: [Circular *4],
+2020-11-01T21:15:45.423179+00:00 app[web.1]: modelSchemas: [Object],
+2020-11-01T21:15:45.423179+00:00 app[web.1]: options: [Object],
+2020-11-01T21:15:45.423179+00:00 app[web.1]: _pluralize: [Function: pluralize],
+2020-11-01T21:15:45.423180+00:00 app[web.1]: Schema: [Function],
+2020-11-01T21:15:45.423180+00:00 app[web.1]: model: [Function (anonymous)],
+2020-11-01T21:15:45.423180+00:00 app[web.1]: plugins: [Array]
+2020-11-01T21:15:45.423180+00:00 app[web.1]: },
+2020-11-01T21:15:45.423180+00:00 app[web.1]: modelName: 'song',
+2020-11-01T21:15:45.423180+00:00 app[web.1]: model: [Function: model],
+2020-11-01T21:15:45.423180+00:00 app[web.1]: db: [Circular *3],
+2020-11-01T21:15:45.423181+00:00 app[web.1]: discriminators: undefined,
+2020-11-01T21:15:45.423181+00:00 app[web.1]: events: EventEmitter {
+2020-11-01T21:15:45.423181+00:00 app[web.1]: _events: [Object: null prototype] {},
+2020-11-01T21:15:45.423181+00:00 app[web.1]: _eventsCount: 0,
+2020-11-01T21:15:45.423181+00:00 app[web.1]: _maxListeners: undefined,
+2020-11-01T21:15:45.423181+00:00 app[web.1]: [Symbol(kCapture)]: false
+2020-11-01T21:15:45.423182+00:00 app[web.1]: },
+2020-11-01T21:15:45.423182+00:00 app[web.1]: '$appliedMethods': true,
+2020-11-01T21:15:45.423182+00:00 app[web.1]: '$appliedHooks': true,
+2020-11-01T21:15:45.423182+00:00 app[web.1]: _middleware: Kareem { _pres: [Map], _posts: [Map] },
+2020-11-01T21:15:45.423182+00:00 app[web.1]: '$__insertMany': [Function (anonymous)],
+2020-11-01T21:15:45.423182+00:00 app[web.1]: schema: Schema {
+2020-11-01T21:15:45.423183+00:00 app[web.1]: obj: [Object],
+2020-11-01T21:15:45.423183+00:00 app[web.1]: paths: [Object],
+2020-11-01T21:15:45.423183+00:00 app[web.1]: aliases: {},
+2020-11-01T21:15:45.423183+00:00 app[web.1]: subpaths: {},
+2020-11-01T21:15:45.423183+00:00 app[web.1]: virtuals: [Object],
+2020-11-01T21:15:45.423183+00:00 app[web.1]: singleNestedPaths: {},
+2020-11-01T21:15:45.423183+00:00 app[web.1]: nested: {},
+2020-11-01T21:15:45.423184+00:00 app[web.1]: inherits: {},
+2020-11-01T21:15:45.423184+00:00 app[web.1]: callQueue: [],
+2020-11-01T21:15:45.423184+00:00 app[web.1]: _indexes: [],
+2020-11-01T21:15:45.423184+00:00 app[web.1]: methods: {},
+2020-11-01T21:15:45.423184+00:00 app[web.1]: methodOptions: {},
+2020-11-01T21:15:45.423184+00:00 app[web.1]: statics: {},
+2020-11-01T21:15:45.423184+00:00 app[web.1]: tree: [Object],
+2020-11-01T21:15:45.423185+00:00 app[web.1]: query: {},
+2020-11-01T21:15:45.423185+00:00 app[web.1]: childSchemas: [],
+2020-11-01T21:15:45.423185+00:00 app[web.1]: plugins: [Array],
+2020-11-01T21:15:45.423185+00:00 app[web.1]: '$id': 6,
+2020-11-01T21:15:45.423185+00:00 app[web.1]: s: [Object],
+2020-11-01T21:15:45.423185+00:00 app[web.1]: _userProvidedOptions: {},
+2020-11-01T21:15:45.423185+00:00 app[web.1]: options: [Object],
+2020-11-01T21:15:45.423186+00:00 app[web.1]: '$globalPluginsApplied': true
+2020-11-01T21:15:45.423186+00:00 app[web.1]: },
+2020-11-01T21:15:45.423186+00:00 app[web.1]: collection: NativeCollection {
+2020-11-01T21:15:45.423186+00:00 app[web.1]: collection: [Collection],
+2020-11-01T21:15:45.423186+00:00 app[web.1]: Promise: [Function: Promise],
+2020-11-01T21:15:45.423186+00:00 app[web.1]: opts: [Object],
+2020-11-01T21:15:45.423187+00:00 app[web.1]: name: 'songs',
+2020-11-01T21:15:45.423187+00:00 app[web.1]: collectionName: 'songs',
+2020-11-01T21:15:45.423187+00:00 app[web.1]: conn: [Circular *3],
+2020-11-01T21:15:45.423187+00:00 app[web.1]: queue: [],
+2020-11-01T21:15:45.423187+00:00 app[web.1]: buffer: false,
+2020-11-01T21:15:45.423187+00:00 app[web.1]: emitter: [EventEmitter]
+2020-11-01T21:15:45.423187+00:00 app[web.1]: },
+2020-11-01T21:15:45.423188+00:00 app[web.1]: Query: [Function (anonymous)] { base: [Object] },
+2020-11-01T21:15:45.423188+00:00 app[web.1]: '$init': Promise { [Circular *7] },
+2020-11-01T21:15:45.423188+00:00 app[web.1]: '$caught': true,
+2020-11-01T21:15:45.423188+00:00 app[web.1]: [Symbol(mongoose#Model)]: true
+2020-11-01T21:15:45.423188+00:00 app[web.1]: },
+2020-11-01T21:15:45.423188+00:00 app[web.1]: message: <ref *8> [Function: model] {
+2020-11-01T21:15:45.423189+00:00 app[web.1]: hooks: Kareem { _pres: [Map], _posts: [Map] },
+2020-11-01T21:15:45.423189+00:00 app[web.1]: base: <ref *1> Mongoose {
+2020-11-01T21:15:45.423189+00:00 app[web.1]: connections: [Array],
+2020-11-01T21:15:45.423189+00:00 app[web.1]: models: [Circular *4],
+2020-11-01T21:15:45.423189+00:00 app[web.1]: modelSchemas: [Object],
+2020-11-01T21:15:45.423189+00:00 app[web.1]: options: [Object],
+2020-11-01T21:15:45.423190+00:00 app[web.1]: _pluralize: [Function: pluralize],
+2020-11-01T21:15:45.423190+00:00 app[web.1]: Schema: [Function],
+2020-11-01T21:15:45.423190+00:00 app[web.1]: model: [Function (anonymous)],
+2020-11-01T21:15:45.423190+00:00 app[web.1]: plugins: [Array]
+2020-11-01T21:15:45.423190+00:00 app[web.1]: },
+2020-11-01T21:15:45.423190+00:00 app[web.1]: modelName: 'message',
+2020-11-01T21:15:45.423190+00:00 app[web.1]: model: [Function: model],
+2020-11-01T21:15:45.423191+00:00 app[web.1]: db: [Circular *3],
+2020-11-01T21:15:45.423197+00:00 app[web.1]: discriminators: undefined,
+2020-11-01T21:15:45.423197+00:00 app[web.1]: events: EventEmitter {
+2020-11-01T21:15:45.423197+00:00 app[web.1]: _events: [Object: null prototype] {},
+2020-11-01T21:15:45.423198+00:00 app[web.1]: _eventsCount: 0,
+2020-11-01T21:15:45.423198+00:00 app[web.1]: _maxListeners: undefined,
+2020-11-01T21:15:45.423198+00:00 app[web.1]: [Symbol(kCapture)]: false
+2020-11-01T21:15:45.423198+00:00 app[web.1]: },
+2020-11-01T21:15:45.423198+00:00 app[web.1]: '$appliedMethods': true,
+2020-11-01T21:15:45.423198+00:00 app[web.1]: '$appliedHooks': true,
+2020-11-01T21:15:45.423199+00:00 app[web.1]: _middleware: Kareem { _pres: [Map], _posts: [Map] },
+2020-11-01T21:15:45.423199+00:00 app[web.1]: '$__insertMany': [Function (anonymous)],
+2020-11-01T21:15:45.423199+00:00 app[web.1]: schema: Schema {
+2020-11-01T21:15:45.423199+00:00 app[web.1]: obj: [Object],
+2020-11-01T21:15:45.423199+00:00 app[web.1]: paths: [Object],
+2020-11-01T21:15:45.423199+00:00 app[web.1]: aliases: {},
+2020-11-01T21:15:45.423200+00:00 app[web.1]: subpaths: {},
+2020-11-01T21:15:45.423200+00:00 app[web.1]: virtuals: [Object],
+2020-11-01T21:15:45.423200+00:00 app[web.1]: singleNestedPaths: {},
+2020-11-01T21:15:45.423200+00:00 app[web.1]: nested: [Object],
+2020-11-01T21:15:45.423200+00:00 app[web.1]: inherits: {},
+2020-11-01T21:15:45.423200+00:00 app[web.1]: callQueue: [],
+2020-11-01T21:15:45.423201+00:00 app[web.1]: _indexes: [],
+2020-11-01T21:15:45.423201+00:00 app[web.1]: methods: {},
+2020-11-01T21:15:45.423201+00:00 app[web.1]: methodOptions: {},
+2020-11-01T21:15:45.423201+00:00 app[web.1]: statics: {},
+2020-11-01T21:15:45.423201+00:00 app[web.1]: tree: [Object],
+2020-11-01T21:15:45.423201+00:00 app[web.1]: query: {},
+2020-11-01T21:15:45.423201+00:00 app[web.1]: childSchemas: [],
+2020-11-01T21:15:45.423202+00:00 app[web.1]: plugins: [Array],
+2020-11-01T21:15:45.423202+00:00 app[web.1]: '$id': 7,
+2020-11-01T21:15:45.423202+00:00 app[web.1]: s: [Object],
+2020-11-01T21:15:45.423202+00:00 app[web.1]: _userProvidedOptions: {},
+2020-11-01T21:15:45.423202+00:00 app[web.1]: options: [Object],
+2020-11-01T21:15:45.423202+00:00 app[web.1]: '$globalPluginsApplied': true,
+2020-11-01T21:15:45.423202+00:00 app[web.1]: _requiredpaths: []
+2020-11-01T21:15:45.423203+00:00 app[web.1]: },
+2020-11-01T21:15:45.423203+00:00 app[web.1]: collection: NativeCollection {
+2020-11-01T21:15:45.423203+00:00 app[web.1]: collection: [Collection],
+2020-11-01T21:15:45.423205+00:00 app[web.1]: Promise: [Function: Promise],
+2020-11-01T21:15:45.423205+00:00 app[web.1]: opts: [Object],
+2020-11-01T21:15:45.423205+00:00 app[web.1]: name: 'messages',
+2020-11-01T21:15:45.423206+00:00 app[web.1]: collectionName: 'messages',
+2020-11-01T21:15:45.423206+00:00 app[web.1]: conn: [Circular *3],
+2020-11-01T21:15:45.423206+00:00 app[web.1]: queue: [],
+2020-11-01T21:15:45.423206+00:00 app[web.1]: buffer: false,
+2020-11-01T21:15:45.423206+00:00 app[web.1]: emitter: [EventEmitter]
+2020-11-01T21:15:45.423206+00:00 app[web.1]: },
+2020-11-01T21:15:45.423207+00:00 app[web.1]: Query: [Function (anonymous)] { base: [Object] },
+2020-11-01T21:15:45.423207+00:00 app[web.1]: '$init': Promise { [Circular *8] },
+2020-11-01T21:15:45.423207+00:00 app[web.1]: '$caught': true,
+2020-11-01T21:15:45.423207+00:00 app[web.1]: [Symbol(mongoose#Model)]: true
+2020-11-01T21:15:45.423207+00:00 app[web.1]: },
+2020-11-01T21:15:45.423207+00:00 app[web.1]: room: [Circular *2],
+2020-11-01T21:15:45.423207+00:00 app[web.1]: category: <ref *9> [Function: model] {
+2020-11-01T21:15:45.423208+00:00 app[web.1]: hooks: Kareem { _pres: [Map], _posts: [Map] },
+2020-11-01T21:15:45.423208+00:00 app[web.1]: base: <ref *1> Mongoose {
+2020-11-01T21:15:45.423208+00:00 app[web.1]: connections: [Array],
+2020-11-01T21:15:45.423208+00:00 app[web.1]: models: [Circular *4],
+2020-11-01T21:15:45.423208+00:00 app[web.1]: modelSchemas: [Object],
+2020-11-01T21:15:45.423208+00:00 app[web.1]: options: [Object],
+2020-11-01T21:15:45.423209+00:00 app[web.1]: _pluralize: [Function: pluralize],
+2020-11-01T21:15:45.423209+00:00 app[web.1]: Schema: [Function],
+2020-11-01T21:15:45.423209+00:00 app[web.1]: model: [Function (anonymous)],
+2020-11-01T21:15:45.423209+00:00 app[web.1]: plugins: [Array]
+2020-11-01T21:15:45.423209+00:00 app[web.1]: },
+2020-11-01T21:15:45.423209+00:00 app[web.1]: modelName: 'category',
+2020-11-01T21:15:45.423210+00:00 app[web.1]: model: [Function: model],
+2020-11-01T21:15:45.423210+00:00 app[web.1]: db: [Circular *3],
+2020-11-01T21:15:45.423210+00:00 app[web.1]: discriminators: undefined,
+2020-11-01T21:15:45.423210+00:00 app[web.1]: events: EventEmitter {
+2020-11-01T21:15:45.423210+00:00 app[web.1]: _events: [Object: null prototype] {},
+2020-11-01T21:15:45.423210+00:00 app[web.1]: _eventsCount: 0,
+2020-11-01T21:15:45.423210+00:00 app[web.1]: _maxListeners: undefined,
+2020-11-01T21:15:45.423211+00:00 app[web.1]: [Symbol(kCapture)]: false
+2020-11-01T21:15:45.423211+00:00 app[web.1]: },
+2020-11-01T21:15:45.423211+00:00 app[web.1]: '$appliedMethods': true,
+2020-11-01T21:15:45.423211+00:00 app[web.1]: '$appliedHooks': true,
+2020-11-01T21:15:45.423211+00:00 app[web.1]: _middleware: Kareem { _pres: [Map], _posts: [Map] },
+2020-11-01T21:15:45.423212+00:00 app[web.1]: '$__insertMany': [Function (anonymous)],
+2020-11-01T21:15:45.423212+00:00 app[web.1]: schema: Schema {
+2020-11-01T21:15:45.423212+00:00 app[web.1]: obj: [Object],
+2020-11-01T21:15:45.423212+00:00 app[web.1]: paths: [Object],
+2020-11-01T21:15:45.423212+00:00 app[web.1]: aliases: {},
+2020-11-01T21:15:45.423212+00:00 app[web.1]: subpaths: {},
+2020-11-01T21:15:45.423212+00:00 app[web.1]: virtuals: [Object],
+2020-11-01T21:15:45.423213+00:00 app[web.1]: singleNestedPaths: {},
+2020-11-01T21:15:45.423213+00:00 app[web.1]: nested: {},
+2020-11-01T21:15:45.423213+00:00 app[web.1]: inherits: {},
+2020-11-01T21:15:45.423213+00:00 app[web.1]: callQueue: [],
+2020-11-01T21:15:45.423213+00:00 app[web.1]: _indexes: [],
+2020-11-01T21:15:45.423213+00:00 app[web.1]: methods: {},
+2020-11-01T21:15:45.423213+00:00 app[web.1]: methodOptions: {},
+2020-11-01T21:15:45.423214+00:00 app[web.1]: statics: {},
+2020-11-01T21:15:45.423214+00:00 app[web.1]: tree: [Object],
+2020-11-01T21:15:45.423214+00:00 app[web.1]: query: {},
+2020-11-01T21:15:45.423214+00:00 app[web.1]: childSchemas: [],
+2020-11-01T21:15:45.423214+00:00 app[web.1]: plugins: [Array],
+2020-11-01T21:15:45.423214+00:00 app[web.1]: '$id': 9,
+2020-11-01T21:15:45.423214+00:00 app[web.1]: s: [Object],
+2020-11-01T21:15:45.423215+00:00 app[web.1]: _userProvidedOptions: {},
+2020-11-01T21:15:45.423215+00:00 app[web.1]: options: [Object],
+2020-11-01T21:15:45.423215+00:00 app[web.1]: '$globalPluginsApplied': true,
+2020-11-01T21:15:45.423215+00:00 app[web.1]: _requiredpaths: []
+2020-11-01T21:15:45.423215+00:00 app[web.1]: },
+2020-11-01T21:15:45.423215+00:00 app[web.1]: collection: NativeCollection {
+2020-11-01T21:15:45.423216+00:00 app[web.1]: collection: [Collection],
+2020-11-01T21:15:45.423216+00:00 app[web.1]: Promise: [Function: Promise],
+2020-11-01T21:15:45.423216+00:00 app[web.1]: opts: [Object],
+2020-11-01T21:15:45.423216+00:00 app[web.1]: name: 'categories',
+2020-11-01T21:15:45.423217+00:00 app[web.1]: collectionName: 'categories',
+2020-11-01T21:15:45.423217+00:00 app[web.1]: conn: [Circular *3],
+2020-11-01T21:15:45.423217+00:00 app[web.1]: queue: [],
+2020-11-01T21:15:45.423217+00:00 app[web.1]: buffer: false,
+2020-11-01T21:15:45.423217+00:00 app[web.1]: emitter: [EventEmitter]
+2020-11-01T21:15:45.423218+00:00 app[web.1]: },
+2020-11-01T21:15:45.423218+00:00 app[web.1]: Query: [Function (anonymous)] { base: [Object] },
+2020-11-01T21:15:45.423218+00:00 app[web.1]: '$init': Promise { [Circular *9] },
+2020-11-01T21:15:45.423219+00:00 app[web.1]: '$caught': true,
+2020-11-01T21:15:45.423219+00:00 app[web.1]: [Symbol(mongoose#Model)]: true
+2020-11-01T21:15:45.423219+00:00 app[web.1]: }
+2020-11-01T21:15:45.423219+00:00 app[web.1]: },
+2020-11-01T21:15:45.423220+00:00 app[web.1]: config: { autoIndex: true },
+2020-11-01T21:15:45.423220+00:00 app[web.1]: replica: false,
+2020-11-01T21:15:45.423220+00:00 app[web.1]: options: null,
+2020-11-01T21:15:45.423220+00:00 app[web.1]: otherDbs: [],
+2020-11-01T21:15:45.423222+00:00 app[web.1]: relatedDbs: {},
+2020-11-01T21:15:45.423222+00:00 app[web.1]: states: [Object: null prototype] {
+2020-11-01T21:15:45.423222+00:00 app[web.1]: '0': 'disconnected',
+2020-11-01T21:15:45.423222+00:00 app[web.1]: '1': 'connected',
+2020-11-01T21:15:45.423223+00:00 app[web.1]: '2': 'connecting',
+2020-11-01T21:15:45.423223+00:00 app[web.1]: '3': 'disconnecting',
+2020-11-01T21:15:45.423223+00:00 app[web.1]: '99': 'uninitialized',
+2020-11-01T21:15:45.423223+00:00 app[web.1]: disconnected: 0,
+2020-11-01T21:15:45.423224+00:00 app[web.1]: connected: 1,
+2020-11-01T21:15:45.423224+00:00 app[web.1]: connecting: 2,
+2020-11-01T21:15:45.423224+00:00 app[web.1]: disconnecting: 3,
+2020-11-01T21:15:45.423224+00:00 app[web.1]: uninitialized: 99
+2020-11-01T21:15:45.423224+00:00 app[web.1]: },
+2020-11-01T21:15:45.423225+00:00 app[web.1]: _readyState: 1,
+2020-11-01T21:15:45.423225+00:00 app[web.1]: _closeCalled: false,
+2020-11-01T21:15:45.423225+00:00 app[web.1]: _hasOpened: true,
+2020-11-01T21:15:45.423225+00:00 app[web.1]: plugins: [],
+2020-11-01T21:15:45.423226+00:00 app[web.1]: _listening: false,
+2020-11-01T21:15:45.423226+00:00 app[web.1]: _connectionOptions: {
+2020-11-01T21:15:45.423226+00:00 app[web.1]: useNewUrlParser: true,
+2020-11-01T21:15:45.423226+00:00 app[web.1]: useUnifiedTopology: true,
+2020-11-01T21:15:45.423227+00:00 app[web.1]: promiseLibrary: [Function: Promise],
+2020-11-01T21:15:45.423227+00:00 app[web.1]: driverInfo: { name: 'Mongoose', version: '5.8.6' }
+2020-11-01T21:15:45.423227+00:00 app[web.1]: },
+2020-11-01T21:15:45.423227+00:00 app[web.1]: '$dbName': 'prod',
+2020-11-01T21:15:45.423228+00:00 app[web.1]: client: MongoClient {
+2020-11-01T21:15:45.423228+00:00 app[web.1]: _events: [Object: null prototype] {
+2020-11-01T21:15:45.423228+00:00 app[web.1]: newListener: [Function (anonymous)],
+2020-11-01T21:15:45.423228+00:00 app[web.1]: left: [Function (anonymous)]
+2020-11-01T21:15:45.423229+00:00 app[web.1]: },
+2020-11-01T21:15:45.423229+00:00 app[web.1]: _eventsCount: 2,
+2020-11-01T21:15:45.423229+00:00 app[web.1]: _maxListeners: undefined,
+2020-11-01T21:15:45.423229+00:00 app[web.1]: s: {
+2020-11-01T21:15:45.423230+00:00 app[web.1]: url: 'mongodb+srv://PartyyAdmins:Pv1j5EsP0kpn29rj@cluster0.qsh1v.mongodb.net/test?retryWrites=true&w=majority',
+2020-11-01T21:15:45.423230+00:00 app[web.1]: options: {
+2020-11-01T21:15:45.423230+00:00 app[web.1]: servers: [Array],
+2020-11-01T21:15:45.423231+00:00 app[web.1]: authSource: 'admin',
+2020-11-01T21:15:45.423231+00:00 app[web.1]: replicaSet: 'atlas-ird72z-shard-0',
+2020-11-01T21:15:45.423231+00:00 app[web.1]: retryWrites: true,
+2020-11-01T21:15:45.423231+00:00 app[web.1]: w: 'majority',
+2020-11-01T21:15:45.423497+00:00 app[web.1]: index: 9811345,
+2020-11-01T21:15:45.423498+00:00 app[web.1]: createPk: [Function: createPk],
+2020-11-01T21:15:45.423498+00:00 app[web.1]: createFromTime: [Function: createFromTime],
+2020-11-01T21:15:45.423498+00:00 app[web.1]: createFromHexString: [Function: createFromHexString],
+2020-11-01T21:15:45.423498+00:00 app[web.1]: isValid: [Function: isValid],
+2020-11-01T21:15:45.423499+00:00 app[web.1]: ObjectID: [Circular *10],
+2020-11-01T21:15:45.423499+00:00 app[web.1]: ObjectId: [Circular *10]
+2020-11-01T21:15:45.423499+00:00 app[web.1]: },
+2020-11-01T21:15:45.423500+00:00 app[web.1]: db: Db {
+2020-11-01T21:15:45.423500+00:00 app[web.1]: _events: [Object: null prototype],
+2020-11-01T21:15:45.423500+00:00 app[web.1]: _eventsCount: 3,
+2020-11-01T21:15:45.423501+00:00 app[web.1]: _maxListeners: undefined,
+2020-11-01T21:15:45.423501+00:00 app[web.1]: s: [Object],
+2020-11-01T21:15:45.423501+00:00 app[web.1]: serverConfig: [Getter],
+2020-11-01T21:15:45.423501+00:00 app[web.1]: bufferMaxEntries: [Getter],
+2020-11-01T21:15:45.423501+00:00 app[web.1]: databaseName: [Getter],
+2020-11-01T21:15:45.423501+00:00 app[web.1]: [Symbol(kCapture)]: false
+2020-11-01T21:15:45.423502+00:00 app[web.1]: },
+2020-11-01T21:15:45.423502+00:00 app[web.1]: topology: NativeTopology {
+2020-11-01T21:15:45.423502+00:00 app[web.1]: _events: [Object: null prototype],
+2020-11-01T21:15:45.423502+00:00 app[web.1]: _eventsCount: 26,
+2020-11-01T21:15:45.423502+00:00 app[web.1]: _maxListeners: Infinity,
+2020-11-01T21:15:45.423502+00:00 app[web.1]: s: [Object],
+2020-11-01T21:15:45.423503+00:00 app[web.1]: [Symbol(kCapture)]: false
+2020-11-01T21:15:45.423503+00:00 app[web.1]: },
+2020-11-01T21:15:45.423503+00:00 app[web.1]: options: {
+2020-11-01T21:15:45.423503+00:00 app[web.1]: promiseLibrary: [Function: Promise],
+2020-11-01T21:15:45.423503+00:00 app[web.1]: readConcern: undefined,
+2020-11-01T21:15:45.423503+00:00 app[web.1]: readPreference: [ReadPreference],
+2020-11-01T21:15:45.423503+00:00 app[web.1]: w: 'majority'
+2020-11-01T21:15:45.423504+00:00 app[web.1]: },
+2020-11-01T21:15:45.423504+00:00 app[web.1]: namespace: MongoDBNamespace { db: 'prod', collection: 'rooms' },
+2020-11-01T21:15:45.423504+00:00 app[web.1]: readPreference: ReadPreference { mode: 'primary', tags: undefined },
+2020-11-01T21:15:45.423504+00:00 app[web.1]: slaveOk: true,
+2020-11-01T21:15:45.423505+00:00 app[web.1]: serializeFunctions: undefined,
+2020-11-01T21:15:45.423505+00:00 app[web.1]: raw: undefined,
+2020-11-01T21:15:45.423505+00:00 app[web.1]: promoteLongs: undefined,
+2020-11-01T21:15:45.423509+00:00 app[web.1]: promoteValues: undefined,
+2020-11-01T21:15:45.423509+00:00 app[web.1]: promoteBuffers: undefined,
+2020-11-01T21:15:45.423509+00:00 app[web.1]: internalHint: null,
+2020-11-01T21:15:45.423510+00:00 app[web.1]: collectionHint: null,
+2020-11-01T21:15:45.423510+00:00 app[web.1]: promiseLibrary: [Function: Promise],
+2020-11-01T21:15:45.423510+00:00 app[web.1]: readConcern: undefined,
+2020-11-01T21:15:45.423510+00:00 app[web.1]: writeConcern: WriteConcern { w: 'majority' }
+2020-11-01T21:15:45.423511+00:00 app[web.1]: }
+2020-11-01T21:15:45.423511+00:00 app[web.1]: },
+2020-11-01T21:15:45.423511+00:00 app[web.1]: Promise: [Function: Promise],
+2020-11-01T21:15:45.423511+00:00 app[web.1]: opts: {
+2020-11-01T21:15:45.423512+00:00 app[web.1]: bufferCommands: true,
+2020-11-01T21:15:45.423512+00:00 app[web.1]: capped: false,
+2020-11-01T21:15:45.423512+00:00 app[web.1]: Promise: [Function: Promise],
+2020-11-01T21:15:45.423513+00:00 app[web.1]: '$wasForceClosed': undefined
+2020-11-01T21:15:45.423514+00:00 app[web.1]: },
+2020-11-01T21:15:45.423514+00:00 app[web.1]: name: 'rooms',
+2020-11-01T21:15:45.423514+00:00 app[web.1]: collectionName: 'rooms',
+2020-11-01T21:15:45.423514+00:00 app[web.1]: conn: <ref *3> NativeConnection {
+2020-11-01T21:15:45.423515+00:00 app[web.1]: base: <ref *1> Mongoose {
+2020-11-01T21:15:45.423515+00:00 app[web.1]: connections: [ [Circular *3] ],
+2020-11-01T21:15:45.423515+00:00 app[web.1]: models: <ref *4> {
+2020-11-01T21:15:45.423515+00:00 app[web.1]: user: [Function],
+2020-11-01T21:15:45.423516+00:00 app[web.1]: game: [Function],
+2020-11-01T21:15:45.423516+00:00 app[web.1]: song: [Function],
+2020-11-01T21:15:45.423516+00:00 app[web.1]: message: [Function],
+2020-11-01T21:15:45.423516+00:00 app[web.1]: room: [Circular *2],
+2020-11-01T21:15:45.423517+00:00 app[web.1]: category: [Function]
+2020-11-01T21:15:45.423517+00:00 app[web.1]: },
+2020-11-01T21:15:45.423517+00:00 app[web.1]: modelSchemas: {
+2020-11-01T21:15:45.423554+00:00 app[web.1]: user: [Schema],
+2020-11-01T21:15:45.423555+00:00 app[web.1]: game: [Schema],
+2020-11-01T21:15:45.423555+00:00 app[web.1]: song: [Schema],
+2020-11-01T21:15:45.423555+00:00 app[web.1]: message: [Schema],
+2020-11-01T21:15:45.423555+00:00 app[web.1]: room: [Schema],
+2020-11-01T21:15:45.423556+00:00 app[web.1]: category: [Schema]
+2020-11-01T21:15:45.423556+00:00 app[web.1]: },
+2020-11-01T21:15:45.423556+00:00 app[web.1]: options: { pluralization: true, [Symbol(mongoose:default)]: true },
+2020-11-01T21:15:45.423557+00:00 app[web.1]: _pluralize: [Function: pluralize],
+2020-11-01T21:15:45.423557+00:00 app[web.1]: Schema: [Function: Schema] {
+2020-11-01T21:15:45.423557+00:00 app[web.1]: reserved: [Object: null prototype],
+2020-11-01T21:15:45.423557+00:00 app[web.1]: Types: [Object],
+2020-11-01T21:15:45.423558+00:00 app[web.1]: ObjectId: [Function]
+2020-11-01T21:15:45.423558+00:00 app[web.1]: },
+2020-11-01T21:15:45.423558+00:00 app[web.1]: model: [Function (anonymous)],
+2020-11-01T21:15:45.423559+00:00 app[web.1]: plugins: [ [Array], [Array], [Array], [Array] ]
+2020-11-01T21:15:45.423559+00:00 app[web.1]: },
+2020-11-01T21:15:45.423559+00:00 app[web.1]: collections: {
+2020-11-01T21:15:45.423560+00:00 app[web.1]: users: NativeCollection {
+2020-11-01T21:15:45.423560+00:00 app[web.1]: collection: [Collection],
+2020-11-01T21:15:45.423560+00:00 app[web.1]: Promise: [Function: Promise],
+2020-11-01T21:15:45.423560+00:00 app[web.1]: opts: [Object],
+2020-11-01T21:15:45.423560+00:00 app[web.1]: name: 'users',
+2020-11-01T21:15:45.423561+00:00 app[web.1]: collectionName: 'users',
+2020-11-01T21:15:45.423561+00:00 app[web.1]: conn: [Circular *3],
+2020-11-01T21:15:45.423561+00:00 app[web.1]: queue: [],
+2020-11-01T21:15:45.423561+00:00 app[web.1]: buffer: false,
+2020-11-01T21:15:45.423562+00:00 app[web.1]: emitter: [EventEmitter]
+2020-11-01T21:15:45.423562+00:00 app[web.1]: },
+2020-11-01T21:15:45.423562+00:00 app[web.1]: games: NativeCollection {
+2020-11-01T21:15:45.423562+00:00 app[web.1]: collection: [Collection],
+2020-11-01T21:15:45.423563+00:00 app[web.1]: Promise: [Function: Promise],
+2020-11-01T21:15:45.423563+00:00 app[web.1]: opts: [Object],
+2020-11-01T21:15:45.423563+00:00 app[web.1]: name: 'games',
+2020-11-01T21:15:45.423563+00:00 app[web.1]: collectionName: 'games',
+2020-11-01T21:15:45.423564+00:00 app[web.1]: conn: [Circular *3],
+2020-11-01T21:15:45.423564+00:00 app[web.1]: queue: [],
+2020-11-01T21:15:45.423564+00:00 app[web.1]: buffer: false,
+2020-11-01T21:15:45.423564+00:00 app[web.1]: emitter: [EventEmitter]
+2020-11-01T21:15:45.423565+00:00 app[web.1]: },
+2020-11-01T21:15:45.423565+00:00 app[web.1]: songs: NativeCollection {
+2020-11-01T21:15:45.423565+00:00 app[web.1]: collection: [Collection],
+2020-11-01T21:15:45.423565+00:00 app[web.1]: Promise: [Function: Promise],
+2020-11-01T21:15:45.423566+00:00 app[web.1]: opts: [Object],
+2020-11-01T21:15:45.423566+00:00 app[web.1]: name: 'songs',
+2020-11-01T21:15:45.423566+00:00 app[web.1]: collectionName: 'songs',
+2020-11-01T21:15:45.423566+00:00 app[web.1]: conn: [Circular *3],
+2020-11-01T21:15:45.423566+00:00 app[web.1]: queue: [],
+2020-11-01T21:15:45.423567+00:00 app[web.1]: buffer: false,
+2020-11-01T21:15:45.423567+00:00 app[web.1]: emitter: [EventEmitter]
+2020-11-01T21:15:45.423567+00:00 app[web.1]: },
+2020-11-01T21:15:45.423567+00:00 app[web.1]: messages: NativeCollection {
+2020-11-01T21:15:45.423568+00:00 app[web.1]: collection: [Collection],
+2020-11-01T21:15:45.423568+00:00 app[web.1]: Promise: [Function: Promise],
+2020-11-01T21:15:45.423568+00:00 app[web.1]: opts: [Object],
+2020-11-01T21:15:45.423568+00:00 app[web.1]: name: 'messages',
+2020-11-01T21:15:45.423569+00:00 app[web.1]: collectionName: 'messages',
+2020-11-01T21:15:45.423569+00:00 app[web.1]: conn: [Circular *3],
+2020-11-01T21:15:45.423569+00:00 app[web.1]: queue: [],
+2020-11-01T21:15:45.423569+00:00 app[web.1]: buffer: false,
+2020-11-01T21:15:45.423570+00:00 app[web.1]: emitter: [EventEmitter]
+2020-11-01T21:15:45.423570+00:00 app[web.1]: },
+2020-11-01T21:15:45.423570+00:00 app[web.1]: rooms: [Circular *11],
+2020-11-01T21:15:45.423570+00:00 app[web.1]: categories: NativeCollection {
+2020-11-01T21:15:45.423571+00:00 app[web.1]: collection: [Collection],
+2020-11-01T21:15:45.423571+00:00 app[web.1]: Promise: [Function: Promise],
+2020-11-01T21:15:45.423571+00:00 app[web.1]: opts: [Object],
+2020-11-01T21:15:45.423571+00:00 app[web.1]: name: 'categories',
+2020-11-01T21:15:45.423572+00:00 app[web.1]: collectionName: 'categories',
+2020-11-01T21:15:45.423572+00:00 app[web.1]: conn: [Circular *3],
+2020-11-01T21:15:45.423572+00:00 app[web.1]: queue: [],
+2020-11-01T21:15:45.423572+00:00 app[web.1]: buffer: false,
+2020-11-01T21:15:45.423573+00:00 app[web.1]: emitter: [EventEmitter]
+2020-11-01T21:15:45.423573+00:00 app[web.1]: }
+2020-11-01T21:15:45.423573+00:00 app[web.1]: },
+2020-11-01T21:15:45.423574+00:00 app[web.1]: models: <ref *4> {
+2020-11-01T21:15:45.423574+00:00 app[web.1]: user: <ref *5> [Function: model] {
+2020-11-01T21:15:45.423574+00:00 app[web.1]: hooks: [Kareem],
+2020-11-01T21:15:45.423574+00:00 app[web.1]: base: [Mongoose],
+2020-11-01T21:15:45.423575+00:00 app[web.1]: modelName: 'user',
+2020-11-01T21:15:45.423575+00:00 app[web.1]: model: [Function: model],
+2020-11-01T21:15:45.423575+00:00 app[web.1]: db: [Circular *3],
+2020-11-01T21:15:45.423575+00:00 app[web.1]: discriminators: undefined,
+2020-11-01T21:15:45.423576+00:00 app[web.1]: events: [EventEmitter],
+2020-11-01T21:15:45.423576+00:00 app[web.1]: '$appliedMethods': true,
+2020-11-01T21:15:45.423576+00:00 app[web.1]: '$appliedHooks': true,
+2020-11-01T21:15:45.423576+00:00 app[web.1]: _middleware: [Kareem],
+2020-11-01T21:15:45.423576+00:00 app[web.1]: '$__insertMany': [Function (anonymous)],
+2020-11-01T21:15:45.423577+00:00 app[web.1]: schema: [Schema],
+2020-11-01T21:15:45.423577+00:00 app[web.1]: collection: [NativeCollection],
+2020-11-01T21:15:45.423577+00:00 app[web.1]: Query: [Function],
+2020-11-01T21:15:45.423577+00:00 app[web.1]: '$init': [Promise],
+2020-11-01T21:15:45.423578+00:00 app[web.1]: '$caught': true,
+2020-11-01T21:15:45.423578+00:00 app[web.1]: [Symbol(mongoose#Model)]: true
+2020-11-01T21:15:45.423578+00:00 app[web.1]: },
+2020-11-01T21:15:45.423578+00:00 app[web.1]: game: <ref *6> [Function: model] {
+2020-11-01T21:15:45.423579+00:00 app[web.1]: hooks: [Kareem],
+2020-11-01T21:15:45.423579+00:00 app[web.1]: base: [Mongoose],
+2020-11-01T21:15:45.423585+00:00 app[web.1]: modelName: 'game',
+2020-11-01T21:15:45.423585+00:00 app[web.1]: model: [Function: model],
+2020-11-01T21:15:45.423585+00:00 app[web.1]: db: [Circular *3],
+2020-11-01T21:15:45.423586+00:00 app[web.1]: discriminators: undefined,
+2020-11-01T21:15:45.423586+00:00 app[web.1]: events: [EventEmitter],
+2020-11-01T21:15:45.423586+00:00 app[web.1]: '$appliedMethods': true,
+2020-11-01T21:15:45.423586+00:00 app[web.1]: '$appliedHooks': true,
+2020-11-01T21:15:45.423587+00:00 app[web.1]: _middleware: [Kareem],
+2020-11-01T21:15:45.423587+00:00 app[web.1]: '$__insertMany': [Function (anonymous)],
+2020-11-01T21:15:45.423587+00:00 app[web.1]: schema: [Schema],
+2020-11-01T21:15:45.423587+00:00 app[web.1]: collection: [NativeCollection],
+2020-11-01T21:15:45.423588+00:00 app[web.1]: Query: [Function],
+2020-11-01T21:15:45.423588+00:00 app[web.1]: '$init': [Promise],
+2020-11-01T21:15:45.423588+00:00 app[web.1]: '$caught': true,
+2020-11-01T21:15:45.423588+00:00 app[web.1]: [Symbol(mongoose#Model)]: true
+2020-11-01T21:15:45.423588+00:00 app[web.1]: },
+2020-11-01T21:15:45.423589+00:00 app[web.1]: song: <ref *7> [Function: model] {
+2020-11-01T21:15:45.423589+00:00 app[web.1]: hooks: [Kareem],
+2020-11-01T21:15:45.423589+00:00 app[web.1]: base: [Mongoose],
+2020-11-01T21:15:45.423590+00:00 app[web.1]: modelName: 'song',
+2020-11-01T21:15:45.423590+00:00 app[web.1]: model: [Function: model],
+2020-11-01T21:15:45.423590+00:00 app[web.1]: db: [Circular *3],
+2020-11-01T21:15:45.423590+00:00 app[web.1]: discriminators: undefined,
+2020-11-01T21:15:45.423591+00:00 app[web.1]: events: [EventEmitter],
+2020-11-01T21:15:45.423591+00:00 app[web.1]: '$appliedMethods': true,
+2020-11-01T21:15:45.423591+00:00 app[web.1]: '$appliedHooks': true,
+2020-11-01T21:15:45.423591+00:00 app[web.1]: _middleware: [Kareem],
+2020-11-01T21:15:45.423591+00:00 app[web.1]: '$__insertMany': [Function (anonymous)],
+2020-11-01T21:15:45.423592+00:00 app[web.1]: schema: [Schema],
+2020-11-01T21:15:45.423592+00:00 app[web.1]: collection: [NativeCollection],
+2020-11-01T21:15:45.423592+00:00 app[web.1]: Query: [Function],
+2020-11-01T21:15:45.423592+00:00 app[web.1]: '$init': [Promise],
+2020-11-01T21:15:45.423602+00:00 app[web.1]: '$caught': true,
+2020-11-01T21:15:45.423603+00:00 app[web.1]: [Symbol(mongoose#Model)]: true
+2020-11-01T21:15:45.423603+00:00 app[web.1]: },
+2020-11-01T21:15:45.423603+00:00 app[web.1]: message: <ref *8> [Function: model] {
+2020-11-01T21:15:45.423603+00:00 app[web.1]: hooks: [Kareem],
+2020-11-01T21:15:45.423603+00:00 app[web.1]: base: [Mongoose],
+2020-11-01T21:15:45.423604+00:00 app[web.1]: modelName: 'message',
+2020-11-01T21:15:45.423604+00:00 app[web.1]: model: [Function: model],
+2020-11-01T21:15:45.423604+00:00 app[web.1]: db: [Circular *3],
+2020-11-01T21:15:45.423604+00:00 app[web.1]: discriminators: undefined,
+2020-11-01T21:15:45.423605+00:00 app[web.1]: events: [EventEmitter],
+2020-11-01T21:15:45.423605+00:00 app[web.1]: '$appliedMethods': true,
+2020-11-01T21:15:45.423605+00:00 app[web.1]: '$appliedHooks': true,
+2020-11-01T21:15:45.423605+00:00 app[web.1]: _middleware: [Kareem],
+2020-11-01T21:15:45.423606+00:00 app[web.1]: '$__insertMany': [Function (anonymous)],
+2020-11-01T21:15:45.423606+00:00 app[web.1]: schema: [Schema],
+2020-11-01T21:15:45.423606+00:00 app[web.1]: collection: [NativeCollection],
+2020-11-01T21:15:45.423606+00:00 app[web.1]: Query: [Function],
+2020-11-01T21:15:45.423607+00:00 app[web.1]: '$init': [Promise],
+2020-11-01T21:15:45.423607+00:00 app[web.1]: '$caught': true,
+2020-11-01T21:15:45.423607+00:00 app[web.1]: [Symbol(mongoose#Model)]: true
+2020-11-01T21:15:45.423607+00:00 app[web.1]: },
+2020-11-01T21:15:45.423608+00:00 app[web.1]: room: [Circular *2],
+2020-11-01T21:15:45.423608+00:00 app[web.1]: category: <ref *9> [Function: model] {
+2020-11-01T21:15:45.423608+00:00 app[web.1]: hooks: [Kareem],
+2020-11-01T21:15:45.423608+00:00 app[web.1]: base: [Mongoose],
+2020-11-01T21:15:45.423609+00:00 app[web.1]: modelName: 'category',
+2020-11-01T21:15:45.423609+00:00 app[web.1]: model: [Function: model],
+2020-11-01T21:15:45.423609+00:00 app[web.1]: db: [Circular *3],
+2020-11-01T21:15:45.423609+00:00 app[web.1]: discriminators: undefined,
+2020-11-01T21:15:45.423610+00:00 app[web.1]: events: [EventEmitter],
+2020-11-01T21:15:45.423610+00:00 app[web.1]: '$appliedMethods': true,
+2020-11-01T21:15:45.423610+00:00 app[web.1]: '$appliedHooks': true,
+2020-11-01T21:15:45.423610+00:00 app[web.1]: _middleware: [Kareem],
+2020-11-01T21:15:45.423611+00:00 app[web.1]: '$__insertMany': [Function (anonymous)],
+2020-11-01T21:15:45.423611+00:00 app[web.1]: schema: [Schema],
+2020-11-01T21:15:45.423611+00:00 app[web.1]: collection: [NativeCollection],
+2020-11-01T21:15:45.423611+00:00 app[web.1]: Query: [Function],
+2020-11-01T21:15:45.423612+00:00 app[web.1]: '$init': [Promise],
+2020-11-01T21:15:45.423612+00:00 app[web.1]: '$caught': true,
+2020-11-01T21:15:45.423612+00:00 app[web.1]: [Symbol(mongoose#Model)]: true
+2020-11-01T21:15:45.423612+00:00 app[web.1]: }
+2020-11-01T21:15:45.423613+00:00 app[web.1]: },
+2020-11-01T21:15:45.423613+00:00 app[web.1]: config: { autoIndex: true },
+2020-11-01T21:15:45.423613+00:00 app[web.1]: replica: false,
+2020-11-01T21:15:45.423613+00:00 app[web.1]: options: null,
+2020-11-01T21:15:45.423614+00:00 app[web.1]: otherDbs: [],
+2020-11-01T21:15:45.423614+00:00 app[web.1]: relatedDbs: {},
+2020-11-01T21:15:45.423614+00:00 app[web.1]: states: [Object: null prototype] {
+2020-11-01T21:15:45.423614+00:00 app[web.1]: '0': 'disconnected',
+2020-11-01T21:15:45.423615+00:00 app[web.1]: '1': 'connected',
+2020-11-01T21:15:45.423615+00:00 app[web.1]: '2': 'connecting',
+2020-11-01T21:15:45.423615+00:00 app[web.1]: '3': 'disconnecting',
+2020-11-01T21:15:45.423615+00:00 app[web.1]: '99': 'uninitialized',
+2020-11-01T21:15:45.423616+00:00 app[web.1]: disconnected: 0,
+2020-11-01T21:15:45.423616+00:00 app[web.1]: connected: 1,
+2020-11-01T21:15:45.423616+00:00 app[web.1]: connecting: 2,
+2020-11-01T21:15:45.423616+00:00 app[web.1]: disconnecting: 3,
+2020-11-01T21:15:45.423616+00:00 app[web.1]: uninitialized: 99
+2020-11-01T21:15:45.423617+00:00 app[web.1]: },
+2020-11-01T21:15:45.423617+00:00 app[web.1]: _readyState: 1,
+2020-11-01T21:15:45.423617+00:00 app[web.1]: _closeCalled: false,
+2020-11-01T21:15:45.423618+00:00 app[web.1]: _hasOpened: true,
+2020-11-01T21:15:45.423618+00:00 app[web.1]: plugins: [],
+2020-11-01T21:15:45.423618+00:00 app[web.1]: _listening: false,
+2020-11-01T21:15:45.423618+00:00 app[web.1]: _connectionOptions: {
+2020-11-01T21:15:45.423619+00:00 app[web.1]: useNewUrlParser: true,
+2020-11-01T21:15:45.423619+00:00 app[web.1]: useUnifiedTopology: true,
+2020-11-01T21:15:45.423619+00:00 app[web.1]: promiseLibrary: [Function: Promise],
+2020-11-01T21:15:45.423620+00:00 app[web.1]: driverInfo: { name: 'Mongoose', version: '5.8.6' }
+2020-11-01T21:15:45.423620+00:00 app[web.1]: },
+2020-11-01T21:15:45.423620+00:00 app[web.1]: '$dbName': 'prod',
+2020-11-01T21:15:45.423620+00:00 app[web.1]: client: MongoClient {
+2020-11-01T21:15:45.423620+00:00 app[web.1]: _events: [Object: null prototype] {
+2020-11-01T21:15:45.423621+00:00 app[web.1]: newListener: [Function (anonymous)],
+2020-11-01T21:15:45.423621+00:00 app[web.1]: left: [Function (anonymous)]
+2020-11-01T21:15:45.423621+00:00 app[web.1]: },
+2020-11-01T21:15:45.423621+00:00 app[web.1]: _eventsCount: 2,
+2020-11-01T21:15:45.423622+00:00 app[web.1]: _maxListeners: undefined,
+2020-11-01T21:15:45.423622+00:00 app[web.1]: s: {
+2020-11-01T21:15:45.423623+00:00 app[web.1]: url: 'mongodb+srv://PartyyAdmins:Pv1j5EsP0kpn29rj@cluster0.qsh1v.mongodb.net/test?retryWrites=true&w=majority',
+2020-11-01T21:15:45.423623+00:00 app[web.1]: options: [Object],
+2020-11-01T21:15:45.423623+00:00 app[web.1]: promiseLibrary: [Function: Promise],
+2020-11-01T21:15:45.423624+00:00 app[web.1]: dbCache: [Map],
+2020-11-01T21:15:45.423625+00:00 app[web.1]: sessions: Set(0) {},
+2020-11-01T21:15:45.423625+00:00 app[web.1]: writeConcern: undefined,
+2020-11-01T21:15:45.423625+00:00 app[web.1]: namespace: [MongoDBNamespace]
+2020-11-01T21:15:45.423625+00:00 app[web.1]: },
+2020-11-01T21:15:45.423626+00:00 app[web.1]: topology: NativeTopology {
+2020-11-01T21:15:45.423631+00:00 app[web.1]: _events: [Object: null prototype],
+2020-11-01T21:15:45.423631+00:00 app[web.1]: _eventsCount: 26,
+2020-11-01T21:15:45.423631+00:00 app[web.1]: _maxListeners: Infinity,
+2020-11-01T21:15:45.423632+00:00 app[web.1]: s: [Object],
+2020-11-01T21:15:45.423632+00:00 app[web.1]: [Symbol(kCapture)]: false
+2020-11-01T21:15:45.423632+00:00 app[web.1]: },
+2020-11-01T21:15:45.423632+00:00 app[web.1]: [Symbol(kCapture)]: false
+2020-11-01T21:15:45.423633+00:00 app[web.1]: },
+2020-11-01T21:15:45.423633+00:00 app[web.1]: '$initialConnection': Promise { [Circular *3] },
+2020-11-01T21:15:45.423633+00:00 app[web.1]: name: 'prod',
+2020-11-01T21:15:45.423633+00:00 app[web.1]: host: 'cluster0-shard-00-02.qsh1v.mongodb.net',
+2020-11-01T21:15:45.423634+00:00 app[web.1]: port: 27017,
+2020-11-01T21:15:45.423634+00:00 app[web.1]: user: 'PartyyAdmins',
+2020-11-01T21:15:45.423634+00:00 app[web.1]: pass: 'Pv1j5EsP0kpn29rj',
+2020-11-01T21:15:45.423635+00:00 app[web.1]: db: Db {
+2020-11-01T21:15:45.423635+00:00 app[web.1]: _events: [Object: null prototype] {
+2020-11-01T21:15:45.423635+00:00 app[web.1]: close: [Function (anonymous)],
+2020-11-01T21:15:45.423635+00:00 app[web.1]: reconnect: [Function (anonymous)],
+2020-11-01T21:15:45.423636+00:00 app[web.1]: timeout: [Function (anonymous)]
+2020-11-01T21:15:45.423636+00:00 app[web.1]: },
+2020-11-01T21:15:45.423636+00:00 app[web.1]: _eventsCount: 3,
+2020-11-01T21:15:45.423636+00:00 app[web.1]: _maxListeners: undefined,
+2020-11-01T21:15:45.423637+00:00 app[web.1]: s: {
+2020-11-01T21:15:45.423637+00:00 app[web.1]: dbCache: {},
+2020-11-01T21:15:45.423637+00:00 app[web.1]: children: [],
+2020-11-01T21:15:45.423637+00:00 app[web.1]: topology: [NativeTopology],
+2020-11-01T21:15:45.423637+00:00 app[web.1]: options: [Object],
+2020-11-01T21:15:45.423638+00:00 app[web.1]: logger: [Logger],
+2020-11-01T21:15:45.423638+00:00 app[web.1]: bson: BSON {},
+2020-11-01T21:15:45.423638+00:00 app[web.1]: readPreference: [ReadPreference],
+2020-11-01T21:15:45.423638+00:00 app[web.1]: bufferMaxEntries: -1,
+2020-11-01T21:15:45.423639+00:00 app[web.1]: parentDb: null,
+2020-11-01T21:15:45.423639+00:00 app[web.1]: pkFactory: undefined,
+2020-11-01T21:15:45.423639+00:00 app[web.1]: nativeParser: undefined,
+2020-11-01T21:15:45.423639+00:00 app[web.1]: promiseLibrary: [Function: Promise],
+2020-11-01T21:15:45.423640+00:00 app[web.1]: noListener: false,
+2020-11-01T21:15:45.423649+00:00 app[web.1]: readConcern: undefined,
+2020-11-01T21:15:45.423650+00:00 app[web.1]: writeConcern: [WriteConcern],
+2020-11-01T21:15:45.423650+00:00 app[web.1]: namespace: [MongoDBNamespace]
+2020-11-01T21:15:45.423650+00:00 app[web.1]: },
+2020-11-01T21:15:45.423650+00:00 app[web.1]: serverConfig: [Getter],
+2020-11-01T21:15:45.423650+00:00 app[web.1]: bufferMaxEntries: [Getter],
+2020-11-01T21:15:45.423651+00:00 app[web.1]: databaseName: [Getter],
+2020-11-01T21:15:45.423651+00:00 app[web.1]: [Symbol(kCapture)]: false
+2020-11-01T21:15:45.423651+00:00 app[web.1]: }
+2020-11-01T21:15:45.423651+00:00 app[web.1]: },
+2020-11-01T21:15:45.423652+00:00 app[web.1]: queue: [],
+2020-11-01T21:15:45.423652+00:00 app[web.1]: buffer: false,
+2020-11-01T21:15:45.423652+00:00 app[web.1]: emitter: EventEmitter {
+2020-11-01T21:15:45.423652+00:00 app[web.1]: _events: [Object: null prototype] {},
+2020-11-01T21:15:45.423653+00:00 app[web.1]: _eventsCount: 0,
+2020-11-01T21:15:45.423653+00:00 app[web.1]: _maxListeners: undefined,
+2020-11-01T21:15:45.423653+00:00 app[web.1]: [Symbol(kCapture)]: false
+2020-11-01T21:15:45.423653+00:00 app[web.1]: }
+2020-11-01T21:15:45.423653+00:00 app[web.1]: },
+2020-11-01T21:15:45.423653+00:00 app[web.1]: Query: [Function (anonymous)] {
+2020-11-01T21:15:45.423654+00:00 app[web.1]: base: {
+2020-11-01T21:15:45.423654+00:00 app[web.1]: toConstructor: [Function: toConstructor],
+2020-11-01T21:15:45.423654+00:00 app[web.1]: setOptions: [Function (anonymous)],
+2020-11-01T21:15:45.423654+00:00 app[web.1]: collection: [Function: collection],
+2020-11-01T21:15:45.423655+00:00 app[web.1]: collation: [Function (anonymous)],
+2020-11-01T21:15:45.423655+00:00 app[web.1]: '$where': [Function (anonymous)],
+2020-11-01T21:15:45.423655+00:00 app[web.1]: where: [Function (anonymous)],
+2020-11-01T21:15:45.423655+00:00 app[web.1]: equals: [Function: equals],
+2020-11-01T21:15:45.423655+00:00 app[web.1]: eq: [Function: eq],
+2020-11-01T21:15:45.423656+00:00 app[web.1]: or: [Function: or],
+2020-11-01T21:15:45.423656+00:00 app[web.1]: nor: [Function: nor],
+2020-11-01T21:15:45.423656+00:00 app[web.1]: and: [Function: and],
+2020-11-01T21:15:45.423656+00:00 app[web.1]: gt: [Function (anonymous)],
+2020-11-01T21:15:45.423657+00:00 app[web.1]: gte: [Function (anonymous)],
+2020-11-01T21:15:45.423657+00:00 app[web.1]: lt: [Function (anonymous)],
+2020-11-01T21:15:45.423657+00:00 app[web.1]: lte: [Function (anonymous)],
+2020-11-01T21:15:45.423657+00:00 app[web.1]: ne: [Function (anonymous)],
+2020-11-01T21:15:45.423657+00:00 app[web.1]: in: [Function (anonymous)],
+2020-11-01T21:15:45.423658+00:00 app[web.1]: nin: [Function (anonymous)],
+2020-11-01T21:15:45.423658+00:00 app[web.1]: all: [Function (anonymous)],
+2020-11-01T21:15:45.423658+00:00 app[web.1]: regex: [Function (anonymous)],
+2020-11-01T21:15:45.423658+00:00 app[web.1]: size: [Function (anonymous)],
+2020-11-01T21:15:45.423658+00:00 app[web.1]: maxDistance: [Function (anonymous)],
+2020-11-01T21:15:45.423659+00:00 app[web.1]: minDistance: [Function (anonymous)],
+2020-11-01T21:15:45.423659+00:00 app[web.1]: mod: [Function (anonymous)],
+2020-11-01T21:15:45.423659+00:00 app[web.1]: exists: [Function (anonymous)],
+2020-11-01T21:15:45.423659+00:00 app[web.1]: elemMatch: [Function (anonymous)],
+2020-11-01T21:15:45.423659+00:00 app[web.1]: within: [Function: within],
+2020-11-01T21:15:45.423660+00:00 app[web.1]: box: [Function (anonymous)],
+2020-11-01T21:15:45.423660+00:00 app[web.1]: polygon: [Function (anonymous)],
+2020-11-01T21:15:45.423660+00:00 app[web.1]: circle: [Function (anonymous)],
+2020-11-01T21:15:45.423660+00:00 app[web.1]: near: [Function: near],
+2020-11-01T21:15:45.423661+00:00 app[web.1]: intersects: [Function: intersects],
+2020-11-01T21:15:45.423661+00:00 app[web.1]: geometry: [Function: geometry],
+2020-11-01T21:15:45.423661+00:00 app[web.1]: select: [Function: select],
+2020-11-01T21:15:45.423661+00:00 app[web.1]: slice: [Function (anonymous)],
+2020-11-01T21:15:45.423661+00:00 app[web.1]: sort: [Function (anonymous)],
+2020-11-01T21:15:45.423662+00:00 app[web.1]: limit: [Function (anonymous)],
+2020-11-01T21:15:45.423662+00:00 app[web.1]: skip: [Function (anonymous)],
+2020-11-01T21:15:45.423662+00:00 app[web.1]: maxScan: [Function (anonymous)],
+2020-11-01T21:15:45.423662+00:00 app[web.1]: batchSize: [Function (anonymous)],
+2020-11-01T21:15:45.423662+00:00 app[web.1]: comment: [Function (anonymous)],
+2020-11-01T21:15:45.423663+00:00 app[web.1]: maxTimeMS: [Function (anonymous)],
+2020-11-01T21:15:45.423663+00:00 app[web.1]: maxTime: [Function (anonymous)],
+2020-11-01T21:15:45.423663+00:00 app[web.1]: snapshot: [Function (anonymous)],
+2020-11-01T21:15:45.423663+00:00 app[web.1]: hint: [Function (anonymous)],
+2020-11-01T21:15:45.423663+00:00 app[web.1]: j: [Function: j],
+2020-11-01T21:15:45.423664+00:00 app[web.1]: slaveOk: [Function (anonymous)],
+2020-11-01T21:15:45.423664+00:00 app[web.1]: setReadPreference: [Function (anonymous)],
+2020-11-01T21:15:45.423664+00:00 app[web.1]: read: [Function (anonymous)],
+2020-11-01T21:15:45.423664+00:00 app[web.1]: r: [Function (anonymous)],
+2020-11-01T21:15:45.423665+00:00 app[web.1]: readConcern: [Function (anonymous)],
+2020-11-01T21:15:45.423665+00:00 app[web.1]: tailable: [Function (anonymous)],
+2020-11-01T21:15:45.423665+00:00 app[web.1]: w: [Function: writeConcern],
+2020-11-01T21:15:45.423665+00:00 app[web.1]: writeConcern: [Function: writeConcern],
+2020-11-01T21:15:45.423665+00:00 app[web.1]: wTimeout: [Function: wtimeout],
+2020-11-01T21:15:45.423666+00:00 app[web.1]: wtimeout: [Function: wtimeout],
+2020-11-01T21:15:45.423666+00:00 app[web.1]: merge: [Function (anonymous)],
+2020-11-01T21:15:45.423666+00:00 app[web.1]: find: [Function (anonymous)],
+2020-11-01T21:15:45.423666+00:00 app[web.1]: cursor: [Function: cursor],
+2020-11-01T21:15:45.423666+00:00 app[web.1]: findOne: [Function (anonymous)],
+2020-11-01T21:15:45.423671+00:00 app[web.1]: count: [Function (anonymous)],
+2020-11-01T21:15:45.423671+00:00 app[web.1]: distinct: [Function (anonymous)],
+2020-11-01T21:15:45.423671+00:00 app[web.1]: update: [Function: update],
+2020-11-01T21:15:45.423671+00:00 app[web.1]: updateMany: [Function: updateMany],
+2020-11-01T21:15:45.423672+00:00 app[web.1]: updateOne: [Function: updateOne],
+2020-11-01T21:15:45.423672+00:00 app[web.1]: replaceOne: [Function: replaceOne],
+2020-11-01T21:15:45.423708+00:00 app[web.1]: remove: [Function (anonymous)],
+2020-11-01T21:15:45.423709+00:00 app[web.1]: deleteOne: [Function (anonymous)],
+2020-11-01T21:15:45.423709+00:00 app[web.1]: deleteMany: [Function (anonymous)],
+2020-11-01T21:15:45.423710+00:00 app[web.1]: findOneAndUpdate: [Function (anonymous)],
+2020-11-01T21:15:45.423710+00:00 app[web.1]: findOneAndDelete: [Function (anonymous)],
+2020-11-01T21:15:45.423710+00:00 app[web.1]: findOneAndRemove: [Function (anonymous)],
+2020-11-01T21:15:45.423711+00:00 app[web.1]: _findAndModify: [Function (anonymous)],
+2020-11-01T21:15:45.423711+00:00 app[web.1]: _wrapCallback: [Function (anonymous)],
+2020-11-01T21:15:45.423711+00:00 app[web.1]: setTraceFunction: [Function (anonymous)],
+2020-11-01T21:15:45.423711+00:00 app[web.1]: exec: [Function: exec],
+2020-11-01T21:15:45.423711+00:00 app[web.1]: thunk: [Function (anonymous)],
+2020-11-01T21:15:45.423712+00:00 app[web.1]: then: [Function (anonymous)],
+2020-11-01T21:15:45.423712+00:00 app[web.1]: stream: [Function (anonymous)],
+2020-11-01T21:15:45.423712+00:00 app[web.1]: selected: [Function: selected],
+2020-11-01T21:15:45.423712+00:00 app[web.1]: selectedInclusively: [Function: selectedInclusively],
+2020-11-01T21:15:45.423713+00:00 app[web.1]: selectedExclusively: [Function: selectedExclusively],
+2020-11-01T21:15:45.423713+00:00 app[web.1]: _mergeUpdate: [Function (anonymous)],
+2020-11-01T21:15:45.423713+00:00 app[web.1]: _optionsForExec: [Function (anonymous)],
+2020-11-01T21:15:45.423713+00:00 app[web.1]: _fieldsForExec: [Function (anonymous)],
+2020-11-01T21:15:45.423713+00:00 app[web.1]: _updateForExec: [Function (anonymous)],
+2020-11-01T21:15:45.423714+00:00 app[web.1]: _ensurePath: [Function (anonymous)],
+2020-11-01T21:15:45.423714+00:00 app[web.1]: _validate: [Function (anonymous)]
+2020-11-01T21:15:45.423714+00:00 app[web.1]: }
+2020-11-01T21:15:45.423714+00:00 app[web.1]: },
+2020-11-01T21:15:45.423715+00:00 app[web.1]: '$init': Promise { [Circular *2] },
+2020-11-01T21:15:45.423715+00:00 app[web.1]: '$caught': true,
+2020-11-01T21:15:45.423715+00:00 app[web.1]: [Symbol(mongoose#Model)]: true
+2020-11-01T21:15:45.423715+00:00 app[web.1]: }
+2020-11-01T21:15:45.423715+00:00 app[web.1]: }
+2020-11-01T21:15:45.463066+00:00 heroku[router]: at=info method=GET path="/socket.io/?EIO=3&transport=websocket&sid=2SGownOCKY4dzmFPAAA4" host=www.partyy.life request_id=7c44cdf5-3e3a-4752-9a2b-d5fa3c30f675 fwd="70.106.226.9" dyno=web.1 connect=0ms service=461980ms status=101 bytes=175 protocol=https
+2020-11-01T21:15:45.465688+00:00 heroku[router]: sock=backend at=error code=H18 desc="Server Request Interrupted" method=POST path="/api/message" host=www.partyy.life request_id=76d59415-ce61-481a-bc45-f241191f1502 fwd="172.58.191.3" dyno=web.1 connect=1ms service=104ms status=503 bytes= protocol=https
+2020-11-01T21:15:45.465831+00:00 app[web.1]: [31m[nodemon] app crashed - waiting for file changes before starting...[39m
+2020-11-01T21:15:45.465852+00:00 heroku[router]: at=info method=GET path="/socket.io/?EIO=3&transport=websocket&sid=agAs0bW-xZqVfa8vAAAn" host=www.partyy.life request_id=abe910f4-4ac5-4a26-a809-3e16519a7048 fwd="104.174.23.50" dyno=web.1 connect=1ms service=1951554ms status=101 bytes=175 protocol=https
+2020-11-01T21:15:45.465943+00:00 heroku[router]: at=info method=GET path="/socket.io/?EIO=3&transport=websocket&sid=9g7cnwp3NETUz3_RAAA-" host=www.partyy.life request_id=f6360c59-6b14-4933-8e69-a4f6e9a2bf1f fwd="96.241.220.207" dyno=web.1 connect=1ms service=281620ms status=101 bytes=175 protocol=https
+2020-11-01T21:15:45.466186+00:00 heroku[router]: at=info method=GET path="/socket.io/?EIO=3&transport=websocket&sid=pmHZy--iYX2MFH0LAAAD" host=www.partyy.life request_id=f296aeb3-af7f-4561-b8d4-3875893ee503 fwd="82.37.169.121" dyno=web.1 connect=1ms service=4311347ms status=101 bytes=175 protocol=http
+2020-11-01T21:15:45.471146+00:00 heroku[router]: at=info method=GET path="/socket.io/?EIO=3&transport=websocket&sid=G3VDNJ-6G1OXumz9AAAi" host=www.partyy.life request_id=9e88d5d2-abe9-43ae-abf7-3b95e640d3f3 fwd="86.88.177.55" dyno=web.1 connect=1ms service=2174226ms status=101 bytes=175 protocol=https
+2020-11-01T21:16:26.864465+00:00 heroku[router]: at=error code=H21 desc="Backend connection refused" method=GET path="/socket.io/?EIO=3&transport=polling&t=NM5gcvg" host=www.partyy.life request_id=7071525e-d1b5-4c9a-8231-7a24f32e542e fwd="172.58.191.3" dyno=web.1 connect=0ms service= status=503 bytes= protocol=https
+2020-11-01T21:16:28.118884+00:00 heroku[router]: at=error code=H21 desc="Backend connection refused" method=GET path="/socket.io/?EIO=3&transport=polling&t=NM5geFN" host=www.partyy.life request_id=e05a6da6-7bb1-46a3-9454-e1f36b6aad7d fwd="70.106.226.9" dyno=web.1 connect=2ms service= status=503 bytes= protocol=https
+2020-11-01T21:16:29.622962+00:00 heroku[router]: at=error code=H21 desc="Backend connection refused" method=GET path="/socket.io/?EIO=3&transport=polling&t=NM5geHn" host=www.partyy.life request_id=8b89f860-b47b-4525-9c96-84ce8c90088c fwd="86.88.177.55" dyno=web.1 connect=1ms service= status=503 bytes= protocol=https
+2020-11-01T21:16:29.961137+00:00 heroku[router]: at=error code=H21 desc="Backend connection refused" method=GET path="/socket.io/?EIO=3&transport=polling&t=NM5geSH" host=www.partyy.life request_id=f8d644b1-24cd-4b49-a3ff-462832e2f998 fwd="96.241.220.207" dyno=web.1 connect=0ms service= status=503 bytes= protocol=https
+2020-11-01T21:16:30.914211+00:00 heroku[router]: at=error code=H21 desc="Backend connection refused" method=GET path="/socket.io/?EIO=3&transport=polling&t=NM5geA6" host=www.partyy.life request_id=94d6e7d6-3c7b-4731-ae6f-957645bd95a0 fwd="82.37.169.121" dyno=web.1 connect=1ms service= status=503 bytes= protocol=http
+2020-11-01T21:16:36.077808+00:00 heroku[router]: at=error code=H21 desc="Backend connection refused" method=POST path="/api/message" host=www.partyy.life request_id=95a43289-8bf3-4af4-8558-5136d5817dfb fwd="172.58.191.3" dyno=web.1 connect=0ms service= status=503 bytes= protocol=https
+2020-11-01T21:16:37.735856+00:00 heroku[router]: at=error code=H21 desc="Backend connection refused" method=POST path="/api/message" host=www.partyy.life request_id=198c6eb7-660a-4c2d-bcc5-dd2dd6788017 fwd="172.58.191.3" dyno=web.1 connect=0ms service= status=503 bytes= protocol=https
+2020-11-01T21:16:39.056411+00:00 heroku[router]: at=error code=H21 desc="Backend connection refused" method=POST path="/api/message" host=www.partyy.life request_id=c0463d44-102f-42e0-b864-732aa4780bd1 fwd="70.106.226.9" dyno=web.1 connect=1ms service= status=503 bytes= protocol=https
+2020-11-01T21:16:41.991077+00:00 heroku[router]: at=error code=H21 desc="Backend connection refused" method=POST path="/api/message" host=www.partyy.life request_id=f9b40b3d-b4d0-4af1-b6f8-4bd99219fad2 fwd="70.106.226.9" dyno=web.1 connect=1ms service= status=503 bytes= protocol=https
+2020-11-01T21:16:42.648092+00:00 heroku[router]: at=error code=H21 desc="Backend connection refused" method=GET path="/socket.io/?EIO=3&transport=polling&t=NM5ghzT" host=www.partyy.life request_id=7f4a585e-f66f-45d0-b893-37f37322bd97 fwd="172.58.191.3" dyno=web.1 connect=0ms service= status=503 bytes= protocol=https
+2020-11-01T21:16:46.961579+00:00 heroku[router]: at=error code=H21 desc="Backend connection refused" method=POST path="/api/message" host=www.partyy.life request_id=bf09c1dc-aab9-485a-9fab-7304421778e6 fwd="70.106.226.9" dyno=web.1 connect=1ms service= status=503 bytes= protocol=https
+2020-11-01T21:16:51.825550+00:00 heroku[router]: at=error code=H21 desc="Backend connection refused" method=GET path="/socket.io/?EIO=3&transport=polling&t=NM5gjXq" host=www.partyy.life request_id=5f3c3a48-d175-4822-b7f3-458ccca15e15 fwd="82.37.169.121" dyno=web.1 connect=0ms service= status=503 bytes= protocol=http
+2020-11-01T21:16:52.428969+00:00 heroku[router]: at=error code=H21 desc="Backend connection refused" method=GET path="/socket.io/?EIO=3&transport=polling&t=NM5gjS4" host=www.partyy.life request_id=e3d4fa15-0c32-45ff-8775-32546a111e90 fwd="70.106.226.9" dyno=web.1 connect=0ms service= status=503 bytes= protocol=https
+2020-11-01T21:16:53.430746+00:00 heroku[router]: at=error code=H21 desc="Backend connection refused" method=GET path="/socket.io/?EIO=3&transport=polling&t=NM5gjdT" host=www.partyy.life request_id=96c526f9-37d3-4672-a114-e301ad3c7257 fwd="86.88.177.55" dyno=web.1 connect=1ms service= status=503 bytes= protocol=https
+2020-11-01T21:16:53.494457+00:00 heroku[router]: at=error code=H21 desc="Backend connection refused" method=GET path="/taylorswift" host=www.partyy.life request_id=5fcf340c-045b-400c-bd71-eac0b581fe93 fwd="104.174.23.50" dyno=web.1 connect=0ms service= status=503 bytes= protocol=https
+2020-11-01T21:16:55.012269+00:00 heroku[router]: at=error code=H21 desc="Backend connection refused" method=GET path="/taylorswift" host=www.partyy.life request_id=63662a3e-10f0-4a09-9977-2cf2c7746d7c fwd="63.155.111.183" dyno=web.1 connect=0ms service= status=503 bytes= protocol=https
+2020-11-01T21:16:57.673229+00:00 heroku[router]: at=error code=H21 desc="Backend connection refused" method=GET path="/socket.io/?EIO=3&transport=polling&t=NM5gjlh" host=www.partyy.life request_id=457a2c72-1bf3-4f0a-86f7-bb47878d361b fwd="96.241.220.207" dyno=web.1 connect=0ms service= status=503 bytes= protocol=https
+2020-11-01T21:17:06.688076+00:00 heroku[router]: at=error code=H21 desc="Backend connection refused" method=GET path="/socket.io/?EIO=3&transport=polling&t=NM5gmtI" host=www.partyy.life request_id=64c6e621-e783-4eba-8ddd-26ba0bef0dc8 fwd="86.88.177.55" dyno=web.1 connect=0ms service= status=503 bytes= protocol=https
+2020-11-01T21:17:07.362819+00:00 heroku[router]: at=error code=H21 desc="Backend connection refused" method=GET path="/taylorswift" host=www.partyy.life request_id=1cbe6c2a-78f6-43b6-8180-72cef5db6436 fwd="104.174.23.50" dyno=web.1 connect=0ms service= status=503 bytes= protocol=https
+2020-11-01T21:17:10.549411+00:00 heroku[router]: at=error code=H21 desc="Backend connection refused" method=GET path="/socket.io/?EIO=3&transport=polling&t=NM5goc8" host=www.partyy.life request_id=8077b8b5-bb55-40d0-874e-e1efe089deaf fwd="70.106.226.9" dyno=web.1 connect=0ms service= status=503 bytes= protocol=https
+2020-11-01T21:17:12.829337+00:00 heroku[router]: at=error code=H21 desc="Backend connection refused" method=GET path="/socket.io/?EIO=3&transport=polling&t=NM5gp9D" host=www.partyy.life request_id=3ef8fa8f-5cd1-4343-9152-d35dbe56745c fwd="82.37.169.121" dyno=web.1 connect=1ms service= status=503 bytes= protocol=http
+2020-11-01T21:17:18.064411+00:00 heroku[router]: at=error code=H21 desc="Backend connection refused" method=GET path="/socket.io/?EIO=3&transport=polling&t=NM5geDL" host=www.partyy.life request_id=fdb29c8d-4286-414c-aa9e-05f43b0e7e5a fwd="104.174.23.50" dyno=web.1 connect=0ms service= status=503 bytes= protocol=https
+2020-11-01T21:17:18.655852+00:00 heroku[router]: at=error code=H21 desc="Backend connection refused" method=GET path="/socket.io/?EIO=3&transport=polling&t=NM5gps7" host=www.partyy.life request_id=0d20ad00-e2b2-4e98-a6a8-200324f26817 fwd="96.241.220.207" dyno=web.1 connect=1ms service= status=503 bytes= protocol=https
+2020-11-01T21:17:24.364442+00:00 heroku[router]: at=error code=H21 desc="Backend connection refused" method=GET path="/taylorswift" host=www.partyy.life request_id=1324ce06-4f0f-4533-a282-ecff42157804 fwd="108.48.4.141" dyno=web.1 connect=0ms service= status=503 bytes= protocol=https
+2020-11-01T21:17:29.802835+00:00 heroku[router]: at=error code=H21 desc="Backend connection refused" method=GET path="/socket.io/?EIO=3&transport=polling&t=NM5gjMx" host=www.partyy.life request_id=357f6dc8-ba47-43b0-8d6f-5f3e0a26a06d fwd="104.174.23.50" dyno=web.1 connect=1ms service= status=503 bytes= protocol=https
+2020-11-01T21:17:36.550578+00:00 heroku[router]: at=error code=H21 desc="Backend connection refused" method=GET path="/socket.io/?EIO=3&transport=polling&t=NM5guT7" host=www.partyy.life request_id=7652efb5-950b-4be4-a14f-f7cf117b80c7 fwd="70.106.226.9" dyno=web.1 connect=1ms service= status=503 bytes= protocol=https
+2020-11-01T21:17:40.764901+00:00 heroku[router]: at=error code=H21 desc="Backend connection refused" method=GET path="/socket.io/?EIO=3&transport=polling&t=NM5gvkN" host=www.partyy.life request_id=e3252ba1-e9d0-41e9-8b66-78d1c6fd99c0 fwd="96.241.220.207" dyno=web.1 connect=1ms service= status=503 bytes= protocol=https
+2020-11-01T21:17:42.850098+00:00 heroku[router]: at=error code=H21 desc="Backend connection refused" method=GET path="/socket.io/?EIO=3&transport=polling&t=NM5gvVS" host=www.partyy.life request_id=a3a87263-ee69-481e-9352-69514d7748d7 fwd="82.37.169.121" dyno=web.1 connect=0ms service= status=503 bytes= protocol=http
+2020-11-01T21:18:01.004076+00:00 heroku[router]: at=error code=H21 desc="Backend connection refused" method=GET path="/taylorswift" host=www.partyy.life request_id=a3f7f545-6cb3-4487-8232-39f6e1472e9b fwd="108.48.4.141" dyno=web.1 connect=0ms service= status=503 bytes= protocol=https
+2020-11-01T21:18:01.703861+00:00 heroku[router]: at=error code=H21 desc="Backend connection refused" method=GET path="/socket.io/?EIO=3&transport=polling&t=NM5g-a_" host=www.partyy.life request_id=a706ef33-41c5-4aa6-89c4-cf4b249a52cb fwd="70.106.226.9" dyno=web.1 connect=0ms service= status=503 bytes= protocol=https
+2020-11-01T21:18:05.817121+00:00 heroku[router]: at=error code=H21 desc="Backend connection refused" method=GET path="/socket.io/?EIO=3&transport=polling&t=NM5g_c9" host=www.partyy.life request_id=9fe2c7b8-6a44-43c9-b392-4c00d070c885 fwd="82.37.169.121" dyno=web.1 connect=1ms service= status=503 bytes= protocol=http
+2020-11-01T21:18:05.980532+00:00 heroku[router]: at=error code=H21 desc="Backend connection refused" method=GET path="/socket.io/?EIO=3&transport=polling&t=NM5h0Nz" host=www.partyy.life request_id=e783e01d-80a0-42d0-894d-8db358216158 fwd="96.241.220.207" dyno=web.1 connect=0ms service= status=503 bytes= protocol=https
+2020-11-01T21:18:25.661403+00:00 heroku[router]: at=error code=H21 desc="Backend connection refused" method=GET path="/socket.io/?EIO=3&transport=polling&t=NM5h4xE" host=www.partyy.life request_id=9197b3d1-ae45-473a-9813-1ef43db03d9d fwd="70.106.226.9" dyno=web.1 connect=0ms service= status=503 bytes= protocol=https
+2020-11-01T21:18:33.842262+00:00 heroku[router]: at=error code=H21 desc="Backend connection refused" method=GET path="/socket.io/?EIO=3&transport=polling&t=NM5h5yK" host=www.partyy.life request_id=742522bc-8d02-4f01-80e9-884f4ed751b6 fwd="82.37.169.121" dyno=web.1 connect=0ms service= status=503 bytes= protocol=http
+2020-11-01T21:18:35.918184+00:00 heroku[router]: at=error code=H21 desc="Backend connection refused" method=GET path="/socket.io/?EIO=3&transport=polling&t=NM5h6yp" host=www.partyy.life request_id=0c1781ed-6d1d-4a86-ae0e-9b8cc3c62e1a fwd="96.241.220.207" dyno=web.1 connect=0ms service= status=503 bytes= protocol=https
+2020-11-01T21:18:53.584476+00:00 heroku[router]: at=error code=H21 desc="Backend connection refused" method=GET path="/socket.io/?EIO=3&transport=polling&t=NM5hBGW" host=www.partyy.life request_id=cb24671a-0cb7-48df-80d9-4e135dc57587 fwd="70.106.226.9" dyno=web.1 connect=2ms service= status=503 bytes= protocol=https
+2020-11-01T21:18:57.878134+00:00 heroku[router]: at=error code=H21 desc="Backend connection refused" method=GET path="/socket.io/?EIO=3&transport=polling&t=NM5hC31" host=www.partyy.life request_id=ff0f51d2-6ec5-4f9c-9071-c8e106a31fb5 fwd="82.37.169.121" dyno=web.1 connect=0ms service= status=503 bytes= protocol=http
+2020-11-01T21:18:59.738287+00:00 heroku[router]: at=error code=H21 desc="Backend connection refused" method=GET path="/socket.io/?EIO=3&transport=polling&t=NM5hDVY" host=www.partyy.life request_id=945a9eef-e59a-48b7-88e4-3f45546be29a fwd="96.241.220.207" dyno=web.1 connect=1ms service= status=503 bytes= protocol=https
+2020-11-01T21:19:16.436616+00:00 heroku[router]: at=error code=H21 desc="Backend connection refused" method=GET path="/socket.io/?EIO=3&transport=polling&t=NM5hHYo" host=www.partyy.life request_id=d953bd40-757e-47c1-b1e1-fa5588ba1349 fwd="70.106.226.9" dyno=web.1 connect=1ms service= status=503 bytes= protocol=https
+2020-11-01T21:19:23.808079+00:00 heroku[router]: at=error code=H21 desc="Backend connection refused" method=GET path="/socket.io/?EIO=3&transport=polling&t=NM5hIPC" host=www.partyy.life request_id=b1fec60d-6fc4-45e0-84bf-33262a81652e fwd="82.37.169.121" dyno=web.1 connect=0ms service= status=503 bytes= protocol=http
+2020-11-01T21:19:31.607865+00:00 heroku[router]: at=error code=H21 desc="Backend connection refused" method=GET path="/socket.io/?EIO=3&transport=polling&t=NM5hKBm" host=www.partyy.life request_id=5b41046b-a56c-46d0-a96d-0a7e0bc272bb fwd="96.241.220.207" dyno=web.1 connect=0ms service= status=503 bytes= protocol=https
+2020-11-01T21:19:42.644155+00:00 heroku[router]: at=error code=H21 desc="Backend connection refused" method=GET path="/socket.io/?EIO=3&transport=polling&t=NM5hNkM" host=www.partyy.life request_id=cc392b79-c412-426f-b8fe-f440cb7d2337 fwd="70.106.226.9" dyno=web.1 connect=1ms service= status=503 bytes= protocol=https
+2020-11-01T21:19:47.816718+00:00 heroku[router]: at=error code=H21 desc="Backend connection refused" method=GET path="/socket.io/?EIO=3&transport=polling&t=NM5hOlT" host=www.partyy.life request_id=7d6df154-ce0a-41b6-abf6-33c4cdd438be fwd="82.37.169.121" dyno=web.1 connect=1ms service= status=503 bytes= protocol=http
+2020-11-01T21:20:07.651306+00:00 heroku[router]: at=error code=H21 desc="Backend connection refused" method=GET path="/socket.io/?EIO=3&transport=polling&t=NM5hU4i" host=www.partyy.life request_id=926d19b0-3bcb-4a72-8764-3b7335234e2c fwd="70.106.226.9" dyno=web.1 connect=0ms service= status=503 bytes= protocol=https
+2020-11-01T21:20:13.858315+00:00 heroku[router]: at=error code=H21 desc="Backend connection refused" method=GET path="/socket.io/?EIO=3&transport=polling&t=NM5hUs7" host=www.partyy.life request_id=886dec68-7017-43ca-8c48-cc15cb4349d8 fwd="82.37.169.121" dyno=web.1 connect=0ms service= status=503 bytes= protocol=http
+2020-11-01T21:20:24.029916+00:00 heroku[router]: at=error code=H21 desc="Backend connection refused" method=GET path="/socket.io/?EIO=3&transport=polling&t=NM5hX2w" host=www.partyy.life request_id=ca5ccf69-fc55-462a-88f5-d2195ae75173 fwd="96.241.220.207" dyno=web.1 connect=1ms service= status=503 bytes= protocol=https
+2020-11-01T21:20:27.766769+00:00 heroku[router]: at=error code=H99 desc="Platform error" method=GET path="/socket.io/?EIO=3&transport=polling&t=NM5hQhr" host=www.partyy.life request_id=576672ca-d232-4f61-87d1-6dbde545abd1 fwd="96.241.220.207" dyno= connect= service= status=503 bytes= protocol=https
+2020-11-01T21:20:29.202623+00:00 heroku[router]: at=error code=H21 desc="Backend connection refused" method=GET path="/taylorswift" host=www.partyy.life request_id=8ed40696-82d3-47d9-a5f4-9c746d8527fd fwd="73.109.137.129" dyno=web.1 connect=0ms service= status=503 bytes= protocol=https
+2020-11-01T21:20:29.276535+00:00 heroku[router]: at=error code=H21 desc="Backend connection refused" method=GET path="/taylorswift" host=www.partyy.life request_id=d6dd2029-4e17-4398-b51e-d1c02bb37b49 fwd="73.109.137.129" dyno=web.1 connect=0ms service= status=503 bytes= protocol=https
+2020-11-01T21:20:30.915029+00:00 heroku[router]: at=error code=H21 desc="Backend connection refused" method=GET path="/xtyacnsssqg" host=www.partyy.life request_id=233795bd-dab2-47a1-9086-15862424a826 fwd="70.106.226.9" dyno=web.1 connect=0ms service= status=503 bytes= protocol=https
+2020-11-01T21:20:32.471130+00:00 heroku[router]: at=error code=H21 desc="Backend connection refused" method=GET path="/taylorswift" host=www.partyy.life request_id=9ff1fc14-9a32-46d3-a7c6-0481f5c766f8 fwd="73.109.137.129" dyno=web.1 connect=1ms service= status=503 bytes= protocol=https
+2020-11-01T21:20:33.033388+00:00 heroku[router]: at=error code=H21 desc="Backend connection refused" method=GET path="/taylorswift" host=www.partyy.life request_id=fde74ec0-e22f-4f31-983b-e1def66e792a fwd="73.109.137.129" dyno=web.1 connect=3ms service= status=503 bytes= protocol=https
+2020-11-01T21:20:38.161346+00:00 heroku[router]: at=error code=H21 desc="Backend connection refused" method=GET path="/xtyacnsssqg" host=www.partyy.life request_id=9ae619e2-0328-45f7-9b19-2daeb37e2f03 fwd="70.106.226.9" dyno=web.1 connect=1ms service= status=503 bytes= protocol=https
+2020-11-01T21:20:39.390167+00:00 heroku[router]: at=error code=H21 desc="Backend connection refused" method=GET path="/" host=www.partyy.life request_id=3c78db4f-5f6b-46dd-9e38-a89be20de061 fwd="70.106.226.9" dyno=web.1 connect=0ms service= status=503 bytes= protocol=https
+2020-11-01T21:20:43.791109+00:00 heroku[router]: at=error code=H21 desc="Backend connection refused" method=GET path="/" host=www.partyy.life request_id=5ae0d116-47fd-4dd4-8501-96d00c1e5e3e fwd="70.106.226.9" dyno=web.1 connect=4ms service= status=503 bytes= protocol=https

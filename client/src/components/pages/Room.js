@@ -200,7 +200,9 @@ class Room extends Component {
             :
           <Button fullWidth size="large" color="primary" variant="outlined"
               onClick={() => {
-                post("api/startGame")
+                post("api/startGame").then((e)=>{
+                  if(e.error) this.props.error();
+                })
               }}
               disabled={disabled}
             >
@@ -227,7 +229,9 @@ class Room extends Component {
               :
         <Button fullWidth size="large" color="primary" variant="outlined"
               onClick={() => {
-                post("api/startGame")
+                post("api/startGame").then((e)=>{
+                  if(e.error) this.props.error();
+                })
               }}
               disabled={disabled}
             >
@@ -249,7 +253,7 @@ class Room extends Component {
               {roundMessage}
             </Typography>
             
-            <Chat categoryName={this.state.category.name} messages={this.props.messages.filter((msg)=>{return msg.roomId === this.state.roomId})} inGame={this.state.game && this.state.game.status === "RoundInProgress"}  />
+            <Chat error={this.props.error} categoryName={this.state.category.name} messages={this.props.messages.filter((msg)=>{return msg.roomId === this.state.roomId})} inGame={this.state.game && this.state.game.status === "RoundInProgress"}  />
             
             <Button fullWidth
               onClick={() => {

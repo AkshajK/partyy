@@ -143,9 +143,9 @@ export default function Chat(props) {
 
               post("api/message", {
                 text: messageText,
-              }).then(() => {
-                
-              });
+              }).then((e)=>{
+                if(e.error) this.props.error();
+              })
               setMessageText("");
               
 

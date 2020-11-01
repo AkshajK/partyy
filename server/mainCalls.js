@@ -15,7 +15,12 @@ Returns:
 Description: Adds message to database if it is from lobby. Emits socket with message
 */
 message = (req, res) => {
+  
   User.findById(req.user._id).then((user) => {
+    if(user.roomId === "Offline") {
+      res.send({error: true});
+      return;
+    }
     const msg = new Message({
       sender: {userId: req.user._id, name: user.name},
       roomId: user.roomId,
