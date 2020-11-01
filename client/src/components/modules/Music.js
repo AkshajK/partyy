@@ -61,7 +61,7 @@ class Music extends React.Component {
           {this.props.mobile ? <></> : (this.props.visual ? <AudioDataContainer  toggleRainbow={this.props.toggleRainbow} rainbow={this.props.rainbow} audio = {this.state.audio} /> : <img src = {waves} style={{width: "100%"}}/>)}
           {/* {this.props.pauseButton ? <ReactPlayer url={this.props.url} playing={this.state.play} controls/> : <ReactPlayer url={this.props.url} playing={this.state.play} width={'0%'} height={'0%'}/>} */}
           {/* <div>post</div> */}
-          {this.props.pauseButton ? <Button onClick={this.togglePlay} color="primary" variant="outlined" fullWidth >{this.state.play && this.state.changedOnce ? 'Pause Music' : 'Play Music'}</Button> : ""}
+          {this.props.pauseButton ? <Button onClick={this.togglePlay} color="primary" variant={this.props.mobile ? "outlined" : undefined} fullWidth >{this.state.play && this.state.changedOnce ? 'Pause Music' : 'Play Music'}</Button> : ""}
 
           {/* <a href = {this.props.url}>SONGURL</a> */}
           </Grid>
