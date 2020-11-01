@@ -1,10 +1,10 @@
 import React, { Component } from "react";
-import { createMuiTheme, MuiThemeProvider } from '@material-ui/core/styles';
+import { createMuiTheme, MuiThemeProvider, responsiveFontSizes } from '@material-ui/core/styles';
 import blue from '@material-ui/core/colors/blue';
 import green from '@material-ui/core/colors/green';
 import red from '@material-ui/core/colors/red';
 export const theme = 
-      createMuiTheme({
+      responsiveFontSizes(createMuiTheme({
         palette: {
           type: 'dark',
           primary: blue,
@@ -25,4 +25,4 @@ export const theme =
           
           
         },
-      });
+      }));

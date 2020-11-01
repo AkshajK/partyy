@@ -27,7 +27,7 @@ class Lobby extends Component {
 
   componentDidMount() {
     // remember -- api calls go here!
-    this.props.setShowSidebar(true)
+    if(!this.props.mobile) this.props.setShowSidebar(true);
     post("api/joinLobby", {}).then((data) => {
       if(data.disconnect) {
         this.props.error();
@@ -156,9 +156,10 @@ class Lobby extends Component {
           
           </React.Fragment>: <></>}
           </Box>
-          <Box height="calc(100% - 50px)">
+          <Box height={this.props.login ? "calc(100% - 70px)" : "calc(100% - 50px)"} style={{marginBottom: this.props.login ? "10px" : undefined}}>
           <RoomTable users={this.state.users} rooms={this.state.rooms} redirect={this.props.redirect} categoryId={this.props.category ? this.props.category._id : undefined} />
           </Box>
+          {this.props.login || <></>}
         </Box>
         {rightbar ? 
         <Box width="320px" height="100%" style={{overflow: "auto"}} bgcolor="sidebar" >

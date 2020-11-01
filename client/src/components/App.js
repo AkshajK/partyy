@@ -168,7 +168,7 @@ class App extends Component {
   }
 
   updateWindowDimensions() {
-    this.setState({ width: window.innerWidth, height: window.innerHeight });
+    this.setState({ width: window.innerWidth, height: window.innerHeight, showSidebar: window.innerWidth >= 500 });
   }
   handleGoogleLogin = (res) => {
     console.log(`Logged in as ${res.profileObj.name}`);
@@ -250,16 +250,61 @@ class App extends Component {
         </Router>
       );
     }
+    let mobile = this.state.width < 500
 
     let showSidebar = this.state.showSidebar;
+    let login = <div className="login">
+    {this.state.google ? (
+      <GoogleLogout
+        clientId={GOOGLE_CLIENT_ID}
+        buttonText="Logout"
+        onLogoutSuccess={this.handleLogout}
+        onFailure={(err) => console.log(err)}
+        render={(renderProps) => (
+          <Button
+            onClick={() => {
+              renderProps.onClick();
+            }}
+            disabled={renderProps.disabled}
+            fullWidth
+            
+            color={mobile ? "primary" : "inherit"}
+            variant={mobile ? "outlined" : undefined}
+          >
+            {mobile ? "Sign Out Of " + this.state.userName : "Sign Out"}
+          </Button>
+        )}
+      />
+    ) : (
+      <GoogleLogin
+        clientId={GOOGLE_CLIENT_ID}
+        buttonText="Login"
+        onSuccess={this.handleGoogleLogin}
+        onFailure={(err) => console.log(err)}
+        render={(renderProps) => (
+          <Button
+            onClick={() => {
+              renderProps.onClick();
+            }}
+            disabled={renderProps.disabled}
+            fullWidth
+            color={mobile ? "primary" : "inherit"}
+            variant={mobile ? "outlined" : undefined}
 
+          >
+            Sign In With Google
+          </Button>
+        )}
+      />
+    )}
+  </div>
     return (
       <MuiThemeProvider theme={theme}>
         <CssBaseline />
         <Grid container direction="row" style={{ width: "100%", height: "100%" }}>
-          {showSidebar ? (
+         
             <Box
-              width="320px"
+              width={showSidebar ? "320px" : "0px"}
               height="100%"
               bgcolor="sidebar"
               style={{ borderRight: undefined }}
@@ -276,51 +321,9 @@ class App extends Component {
                   setCategory={this.setCategory}
                 />
               </Box>
-              <div className="login">
-                {this.state.google ? (
-                  <GoogleLogout
-                    clientId={GOOGLE_CLIENT_ID}
-                    buttonText="Logout"
-                    onLogoutSuccess={this.handleLogout}
-                    onFailure={(err) => console.log(err)}
-                    render={(renderProps) => (
-                      <Button
-                        onClick={() => {
-                          renderProps.onClick();
-                        }}
-                        disabled={renderProps.disabled}
-                        fullWidth
-                        color="inherit"
-                      >
-                        Sign Out
-                      </Button>
-                    )}
-                  />
-                ) : (
-                  <GoogleLogin
-                    clientId={GOOGLE_CLIENT_ID}
-                    buttonText="Login"
-                    onSuccess={this.handleGoogleLogin}
-                    onFailure={(err) => console.log(err)}
-                    render={(renderProps) => (
-                      <Button
-                        onClick={() => {
-                          renderProps.onClick();
-                        }}
-                        disabled={renderProps.disabled}
-                        fullWidth
-                        color="inherit"
-                      >
-                        Sign In With Google
-                      </Button>
-                    )}
-                  />
-                )}
-              </div>
+              {showSidebar ? login : <></>}
             </Box>
-          ) : (
-            <React.Fragment />
-          )}
+          
           <Box width={showSidebar ? "calc(100% - 320px)" : "100%"} height="100%">
             <Router>
               <Switch>
@@ -331,7 +334,7 @@ class App extends Component {
                   setLobby={this.setLobby}
                   setShowSidebar={this.setShowSidebar}
                   url={window.location.pathname}
-                  name={this.state.name}
+                  name={this.state.userName}
                   userId={this.state.userId}
                   category={this.state.category}
                   redirect={this.redirect}
@@ -343,6 +346,8 @@ class App extends Component {
                     this.setState({ messages: [] });
                   }}
                   width={this.state.width}
+                  mobile = {mobile}
+                  login = {mobile ? login : undefined}
                 />
                 <CategoryDashboard exact path="/dashboard" category={this.state.category} />
                 <BotDashboard exact path="/bots" category={this.state.category} />
@@ -350,6 +355,8 @@ class App extends Component {
                 <Room
                   exact
                   path="/:roomName"
+                  width={this.state.width}
+                  mobile = {mobile}
                   setUsers={this.setUsers}
                   setLobby={this.setLobby}
                   rainbow={this.state.rainbow}

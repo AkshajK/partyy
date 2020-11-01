@@ -25,7 +25,8 @@ class Room extends Component {
     super(props);
     // Initialize Default State
     this.state = {
-      buttonColor: "#1565c0"
+      buttonColor: "#1565c0",
+      
     };
   }
 
@@ -36,7 +37,7 @@ class Room extends Component {
         this.props.error();
         return;
       }
-      
+      let mobile  = this.props.mobile < 500
       this.setState({
         roomId: data.room._id,
         name: data.room.name,
@@ -52,9 +53,11 @@ class Room extends Component {
         game: data.game,
         users: data.users.concat([]),
         category: data.room.category,
-        modal: (true)
+        modal: (true),
       });
-      this.props.setShowSidebar(!data.game || (data.game.status !== "RoundInProgress"));
+     // console.log(this.state.mobile);
+      if(!mobile) this.props.setShowSidebar(!data.game || (data.game.status !== "RoundInProgress"));
+      else this.props.setShowSidebar(false);
       this.props.setCategory(data.room.category);
       this.props.setUsers(data.users);
       this.props.setLobby(false);
@@ -78,7 +81,7 @@ class Room extends Component {
 
       
       if(game.status === "RoundFinished") {
-        this.props.setShowSidebar(true);
+        if(!this.props.mobile) this.props.setShowSidebar(true);
         this.props.setCategory(this.state.category);
       }
       else if(game.status === "RoundInProgress" && (this.state.game.status !== "RoundInProgress") ) {
@@ -142,7 +145,7 @@ class Room extends Component {
     let disabled = this.state.game && this.state.game.status !== "RoundFinished"
     let editName = <EditName open={this.state.modal} onClose={()=>{
       this.setState({modal: false})
-      if(this.state.category && this.state.category.name) {
+      if(this.state.category && this.state.category.name && !this.props.mobile) {
        
           notification.success({
             message: 'This is a ' + this.state.category.name + " room",
@@ -156,21 +159,21 @@ class Room extends Component {
     
       return (
       <Grid container direction="row" style={{ width: "100%", height: "100%", overflow:"auto" }}>
-        <Grid container direction="column" style={{width:"calc(100% - 320px)", height: "100%"}}>
+        <Grid container direction="column" style={{width: this.props.mobile ? "100%" : "calc(100% - 320px)", height: "100%"}}>
         {timer}
         {editName}
-        <Typography component={'div'} variant="h5" align="center" color="textPrimary" gutterBottom style={{marginTop: "10px", overflow: "auto", width: "100%"}} noWrap>
+        <Typography component={'div'} variant="h5" align="center" color="textPrimary" gutterBottom style={{margin: "10px 20px 0px 20px", overflow: "auto", width: "calc(100% - 40px)"}} noWrap>
           {header}
         </Typography>
-        <Grid container direction="row" style={{width:"calc(100% - 40px)", margin: "20px 20px 20px 20px", height: "calc(100% - 180px)", overflow: "auto"}}   >
-          {!(this.state.game && (this.state.game.status === "RoundInProgress" || (this.state.game.correctAnswers > 0))) ?
+        <Grid container direction="row" style={{width:"calc(100% - 40px)", margin: "20px 20px 20px 20px", height: this.props.mobile ? "calc(50% - 80px)" :"calc(100% - 180px)", overflow: "auto"}}   >
+          {this.props.mobile || !(this.state.game && (this.state.game.status === "RoundInProgress" || (this.state.game.correctAnswers > 0))) ?
               <Box width="100%">
-              <PlayerTable userId = {this.props.userId} users={this.state.users} players={(this.state.game || {}).players} />
+              <PlayerTable mobile={this.props.mobile} userId = {this.props.userId} users={this.state.users} players={(this.state.game || {}).players} />
               </Box>
           :
           <React.Fragment>
           <Box width="calc(40% - 10px)">
-          <PlayerTable userId = {this.props.userId} users={this.state.users} players={(this.state.game || {}).players} />
+          <PlayerTable mobile={this.props.mobile} userId = {this.props.userId} users={this.state.users} players={(this.state.game || {}).players} />
           </Box>
           <Box width="20px"></Box>
           <Box width="calc(60% - 10px)">
@@ -178,21 +181,58 @@ class Room extends Component {
           </Box></React.Fragment>}
           
         </Grid>
+        {this.props.mobile ? 
+                    <Box style={{margin: "0px 20px 20px 20px"}} height="calc(50% - 100px)">
+                      <Chat mobile={true} categoryName={this.state.category.name} messages={this.props.messages.filter((msg)=>{return msg.roomId === this.state.roomId})} inGame={this.state.game && this.state.game.status === "RoundInProgress"}  />     
+                      </Box> : <React.Fragment />}
         <Box style={{margin: "0px 20px 0px 20px"}}>
+        {this.props.mobile ? 
+        <Grid container fullWidth spacing={2} direction="row">
+          <Grid  item xs={6}>
+          <Button fullWidth size="large" color="primary" variant="outlined"
+              onClick={() => {
+                post("api/startGame")
+              }}
+              disabled={disabled}
+            >
+              
+              <Typography noWrap variant="button"> {"Start Game"} </Typography>
+             
+            </Button>
+          </Grid>
+          <Grid item xs={6}>
+          <Button fullWidth size="large" color="primary" variant="outlined"
+              onClick={() => {
+                post("api/leaveRoom", { roomId: this.state.roomId, name: this.state.name }).then((data) => {
+                  this.props.redirect("/");
+                });
+              }}
+        
+            >
+              
+              <Typography noWrap variant="button"> {"Leave Room"} </Typography>
+             
+            </Button>
+          </Grid>
+        </Grid>
+              :
         <Button fullWidth size="large" color="primary" variant="outlined"
               onClick={() => {
                 post("api/startGame")
               }}
               disabled={disabled}
             >
-              <Typography noWrap variant="button"> {"Start " + (this.state.category ? this.state.category.name : "") + " Game"} </Typography>
               
+              <Typography noWrap variant="button"> {"Start " + (this.state.category ? this.state.category.name : "") + " Game"} </Typography>
+             
             </Button>
+             } 
             </Box>
         </Grid>
-        <Box width="320px" height="100%" bgcolor="sidebar">
+        
+        <Box width={this.props.mobile ? "0px" : "320px"} height="100%" bgcolor="sidebar">
             <Box  style={Object.assign({height: "240px", overflow: "auto"}, playingMusic?{}:{width: "100%",  display: "flex", justifyContent:"center", alignItems: "center"})}>
-              {playingMusic && !this.state.modal ?                 <Music modal={this.state.modal} setModal={()=>{this.setState({modal: false})}} url = {this.state.game.song.songUrl} visual={window.AudioContext ? true : false} pauseButton={window.AudioContext ? false : true} rainbow={this.props.rainbow} toggleRainbow={()=>{
+              {playingMusic && !this.state.modal ?                 <Music modal={this.state.modal} setModal={()=>{this.setState({modal: false})}} url = {this.state.game.song.songUrl} visual={window.AudioContext && !this.props.mobile ? true : false} mobile={this.props.mobile} pauseButton={false} rainbow={this.props.rainbow} toggleRainbow={()=>{
                 notification.success({
                   message: 'Switched to ' + (!this.props.rainbow ? 'Rainbow' : 'Blue') + ' Mode',
                   
@@ -201,6 +241,7 @@ class Room extends Component {
               }}   />
 : <img src = {img} height={"240px"} />}
             </Box> 
+            {this.props.mobile ? <React.Fragment /> : <React.Fragment>
             <Typography component={'div'} variant="h5" align="center" color="textPrimary" gutterBottom style={{marginTop: "10px"}} >
               {roundMessage}
             </Typography>
@@ -240,6 +281,8 @@ class Room extends Component {
             >
               Report Song
             </Button>
+            </React.Fragment>
+            }
             
           
         </Box>
