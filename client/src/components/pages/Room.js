@@ -7,6 +7,7 @@ import Button from "@material-ui/core/Button";
 import Timer from "../modules/Timer.js"
 import { socket } from "../../client-socket.js";
 import logo from "../images/logodark.png";
+import spotifylogo from "../images/Spotify_Logo_RGB_White.png";
 import PlayerTable from "../modules/PlayerTable.js"
 import CorrectAnswerTable from "../modules/CorrectAnswerTable.js"
 import Grid from "@material-ui/core/Grid"
@@ -134,7 +135,7 @@ class Room extends Component {
     let header = "Waiting to Start"
     if(this.state.game) {
       if(this.state.game.status !== "RoundInProgress") {
-        if(answer) header = "Answer: " + answer.title + " by " + answer.artist
+        if(answer) header = "Answer: " + answer.title + " by " + answer.artist[0]
         else header = "Get ready"
       }
       else header = "Guess the Song"
@@ -163,6 +164,8 @@ class Room extends Component {
       });
       this.props.toggleRainbow()
     }}   />
+    let spotifyUrl = this.state.game ? this.state.game.song ? this.state.game.song.spotifyUrl : undefined : undefined
+    spotifyUrl = spotifyUrl || (answer ? answer.spotifyUrl : undefined)
       return (
       <Grid container direction="row" style={{ width: "100%", height: "100%", overflow:"auto" }}>
         <Grid container direction="column" style={{width: this.props.mobile ? "100%" : "calc(100% - 320px)", height: "100%"}}>
@@ -272,7 +275,13 @@ class Room extends Component {
             >
               Leave Room
             </Button>
-            <Button fullWidth
+           
+              <Button fullWidth onClick={()=>{window.open(spotifyUrl, '_blank')}} disabled={!spotifyUrl}> 
+                View Song On <img src={spotifylogo} style={{marginLeft: "12px"}} width="80px" />
+              </Button>
+            
+           
+            {/*<Button fullWidth
               onClick={() => {
                 post("api/reportSong", { songUrl: this.state.game.song.songUrl }).then((data) => {
                   if(data.reported) {
@@ -287,7 +296,7 @@ class Room extends Component {
               disabled={!this.state.game || !this.state.game.song}
             >
               Report Song
-            </Button>
+            </Button>*/}
             </React.Fragment>
             }
             

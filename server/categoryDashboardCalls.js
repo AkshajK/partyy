@@ -57,12 +57,14 @@ let getSongs = (playlistId, offSet, spotifyApi, categoryId) => {
           
           if(songApi && songApi.preview_url) {
             let song = new Song({
-              artist: songApi.artists[0] ? songApi.artists[0].name : "Artist",
+              artist: ((songApi.artists || []).length > 0 ? songApi.artists : [{name: "Artist"}]).map((a)=>{return a.name}),
               title: songApi.name,
               artUrl: songApi.album.images[0] ? songApi.album.images[0].url : undefined,
               songUrl: songApi.preview_url,
+              spotifyUrl: ((songApi.external_urls)||{spotify: undefined}).spotify,
               categoryId: categoryId,
             });
+            //console.log(song);
           song.save().then(() => {
             //console.log("Yes preview url" + counter)
             counter += 1;

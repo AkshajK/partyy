@@ -111,11 +111,13 @@ startRound = (roomId, roundNum, gameId) => {
       game.correctAnswers = 0
 
       let savedGame = await game.save();
-
+      let answer = savedGame.song.title;
+      let hideAnswer = Object.assign(savedGame, {song: {songUrl: savedGame.song.songUrl}})
+          
         socket
           .getIo()
           .in("Room: " + room._id)
-          .emit("game", savedGame);
+          .emit("game", hideAnswer);
         setTimeout(() => {
           endRound(room._id, roundNum, gameId);
         }, 30000);
@@ -126,7 +128,8 @@ startRound = (roomId, roundNum, gameId) => {
             if(!user.bot) return;
             let timeTaken = calculate(user.difficulty)*1000;
             setTimeout(async ()=>{
-              await guessAnswer(user._id, user.name, game._id, {message: game.song.title}, true)
+              //console.log(game.song);
+              await guessAnswer(user._id, user.name, game._id, {message: answer}, true)
             }, timeTaken)
           })
         })
@@ -213,9 +216,18 @@ var stringSimilarity = require('string-similarity');
 let similarity = (a, b) => {
   return stringSimilarity.compareTwoStrings(a.toLowerCase(),b.toLowerCase());
 }
-let similar = (messageText, title) => {
+let similar = (title, messageText) => {
+  //console.log(title);
+  //console.log(messageText);
   return (similarity(messageText, title) > 0.7) || (similarity(messageText.toLowerCase().replace("fuck", "forget"), title) > 0.7) ||
   (similarity(messageText.toLowerCase().replace(" and ", " & "), title) > 0.7);
+}
+
+let similarArtist = (arr, messageText) => {
+  for(var i=0; i<arr.length; i++) {
+    if(similar(arr[i], messageText)) return true;
+  }
+  return false;
 }
 const guessAnswer = async (userId, name, gameId, msg, bot) => {
   lock.acquire(gameId+"Guess", async function(done) {
@@ -224,7 +236,9 @@ const guessAnswer = async (userId, name, gameId, msg, bot) => {
     let correct = false
     let correctArtist = false;
     let skip = false;
+ 
   let messageText = msg.message
+  
   let title = game.song.title.replace(/ \([\s\S]*?\)/g, '')
   title = title.replace(/ \[[\s\S]*?\]/g, '')
   if(title.includes("-")) {
@@ -235,7 +249,7 @@ const guessAnswer = async (userId, name, gameId, msg, bot) => {
   }
   if(!game.usersAlreadyAnswered.filter((e)=>{return e.style === "correct answer" || e.style === "skip"}).map((e)=>{return e.userId}).includes(userId) && (game.status==="RoundInProgress")&&((game.song.title === messageText)|| similar(title, messageText)))
     correct = true;
-  if(!game.usersAlreadyAnswered.filter((e)=>{return e.style === "correct artist" || e.style === "correct answer" || e.style === "skip"}).map((e)=>{return e.userId}).includes(userId) && (game.status==="RoundInProgress")&&((game.song.title === messageText)|| similar(game.song.artist, messageText)))
+  if(!game.usersAlreadyAnswered.filter((e)=>{return e.style === "correct artist" || e.style === "correct answer" || e.style === "skip"}).map((e)=>{return e.userId}).includes(userId) && (game.status==="RoundInProgress")&&((game.song.title === messageText)|| similarArtist(game.song.artist, messageText)))
     correctArtist = true;
   if(!game.usersAlreadyAnswered.filter((e)=>{return e.style === "skip" || e.style === "correct answer"}).map((e)=>{return e.userId}).includes(userId) && (game.status==="RoundInProgress")&&((messageText.toLowerCase() === "skip")))
     skip = true;

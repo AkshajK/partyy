@@ -168,7 +168,7 @@ class App extends Component {
   }
 
   updateWindowDimensions() {
-    this.setState({ width: window.innerWidth, height: window.innerHeight, showSidebar: window.innerWidth >= 500 });
+    this.setState({ width: window.innerWidth, height: window.innerHeight, showSidebar: (this.state.showSidebar && (window.innerWidth >= 500))  || (window.innerWidth >= 1100)});
   }
   handleGoogleLogin = (res) => {
     console.log(`Logged in as ${res.profileObj.name}`);

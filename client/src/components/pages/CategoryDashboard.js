@@ -128,7 +128,7 @@ class CategoryDashboard extends Component {
               </Typography>
           {entry.songs.map((song) => {
             return <Typography component={'div'} variant="h5" color={song.bad ? "primary" : "textPrimary"}>
-            {song.title + " by " + song.artist}
+            {song.title + " by " + song.artist[0]}
                 </Typography>
           })}
           </>
