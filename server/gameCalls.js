@@ -403,7 +403,15 @@ socket.getIo()
   
 };
 
-const getLeaderboard = () => {
+var curLeaderboard = {leaderboard: {}, categories: []}
+
+
+const getLeaderboard = (useCurrent) => {
+  if(useCurrent) {
+    return new Promise((resolve, reject) => {
+      resolve(curLeaderboard);
+    })
+  }
   return new Promise((resolve, reject) => {
     lock.acquire("leaderboard", (done)=>{
     User.find({}, (err, users) => {
@@ -444,6 +452,7 @@ const getLeaderboard = () => {
         }
         //console.log("got here 3")
         let res={ leaderboard: leaderboard, categories: categories }
+        curLeaderboard = res;
         resolve(res);
         done({}, {});
       });
@@ -493,7 +502,7 @@ updateLeaderboard = (players, categoryId) => {
            user1.save().then(() => {
              counter1+=1
              if(counter1 === users.length) {
-               getLeaderboard().then((data) => {
+               getLeaderboard(false).then((data) => {
                  socket.getIo().emit("leaderboard", data);
                }).catch((error) => {
                  console.error(error)
