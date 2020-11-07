@@ -81,7 +81,7 @@ getLeaderboard = (req, res) => {
   category2.save()
   */
 
-  gameCalls.getLeaderboard(true).then((data) => {
+  gameCalls.getLeaderboard(true, undefined).then((data) => {
     res.send(data);
   })
   
@@ -166,7 +166,7 @@ changeName = (req, res) => {
         userName: user.name,
         leaderboardData: user.leaderboardData
       })
-      gameCalls.getLeaderboard(false).then((data) => {
+      gameCalls.getLeaderboard(false, [req.user._id]).then((data) => {
         socket.getIo().emit("leaderboard", data)
       })
       res.send({})

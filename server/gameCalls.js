@@ -7,7 +7,15 @@ const Category = require("./models/category");
 const socket = require("./server-socket");
 var Promise = require("promise");
 const random = require('random')
-
+const {
+  bubbleSort,
+  selectionSort,
+  insertionSort,
+  radixSort,
+  heapSort,
+  quickSort,
+  mergeSort 
+} = require('sort-algorithms-js');
 const lock = require("./lock").lock;
 
 
@@ -405,26 +413,48 @@ socket.getIo()
 
 var curLeaderboard = {leaderboard: {}, categories: []}
 
-
-const getLeaderboard = (useCurrent) => {
-  if(useCurrent && curLeaderboard.categories.length > 0) {
-    return new Promise((resolve, reject) => {
-      resolve(curLeaderboard);
-    })
+let isEqual = (a, b) => {
+  for(var i=0; i<a.length; i++) {
+    if(!b.includes(a[i])) return false;
   }
+  return a.length === b.length;
+}
+
+const getLeaderboard = (useCurrent, modifiedUserIds) => {
+  
   return new Promise((resolve, reject) => {
     lock.acquire("leaderboard", (done)=>{
-    User.find({}, (err, users) => {
-      Category.find({}, (err, categories) => {
     
-        var leaderboard = {};
-        for (var j = 0; j < categories.length; j++) {
-          leaderboard[""+categories[j]._id] = {
-            topScores: [],
-            topRatings: [],
-          };
+      Category.find({}, (err, categories) => {
+        
+        // check if categories is the same
+        let sameCategories = isEqual(categories.map((c=>{return c._id+""})), curLeaderboard.categories.map((c=>{return c._id+""})))
+
+        if(sameCategories && useCurrent && curLeaderboard.categories.length > 0) {
+          resolve(curLeaderboard);
+          done({}, {})
+        }
+        let reset = !sameCategories || !modifiedUserIds;
+        var leaderboard = reset ? {} : curLeaderboard.leaderboard;
+
+        User.find(reset ? {} : {_id: {$in: modifiedUserIds}}, (err, users) => {
+        if(reset) {
+          for (var j = 0; j < categories.length; j++) {
+            leaderboard[""+categories[j]._id] = {
+              topScores: [],
+              topRatings: [],
+            };
+          }
+        }
+        else {
+          let arrUserIds = modifiedUserIds.map((a)=>{return a+""});
+          for (var j = 0; j < categories.length; j++) {
+            leaderboard[categories[j]._id].topScores = leaderboard[categories[j]._id].topScores.filter((a)=>{return !arrUserIds.includes(a.userId+"")})
+            leaderboard[categories[j]._id].topRatings = leaderboard[categories[j]._id].topRatings.filter((a)=>{return !arrUserIds.includes(a.userId+"")})
+          }
         }
         for (var i = 0; i < users.length; i++) {
+         
           let topScores = [];
           let topRatings = [];
           let leaderboardData = users[i].leaderboardData;
@@ -443,12 +473,23 @@ const getLeaderboard = (useCurrent) => {
           }
         }
         for (var j = 0; j < categories.length; j++) {
+          if(reset) {
           leaderboard[categories[j]._id+""].topScores.sort((a, b) => {
             return b.score - a.score;
           });
           leaderboard[categories[j]._id+""].topRatings.sort((a, b) => {
             return b.rating - a.rating;
           });
+          
+          }
+          else {
+            leaderboard[categories[j]._id+""].topScores = insertionSort(leaderboard[categories[j]._id+""].topScores, (a, b) => {
+              return b.score - a.score;
+            });
+            leaderboard[categories[j]._id+""].topRatings = insertionSort(leaderboard[categories[j]._id+""].topRatings, (a, b) => {
+              return b.rating - a.rating;
+            });
+          }
         }
         //console.log("got here 3")
         let res={ leaderboard: leaderboard, categories: categories }
@@ -465,8 +506,8 @@ const getLeaderboard = (useCurrent) => {
 updateLeaderboard = (players, categoryId) => {
    let ratedPlayers = players.filter((p)=>{return p.rated})
    let k = 60/ratedPlayers.length
-   
-   User.find({_id: {$in: players.map((p)=>{return ObjectId(p.userId)})}}, (err, users)=>{
+   let playerIds =  players.map((p)=>{return ObjectId(p.userId)})
+   User.find({_id: {$in: playerIds}}, (err, users)=>{
 
      if(users.length === 0) {
        return;
@@ -502,7 +543,7 @@ updateLeaderboard = (players, categoryId) => {
            user1.save().then(() => {
              counter1+=1
              if(counter1 === users.length) {
-               getLeaderboard(false).then((data) => {
+               getLeaderboard(false, playerIds).then((data) => {
                  socket.getIo().emit("leaderboard", data);
                }).catch((error) => {
                  console.error(error)
