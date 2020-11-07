@@ -407,7 +407,7 @@ var curLeaderboard = {leaderboard: {}, categories: []}
 
 
 const getLeaderboard = (useCurrent) => {
-  if(useCurrent) {
+  if(useCurrent && curLeaderboard.categories.length > 0) {
     return new Promise((resolve, reject) => {
       resolve(curLeaderboard);
     })
