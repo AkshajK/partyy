@@ -73,7 +73,7 @@ export default function Leaderboard(props) {
       <TabPanel value={value} index={0}>
        
         <List dense>
-          {props.leaderboard.topRatings.map((entry) => {
+          {props.leaderboard.topRatings.filter((arr, i)=>{return i<100}).map((entry) => {
             return (
               <ListItem key={entry.userId} selected={entry.userId === props.userId}>
              
@@ -91,7 +91,7 @@ export default function Leaderboard(props) {
       <TabPanel value={value} index={props.appbar ? 1 : 0} style={props.appbar ? undefined : {padding: "0px 25px 25px 25px"}}noMargin={props.appbar ? false : true}>
      
       <List dense>
-      {props.leaderboard.topScores.map((entry) => {
+      {props.leaderboard.topScores.filter((arr, i)=>{return i<100}).map((entry) => {
             return (
               <ListItem key={entry.userId} selected={entry.userId === props.userId}>
                 <ListItemText primaryTypographyProps={{variant: "h6", style: entry.userId === props.userId ? {fontWeight: 900} : null}} primary= {entry.name } />

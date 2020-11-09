@@ -225,7 +225,7 @@ let rankify = (num) => {
       if(leaderboardDataArr[b.userId]);
         b_val = leaderboardDataArr[b.userId].rating
       return b_val-a_val;
-  }).map((user)=>{
+  }).filter((arr, i)=>{return i<100}).map((user)=>{
       if(!leaderboardDataArr) return <></>
       return ( <ListItem key={user.userId} selected={user.userId === props.userId}>
              
