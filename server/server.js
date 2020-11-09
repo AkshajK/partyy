@@ -18,7 +18,7 @@
 require("dotenv").config();
 const validator = require("./validator");
 validator.checkSetup();
-
+const compression = require('compression');
 //import libraries needed for the webserver to work!
 const http = require("http");
 const express = require("express"); // backend framework for our node server.
@@ -52,6 +52,7 @@ mongoose
 
 // create a new express server
 const app = express();
+app.use(compression());
 app.use(validator.checkRoutes);
 
 // allow us to process POST requests
