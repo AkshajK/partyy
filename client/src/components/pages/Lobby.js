@@ -21,7 +21,10 @@ class Lobby extends Component {
     super(props);
     // Initialize Default State
     this.state = {
-      buttonColor: "#2e7d32"
+      buttonColor: "#2e7d32",
+      rooms: [],
+      messages: [], 
+      users: []
     };
   }
 
@@ -115,7 +118,7 @@ class Lobby extends Component {
   } */
   
   render() {
-    if (!this.state.doneLoading) return <CircularProgress />;
+    //if (!this.state.doneLoading) return <CircularProgress />;
   
     let rightbar = this.props.width > 1000;
     return (
