@@ -30,7 +30,7 @@ module.exports = {
     filename: "bundle.js",
   },
   devtool: (mode === 'development') ? 'inline-source-map' : false,
-  performance: (mode === 'development') ? {
+  performance: (mode !== 'development') ? {
     hints: false,
     maxEntrypointSize: 512000,
     maxAssetSize: 512000
