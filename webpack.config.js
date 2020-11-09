@@ -21,7 +21,7 @@ const entryFile = path.resolve(__dirname, "client", "src", "index.js");
 const outputDir = path.resolve(__dirname, "client", "dist");
 
 const webpack = require("webpack");
-
+var mode = process.env.NODE_ENV || 'development';
 module.exports = {
   entry: ["@babel/polyfill", entryFile],
   output: {
@@ -29,7 +29,7 @@ module.exports = {
     publicPath: "/",
     filename: "bundle.js",
   },
-  devtool: "inline-source-map",
+  devtool: (mode === 'development') ? 'inline-source-map' : false,
   module: {
     rules: [
       {
