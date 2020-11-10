@@ -96,7 +96,10 @@ Returns: {users: [{userId: String, userName: String, leaderboardData: []}], room
 Description: Adds message to database if it is from lobby. Emits socket with message
 */
 joinLobby = (req, res) => {
-  
+  if(!req.user._id) {
+    res.send({disconnect: true});
+    return;
+  }
   Room.find({private: false, $or: [{created: {$gte: new Date(new Date().getTime() - 1000*60*60*12)}}, { users: {$ne: []} }]}, (err, rooms) => {
     Message.find({}, (err, messages) => {
       User.findById(req.user._id).then((me) => {
