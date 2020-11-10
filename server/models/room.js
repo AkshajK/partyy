@@ -32,10 +32,11 @@ const RoomSchema = new mongoose.Schema({
     type: [String],
     default: []
   },
+  /*
   allUserIdsThatHaveBeenInRoom: {
     type: [String],
     default: []
-  }
+  }*/
 });
 
 // compile model from schema

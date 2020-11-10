@@ -93,9 +93,11 @@ joinRoom = (req, res) => {
                       userId: me._id,
                       roomId: room._id
                     });*/
+                  /*
                   let listOfIds = room.allUserIdsThatHaveBeenInRoom;
                   if(!listOfIds.includes(req.user._id)) listOfIds.push(req.user._id);
                   room.allUserIdsThatHaveBeenInRoom = listOfIds;
+                  */
                   let roomUsers = room.users.filter((user)=>{return socket.getSocketFromUserID(user)});
                   if(!roomUsers.includes(req.user._id))
                       roomUsers.push(req.user._id); 
