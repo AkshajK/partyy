@@ -96,7 +96,7 @@ Returns: {users: [{userId: String, userName: String, leaderboardData: []}], room
 Description: Adds message to database if it is from lobby. Emits socket with message
 */
 joinLobby = (req, res) => {
-  if(!req.user._id) {
+  if(!req.user || !req.user._id) {
     res.send({disconnect: true});
     return;
   }
