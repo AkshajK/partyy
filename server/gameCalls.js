@@ -27,13 +27,14 @@ let fromNow = (num) => {
 };
 
 startGame = (req, res) => {
-  lock.acquire("room"+req.body.name, function(done) {
+ 
     //console.log(songs)
   User.findById(req.user._id).then((user) => {
     if(user.roomId === "Offline" || user.roomId === "Lobby") {
       res.send({error: true});
       return;
     }
+    lock.acquire("room"+req.body.name, function(done) {
     Room.findById(user.roomId).then((room) => {
       Song.aggregate([{$match:
         {categoryId: room.category._id+"" } }, { $sample: { size: 1 } }], async (err, songs) => {
@@ -82,9 +83,9 @@ startGame = (req, res) => {
           });
         });
       });
-   
+    }, function(err, ret){});
   });
-  }, function(err, ret){});
+  
 };
 
 let calculate = (difficulty) => {

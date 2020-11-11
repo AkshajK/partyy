@@ -206,7 +206,7 @@ class Room extends Component {
           <Button fullWidth size="large" color="primary" variant="outlined"
               onClick={() => {
                 this.setState({disable: true}, ()=>{
-                post("api/startGame").then((e)=>{
+                post("api/startGame", {name: this.state.name}).then((e)=>{
                   if(e.error) this.props.error();
                   this.setState({disable: false})
                 })
@@ -238,7 +238,7 @@ class Room extends Component {
         <Button fullWidth size="large" color="primary" variant="outlined"
               onClick={() => {
                 this.setState({disable: true}, ()=>{
-                post("api/startGame").then((e)=>{
+                post("api/startGame", {name: this.state.name}).then((e)=>{
                   if(e.error) this.props.error();
                   this.setState({disable: false})
                 })
