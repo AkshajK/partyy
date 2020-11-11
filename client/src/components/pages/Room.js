@@ -27,12 +27,13 @@ class Room extends Component {
     // Initialize Default State
     this.state = {
       buttonColor: "#1565c0",
-      
+      users: [],
+
     };
   }
 
   componentDidMount() {
-
+    this.props.setShowSidebar(false);
     post("api/joinRoom", { name: this.props.computedMatch.params.roomName }).then((data) => {
       if (!data.exists) {
         this.props.error();
@@ -120,7 +121,7 @@ class Room extends Component {
   } */
 
   render() {
-    if (!this.state.exists) return <CircularProgress />;
+
     let timer = this.state.game && this.state.game.status !== "RoundFinished" ? <Timer color={"#FF0000"} rainbow={this.props.rainbow} endTime={this.state.game.statusChangeTime} max={this.state.game.status === "RoundInProgress" ? 30.0 : 3.0} /> : <div style={{height: "20px"}} />
     let roundMessage = "Waiting for players..."
     if(this.state.game) roundMessage = "Round " + this.state.game.roundNumber + " of 5" 
@@ -194,7 +195,7 @@ class Room extends Component {
         </Grid>
         {this.props.mobile ? 
                     <Box style={{margin: "0px 20px 20px 20px"}} height="calc(50% - 100px)">
-                      <Chat mobile={true} categoryName={this.state.category.name} messages={this.props.messages.filter((msg)=>{return msg.roomId === this.state.roomId})} inGame={this.state.game && this.state.game.status === "RoundInProgress"}  />     
+                      <Chat mobile={true} messages={this.props.messages.filter((msg)=>{return msg.roomId === this.state.roomId})} inGame={this.state.game && this.state.game.status === "RoundInProgress"}  />     
                       </Box> : <React.Fragment />}
         <Box style={{margin: "0px 20px 0px 20px"}}>
         {this.props.mobile ? 
@@ -244,7 +245,7 @@ class Room extends Component {
                 })
                 })
               }}
-              disabled={disabled || this.state.disable}
+              disabled={disabled || this.state.disable || !this.state.exists}
             >
               
               <Typography noWrap variant="button"> {"Start " + (this.state.category ? this.state.category.name : "") + " Game"} </Typography>
@@ -264,7 +265,7 @@ class Room extends Component {
               {roundMessage}
             </Typography>
             
-            <Chat error={this.props.error} categoryName={this.state.category.name} messages={this.props.messages.filter((msg)=>{return msg.roomId === this.state.roomId})} inGame={this.state.game && this.state.game.status === "RoundInProgress"}  />
+            <Chat error={this.props.error} messages={this.props.messages.filter((msg)=>{return msg.roomId === this.state.roomId})} inGame={this.state.game && this.state.game.status === "RoundInProgress"}  />
             
             <Button fullWidth
               onClick={() => {
@@ -280,6 +281,7 @@ class Room extends Component {
                   this.props.redirect("/");
                 });
               }}
+              disabled={!this.state.exists}
             >
               Leave Room
             </Button>

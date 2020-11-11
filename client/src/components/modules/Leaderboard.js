@@ -50,7 +50,8 @@ function a11yProps(index) {
 
 export default function Leaderboard(props) {
   const [value, setValue] = React.useState(0);
-  if(!props.leaderboard) return <CircularProgress />
+  //if(!props.leaderboard) return <CircularProgress />
+  let leaderboard = props.leaderboard || {topScores: [], topRatings: []}
   return (
     <React.Fragment>
       {props.appbar ? <AppBar position="static" color="inherit">
@@ -73,7 +74,7 @@ export default function Leaderboard(props) {
       <TabPanel value={value} index={0}>
        
         <List dense>
-          {props.leaderboard.topRatings.filter((arr, i)=>{return i<100}).map((entry) => {
+          {leaderboard.topRatings.filter((arr, i)=>{return i<100}).map((entry) => {
             return (
               <ListItem key={entry.userId} selected={entry.userId === props.userId}>
              
@@ -91,7 +92,7 @@ export default function Leaderboard(props) {
       <TabPanel value={value} index={props.appbar ? 1 : 0} style={props.appbar ? undefined : {padding: "0px 25px 25px 25px"}}noMargin={props.appbar ? false : true}>
      
       <List dense>
-      {props.leaderboard.topScores.filter((arr, i)=>{return i<100}).map((entry) => {
+      {leaderboard.topScores.filter((arr, i)=>{return i<100}).map((entry) => {
             return (
               <ListItem key={entry.userId} selected={entry.userId === props.userId}>
                 <ListItemText primaryTypographyProps={{variant: "h6", style: entry.userId === props.userId ? {fontWeight: 900} : null}} primary= {entry.name } />

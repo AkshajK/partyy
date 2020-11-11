@@ -239,7 +239,9 @@ class App extends Component {
       return (
         <MuiThemeProvider theme={theme}>
           <CssBaseline />
+          <Box width="100%" style={{display: "flex", justifyContent: "center", marginTop: "50px"}}>
           <CircularProgress />
+          </Box>
         </MuiThemeProvider>
       );
     }
@@ -268,7 +270,7 @@ class App extends Component {
             onClick={() => {
               renderProps.onClick();
             }}
-            disabled={renderProps.disabled}
+            disabled={renderProps.disabled || !this.state.loaded}
             fullWidth
             
             color={mobile ? "primary" : "inherit"}
@@ -289,7 +291,7 @@ class App extends Component {
             onClick={() => {
               renderProps.onClick();
             }}
-            disabled={renderProps.disabled}
+            disabled={renderProps.disabled || !this.state.loaded}
             fullWidth
             color={mobile ? "primary" : "inherit"}
             variant={mobile ? "outlined" : undefined}
