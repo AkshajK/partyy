@@ -53,11 +53,11 @@ return (
 
           onKeyPress={(event) => {
             if (event.charCode === 13) {
-              post("api/changeName", {name: newName}).then(()=>{
+              post("api/changeName", {name: newName})
                 props.changeName(newName)
                 props.onSubmit()
                 props.onClose()
-              })
+             
             }
           }}
 
@@ -68,12 +68,12 @@ return (
       <MuiDialogActions>
         <Button className={classes.closeButton}
           onClick={()=>{
-            post("api/changeName", {name: newName}).then(()=>{
+            post("api/changeName", {name: newName})
             props.changeName(newName)
             props.onSubmit()
             props.onClose()
-          })}
-        }
+          }}
+        
          
           color="primary"
         >
