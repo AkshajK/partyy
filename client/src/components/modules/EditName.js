@@ -50,7 +50,7 @@ return (
           onChange={(event) => {
            setNewName(event.target.value.substring(0, 15));
           }}
-
+          autoFocus
           onKeyPress={(event) => {
             if (event.charCode === 13) {
               post("api/changeName", {name: newName})

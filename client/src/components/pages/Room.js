@@ -136,6 +136,7 @@ class Room extends Component {
       }
     }
     let header = "Waiting to Start"
+    if(!this.state.exists) header = ""
     if(this.state.game) {
       if(this.state.game.status !== "RoundInProgress") {
         if(answer) header = "Answer: " + answer.title + " by " + answer.artist[0]

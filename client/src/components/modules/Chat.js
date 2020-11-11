@@ -135,6 +135,7 @@ export default function Chat(props) {
         onChange={(event) => {
           setMessageText(event.target.value);
         }}
+        autoFocus
         onKeyPress={(event) => {
           if (event.charCode === 13) {
             if (new Date().getTime() - new Date(lastMessage).getTime() >= 500) {
