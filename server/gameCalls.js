@@ -38,7 +38,10 @@ startGame = (req, res) => {
     Room.findById(user.roomId).then((room) => {
       Song.aggregate([{$match:
         {categoryId: room.category._id+"" } }, { $sample: { size: 1 } }], async (err, songs) => {
-        if (room.status === "InProgress") return;
+        if (room.status === "InProgress") {
+          done({}, {});
+          return;
+        }
         room.status = "InProgress";
         let players = room.users.map((oneuser) => {
           return { userId: oneuser };
