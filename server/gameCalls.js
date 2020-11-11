@@ -27,7 +27,7 @@ let fromNow = (num) => {
 };
 
 startGame = (req, res) => {
-  
+  lock.acquire("room"+req.body.name, function(done) {
     //console.log(songs)
   User.findById(req.user._id).then((user) => {
     if(user.roomId === "Offline" || user.roomId === "Lobby") {
@@ -78,11 +78,13 @@ startGame = (req, res) => {
               startRound(room._id, 1, savedGame._id+"");
             }, 3000);
             res.send({})
+            done({}, {});
           });
         });
       });
    
   });
+  }, function(err, ret){});
 };
 
 let calculate = (difficulty) => {
