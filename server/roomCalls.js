@@ -55,6 +55,10 @@ Returns:  {room: Room, game: Game, users: [{userId: String, userName: String, le
 Description: Checks to see if room name exists and is not closed. If it is closed, shows error message. Else, returns information associated with the room and game
 */
 joinRoom = (req, res) => {
+  if(!req.user || !req.user._id) {
+    res.send({exists: false});
+    return;
+  }
   lock.acquire("room"+req.body.name, function(done) {
   Room.findOne({ name: req.body.name }).then((room) => {
     if (!room) res.send({ exists: false });
