@@ -43,7 +43,9 @@ router.post("/whoami", (req,res) => {
 
 router.post("/initsocket", (req, res) => {
   // do nothing if user not logged in
-  if (req.user) socket.addUser(req.user, socket.getSocketFromSocketID(req.body.socketid));
+  let mySocket = req.body.socket
+  if(req.body.socketid) mySocket = socket.getSocketFromSocketID(req.body.socketid);
+  if (req.user) socket.addUser(req.user, mySocket);
   res.send({});
 });
 
