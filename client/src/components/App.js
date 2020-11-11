@@ -274,7 +274,7 @@ class App extends Component {
             color={mobile ? "primary" : "inherit"}
             variant={mobile ? "outlined" : undefined}
           >
-            {mobile ? "Sign Out Of " + this.state.userName : "Sign Out"}
+            {mobile ? "Logout " + this.state.userName : "Log Out"}
           </Button>
         )}
       />
@@ -295,7 +295,7 @@ class App extends Component {
             variant={mobile ? "outlined" : undefined}
 
           >
-            Sign In With Google
+            Login
           </Button>
         )}
       />
@@ -312,7 +312,7 @@ class App extends Component {
               bgcolor="sidebar"
               style={{ borderRight: undefined }}
             >
-              <Box width="100%" height="calc(100% - 75px)">
+              <Box width="100%" height="calc(100% - 70px)">
                 <SideBar
                   changeName={this.changeName}
                   setUserInfo={this.setUserInfo}

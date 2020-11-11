@@ -64,7 +64,7 @@ const useStyles = makeStyles({
 });
 export default function RoomTable(props) {
   const classes = useStyles();
-  
+  const [disable, setDisable] = React.useState(false);
   
   return (
     <TableContainer component={Paper} style={{height: "100%", width: "100%"}}>
@@ -88,12 +88,12 @@ export default function RoomTable(props) {
             let icon = iconText === "In Progress" ? <MusicNoteIcon /> : <ReplayIcon />
             return  (
             <StyledTableRow key={room.name} hover onClick={()=>{
-              if(this.state.disable) return;
-              this.setState({disable: true}, ()=>{
+              if(disable) return;
+              setDisable(true)
               post("api/leaveLobby",{}).then(()=>{
                 props.redirect("/"+room.name)
-                this.setState({disable: false})
-              })})
+                setDisable(false)
+              })
               }}>
               <StyledTableCell component="th" scope="row">
               <Typography component={'div'} variant="h6" color="primary" style={{fontWeight: 900}}>
