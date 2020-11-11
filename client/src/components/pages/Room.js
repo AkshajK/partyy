@@ -145,7 +145,7 @@ class Room extends Component {
     }
 
     let playingMusic = this.state.game && (this.state.game.status === "RoundInProgress")
-    let disabled = this.state.game && this.state.game.status !== "RoundFinished" && this.state.disable
+    let disabled = this.state.game && this.state.game.status !== "RoundFinished" 
     let editName = <EditName open={this.state.modal} onClose={()=>{
       this.setState({modal: false})
       if(this.state.category && this.state.category.name && !this.props.mobile) {
