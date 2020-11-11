@@ -83,7 +83,9 @@ class App extends Component {
         let token = cookies.get("cookieToken");
         post("/api/whoami", {}).then((user) => {
           if (user._id) {
-            post("/api/initsocket", { socketid: socket.id }).then(() => {
+            post("/api/initsocket", { socketid: socket.id }).then((res) => {
+              if(!res.init) this.error()
+              else {
               this.setState({
                 loaded: true,
                 userId: user._id,
@@ -94,10 +96,13 @@ class App extends Component {
                 cookies.set("cookieToken", user.cookieToken, {
                   expires: new Date("December 17, 2030 03:24:00"),
                 });
+              }
             });
           } else {
             post("/api/login", { cookieToken: token }).then((user) => {
-              post("/api/initsocket", { socketid: socket.id }).then(() => {
+              post("/api/initsocket", { socketid: socket.id }).then((res) => {
+                if(!res.init) this.error()
+                else {
                 this.setState({
                   loaded: true,
                   userId: user._id,
@@ -108,6 +113,7 @@ class App extends Component {
                   cookies.set("cookieToken", user.cookieToken, {
                     expires: new Date("December 17, 2030 03:24:00"),
                   });
+                }
               });
             });
           }
@@ -115,14 +121,12 @@ class App extends Component {
       });
     });
     socket.on("reconnect_failed", () => {
-      this.setState({ disconnect: true });
       this.error();
       //window.location.reload();
     });
 
     socket.on("disconnect", (reason) => {
       if (reason === "io server disconnect") {
-        this.setState({ disconnect: true });
         this.error();
       } else {
         console.log("DISCONNECTED");
@@ -131,7 +135,6 @@ class App extends Component {
     });
     socket.on("reconnect_error", function () {
       /* handle reconnect error events - possible retry? */
-      this.setState({ disconnect: true });
       this.error();
     });
 

@@ -21,6 +21,11 @@ Returns: {name: String}  (the room name, some randomly generated string)
 Description: Creates a room
 */
 createRoom = (req, res) => {
+  let mySocket = socket.getSocketFromUserID(req.user._id);
+  if(!mySocket) {
+    res.send({disconnect: true});
+    return;
+  }
   let name = Math.random().toString(36).substring(2, 15);
   User.findById(req.user._id).then((me) => {
     Category.findById(req.body.categoryId).then((category) => {
@@ -35,10 +40,9 @@ createRoom = (req, res) => {
           name: me.name,
         },
       });
-      newRoom.save().then((daroom) => {
-        //socket.getSocketFromUserID(req.user._id).to("Room: Lobby").emit("createdRoom", daroom);
-         if(!daroom.private)
-            socket.getSocketFromUserID(req.user._id).to("Room: Lobby").emit("room", daroom);
+      newRoom.save().then((room) => {
+         if(!room.private)
+            mySocket.to("Room: Lobby").emit("room", room);
 
         res.send({ name: name });
       });
@@ -87,21 +91,7 @@ joinRoom = (req, res) => {
                       userName: me.name,
                       leaderboardData: me.leaderboardData,
                     });
-                     /*
-                  socket
-                    .getSocketFromUserID(req.user._id)
-                    .to("Room: Lobby")
-                    .emit("room", )
-                   
-                    .emit("joinRoomLobby", {
-                      userId: me._id,
-                      roomId: room._id
-                    });*/
-                  /*
-                  let listOfIds = room.allUserIdsThatHaveBeenInRoom;
-                  if(!listOfIds.includes(req.user._id)) listOfIds.push(req.user._id);
-                  room.allUserIdsThatHaveBeenInRoom = listOfIds;
-                  */
+                  
                   let roomUsers = room.users.filter((user)=>{return socket.getSocketFromUserID(user)});
                   if(!roomUsers.includes(req.user._id))
                       roomUsers.push(req.user._id); 
@@ -163,9 +153,13 @@ Returns: {}
 Description: Does socket.leave("Room: roomId")
 */
 leaveRoom = (req, res) => {
+  let mySocket = socket.getSocketFromUserID(req.user._id);
+  if(!req.user.bot && !mySocket) {
+    res.send({});
+    return;
+  }
   lock.acquire("room"+req.body.name, function(done) {
-  (socket
-    .getSocketFromUserID(req.user._id) || socket.getIo())
+  (mySocket || socket.getIo())
     .to("Room: " + req.body.roomId)
     .emit("leftRoom", {
       userId: req.user._id,
@@ -189,12 +183,11 @@ leaveRoom = (req, res) => {
     room.save().then((savedRoom) => {
       
       if(!savedRoom.private) {
-      (socket
-    .getSocketFromUserID(req.user._id) || socket.getIo())
+      (mySocket || socket.getIo())
     .to("Room: " + "Lobby")
     .emit("room", savedRoom);
       }
-      if(!req.user.bot) socket.getSocketFromUserID(req.user._id).leave("Room: " + req.body.roomId);
+      if(!req.user.bot) mySocket.leave("Room: " + req.body.roomId);
       User.findById(req.user._id).then((user)=>{
         user.roomId = "Offline"
         user.save().then(()=>{

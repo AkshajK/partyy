@@ -21,6 +21,7 @@ message = (req, res) => {
       res.send({error: true});
       return;
     }
+    res.send({});
     const msg = new Message({
       sender: {userId: req.user._id, name: user.name},
       roomId: user.roomId,
@@ -61,7 +62,7 @@ message = (req, res) => {
     }
     
     if (user.roomId === "Lobby") msg.save();
-    res.send({});
+    
   });
 };
 
@@ -74,17 +75,9 @@ Returns: {leaderboard: {"categoryId": {topScores: [], topRatings: []}}, categori
 Description: Returns a leaderboard of top scores and ratings for each category, already sorted, and also all the categories
 */
 getLeaderboard = (req, res) => {
-  /*
-  const category = new Category({name: "General"});
-  category.save()
-  const category2 = new Category({name: "General 2"});
-  category2.save()
-  */
-
   gameCalls.getLeaderboard(true, undefined).then((data) => {
     res.send(data);
   })
-  
 };
 
 /*
@@ -101,31 +94,18 @@ joinLobby = (req, res) => {
     return;
   }
   Room.find({private: false, $or: [{created: {$gte: new Date(new Date().getTime() - 1000*60*60*12)}}, { users: {$ne: []} }]}, (err, rooms) => {
-    Message.find({}, (err, messages) => {
+    Message.find({timestamp: {$gte: new Date(new Date().getTime() - 3000*60*60*12)}}, (err, messages) => {
       User.findById(req.user._id).then((me) => {
         me.roomId = "Lobby";
         me.save().then(() => {
-          User.find({ roomId: "Lobby" }, (err, users) => {
-            if(!socket.getSocketFromUserID(req.user._id)) {
+            let mySocket = socket.getSocketFromUserID(req.user._id);
+            if(!mySocket) {
               res.send({disconnect: true});
               return;
             }
-            socket.getSocketFromUserID(req.user._id).join("Room: Lobby");
-            socket.getSocketFromUserID(req.user._id).to("Room: Lobby").emit("joinedLobby", {
-              userId: me._id,
-              userName: me.name,
-              leaderboardData: me.leaderboardData,
-            });
-  
-            console.log(req.user._id)
+            mySocket.join("Room: Lobby");  
+            console.log(req.user.name + " joined the Lobby")
             res.send({
-              users: users.filter((user)=>{return user.bot || socket.getSocketFromUserID(user._id)}).map((user) => {
-                return {
-                  userId: user._id,
-                  userName: user.name,
-                  leaderboardData: user.leaderboardData,
-                };
-              }),
               rooms: rooms,
               messages: messages
                 .sort((a, b) => {
@@ -135,7 +115,7 @@ joinLobby = (req, res) => {
                   return i >= messages.length - 100;
                 }),
             });
-          });
+
         });
       });
     });
@@ -143,10 +123,12 @@ joinLobby = (req, res) => {
 };
 
 leaveLobby = (req, res) => {
-  socket.getSocketFromUserID(req.user._id).to("Room: Lobby").emit("leftLobby", {
-    userId: req.user._id,
-  });
-  socket.getSocketFromUserID(req.user._id).leave("Room: Lobby");
+  let mySocket = socket.getSocketFromUserID(req.user._id);
+  if(!mySocket) {
+    res.send({disconnect: true});
+    return;
+  }
+  mySocket.leave("Room: Lobby");
   res.send({});
 };
 
@@ -160,19 +142,22 @@ reportSong = (req, res) => {
 }
 
 changeName = (req, res) => {
+  res.send({})
   User.findById(req.user._id).then((user)=>{
     user.name = req.body.name 
     if(user.name.length > 20) return;
     user.save().then(() => {
+      if(user.roomId !== "Lobby") {
       socket.getIo().in("Room: " + user.roomId).emit("changeName", {
         userId: req.user._id,
         userName: user.name,
         leaderboardData: user.leaderboardData
       })
+      }
       gameCalls.getLeaderboard(false, [req.user._id]).then((data) => {
-        socket.getIo().emit("leaderboard", data)
+        socket.getIo().in("Room: " + user.roomId).emit("leaderboard", data)
       })
-      res.send({})
+      
     })
    
   })

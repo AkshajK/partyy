@@ -42,9 +42,6 @@ module.exports = {
         if (user) {
           User.findById(user._id).then((me) => {
             if (me.roomId === "Lobby") {
-              io.in("Room: Lobby").emit("leftLobby", {
-                userId: me._id,
-              });
               me.roomId="Offline"
               me.save().then(() => {
                 removeUser(user, socket, reason === "server namespace disconnect");

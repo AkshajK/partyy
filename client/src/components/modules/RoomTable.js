@@ -88,9 +88,12 @@ export default function RoomTable(props) {
             let icon = iconText === "In Progress" ? <MusicNoteIcon /> : <ReplayIcon />
             return  (
             <StyledTableRow key={room.name} hover onClick={()=>{
+              if(this.state.disable) return;
+              this.setState({disable: true}, ()=>{
               post("api/leaveLobby",{}).then(()=>{
                 props.redirect("/"+room.name)
-              })
+                this.setState({disable: false})
+              })})
               }}>
               <StyledTableCell component="th" scope="row">
               <Typography component={'div'} variant="h6" color="primary" style={{fontWeight: 900}}>

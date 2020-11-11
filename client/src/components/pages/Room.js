@@ -67,6 +67,8 @@ class Room extends Component {
 
     socket.on("joinRoom", (data)=>{
       let users = this.state.users.concat([]) 
+      if(users.find((u=>{return u.userId === data.userId})))
+        return;
       users.push(data)
       this.setState({users: users})
       this.props.setUsers(users)
@@ -143,7 +145,7 @@ class Room extends Component {
     }
 
     let playingMusic = this.state.game && (this.state.game.status === "RoundInProgress")
-    let disabled = this.state.game && this.state.game.status !== "RoundFinished"
+    let disabled = this.state.game && this.state.game.status !== "RoundFinished" && this.state.disable
     let editName = <EditName open={this.state.modal} onClose={()=>{
       this.setState({modal: false})
       if(this.state.category && this.state.category.name && !this.props.mobile) {
@@ -203,11 +205,14 @@ class Room extends Component {
             :
           <Button fullWidth size="large" color="primary" variant="outlined"
               onClick={() => {
+                this.setState({disable: true}, ()=>{
                 post("api/startGame").then((e)=>{
                   if(e.error) this.props.error();
+                  this.setState({disable: false})
+                })
                 })
               }}
-              disabled={disabled}
+              disabled={disabled || this.state.disable}
             >
               
               <Typography noWrap variant="button"> {"Start Game"} </Typography>
@@ -232,11 +237,14 @@ class Room extends Component {
               :
         <Button fullWidth size="large" color="primary" variant="outlined"
               onClick={() => {
+                this.setState({disable: true}, ()=>{
                 post("api/startGame").then((e)=>{
                   if(e.error) this.props.error();
+                  this.setState({disable: false})
+                })
                 })
               }}
-              disabled={disabled}
+              disabled={disabled || this.state.disable}
             >
               
               <Typography noWrap variant="button"> {"Start " + (this.state.category ? this.state.category.name : "") + " Game"} </Typography>
