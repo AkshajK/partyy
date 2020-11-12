@@ -8,8 +8,8 @@ const lock = require("./lock").lock;
 const getSocketFromUserID = (userid) => userToSocketMap[userid];
 const getUserFromSocketID = (socketid) => socketToUserMap[socketid];
 const getSocketFromSocketID = (socketid) => io.sockets.connected[socketid];
-const redis = require('socket.io-redis');
-require("dotenv").config();
+//const redis = require('socket.io-redis');
+//require("dotenv").config();
 const addUser = (user, socket) => {
   const oldSocket = userToSocketMap[user._id];
   if (oldSocket && oldSocket.id !== socket.id) {
@@ -34,7 +34,7 @@ const removeUser = (user, socket, server) => {
 module.exports = {
   init: (http) => {
     io = require("socket.io")(http);
-    io.adapter(redis(process.env.REDIS_URL || { host: 'localhost', port: 6379 }));
+    //io.adapter(redis(process.env.REDIS_URL || { host: 'localhost', port: 6379 }));
 
 
     io.on("connection", (socket) => {

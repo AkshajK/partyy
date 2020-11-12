@@ -196,7 +196,7 @@ class Room extends Component {
         </Grid>
         {this.props.mobile ? 
                     <Box style={{margin: "0px 20px 20px 20px"}} height="calc(50% - 100px)">
-                      <Chat mobile={true} messages={this.props.messages.filter((msg)=>{return msg.roomId === this.state.roomId})} inGame={this.state.game && this.state.game.status === "RoundInProgress"}  />     
+                      <Chat error={this.props.error} mobile={true} messages={this.props.messages.filter((msg)=>{return msg.roomId === this.state.roomId})} inGame={this.state.game && this.state.game.status === "RoundInProgress"}  />     
                       </Box> : <React.Fragment />}
         <Box style={{margin: "0px 20px 0px 20px"}}>
         {this.props.mobile ? 
