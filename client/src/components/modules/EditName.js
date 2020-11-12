@@ -53,6 +53,7 @@ return (
           autoFocus
           onKeyPress={(event) => {
             if (event.charCode === 13) {
+              if(newName.length < 1) return;
               post("api/changeName", {name: newName})
                 props.changeName(newName)
                 props.onSubmit()
@@ -73,7 +74,7 @@ return (
             props.onSubmit()
             props.onClose()
           }}
-        
+          disabled={(newName.length < 1) || (newName.length > 15) }
          
           color="primary"
         >

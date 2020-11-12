@@ -65,7 +65,10 @@ joinRoom = (req, res) => {
   }
   lock.acquire("room"+req.body.name, function(done) {
   Room.findOne({ name: req.body.name }).then((room) => {
-    if (!room) res.send({ exists: false });
+    if (!room) {
+      res.send({ exists: false });
+      done({}, {})
+    }
     else {
       Game.findOne(room.gameId !== "Waiting" ? { _id: room.gameId } : { doesntxist: "nope" }).then(
         (game) => {
@@ -77,6 +80,7 @@ joinRoom = (req, res) => {
                   if(!req.user.bot) {
                     if(!socket.getSocketFromUserID(req.user._id)) {
                       res.send({exists: false});
+                      done({}, {})
                       return;
                     }
                     socket.getSocketFromUserID(req.user._id).join("Room: " + room._id);

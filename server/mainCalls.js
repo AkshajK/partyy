@@ -146,6 +146,7 @@ changeName = (req, res) => {
   User.findById(req.user._id).then((user)=>{
     user.name = req.body.name 
     if(user.name.length > 20) return;
+    if(user.name.length < 1) return;
     user.save().then(() => {
       if(user.roomId !== "Lobby") {
       socket.getIo().in("Room: " + user.roomId).emit("changeName", {

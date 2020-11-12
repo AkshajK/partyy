@@ -39,6 +39,7 @@ startGame = (req, res) => {
       Song.aggregate([{$match:
         {categoryId: room.category._id+"" } }, { $sample: { size: 1 } }], async (err, songs) => {
         if (room.status === "InProgress") {
+          res.send({})
           done({}, {});
           return;
         }
