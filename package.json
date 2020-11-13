@@ -26,6 +26,7 @@
     "animals": "0.0.3",
     "antd": "^4.6.6",
     "async-lock": "^1.2.4",
+    "bad-words": "^3.0.3",
     "compression": "^1.7.4",
     "connect-ensure-login": "^0.1.1",
     "core-js": "^3.3.6",
