@@ -7,6 +7,8 @@ const Category = require("./models/category");
 const socket = require("./server-socket");
 var Promise = require("promise");
 const random = require('random')
+var filter = new Filter();
+filter.removeWords('god');
 const {
   bubbleSort,
   selectionSort,
