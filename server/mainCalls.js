@@ -6,6 +6,8 @@ const Room = require("./models/room");
 const Category = require("./models/category");
 const socket = require("./server-socket");
 const gameCalls = require("./gameCalls");
+var Filter = require('bad-words');
+var filter = new Filter();
 /*
 message
 Input (req.body): {text: String}
@@ -25,7 +27,7 @@ message = (req, res) => {
     const msg = new Message({
       sender: {userId: req.user._id, name: user.name},
       roomId: user.roomId,
-      message: req.body.text,
+      message: filter.clean(req.body.text),
       timestamp: new Date(),
       style: "message"
     });
@@ -144,7 +146,7 @@ reportSong = (req, res) => {
 changeName = (req, res) => {
   res.send({})
   User.findById(req.user._id).then((user)=>{
-    user.name = req.body.name 
+    user.name = filter.clean(req.body.name)
     if(user.name.length > 20) return;
     if(user.name.length < 1) return;
     user.save().then(() => {
