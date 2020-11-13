@@ -8,6 +8,7 @@ const socket = require("./server-socket");
 const gameCalls = require("./gameCalls");
 var Filter = require('bad-words');
 var filter = new Filter();
+filter.removeWords('god');
 /*
 message
 Input (req.body): {text: String}
@@ -27,7 +28,7 @@ message = (req, res) => {
     const msg = new Message({
       sender: {userId: req.user._id, name: user.name},
       roomId: user.roomId,
-      message: filter.clean(req.body.text),
+      message: req.body.text,
       timestamp: new Date(),
       style: "message"
     });
@@ -41,6 +42,7 @@ message = (req, res) => {
               
             }
             else {
+              msg.message = filter.clean(msg.message);
               socket.getIo()
       
       .in("Room: " + user.roomId)

@@ -374,6 +374,7 @@ const guessAnswer = async (userId, name, gameId, msg, bot) => {
     done(undefined, {game: savedGame, style: "skip"})
   }
   else {
+    msg.message = filter.clean(msg.message);
     if(!bot) socket.getIo()
       
       .in("Room: " + game.roomId)
