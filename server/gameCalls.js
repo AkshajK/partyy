@@ -7,6 +7,7 @@ const Category = require("./models/category");
 const socket = require("./server-socket");
 var Promise = require("promise");
 const random = require('random')
+var Filter = require('bad-words');
 var filter = new Filter();
 filter.removeWords('god');
 const {
