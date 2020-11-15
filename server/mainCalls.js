@@ -84,6 +84,7 @@ getLeaderboard = (req, res) => {
   })
 };
 
+//require("dotenv").config();
 /*
 joinLobby
 Input (req.body): 
@@ -97,8 +98,10 @@ joinLobby = (req, res) => {
     res.send({disconnect: true});
     return;
   }
-  Room.find({private: false, $or: [{created: {$gte: new Date(new Date().getTime() - 1000*60*60*12)}}, { users: {$ne: []} }]}, (err, rooms) => {
-    Message.find({timestamp: {$gte: new Date(new Date().getTime() - 3000*60*60*12)}}, (err, messages) => {
+  //let HOURS = Math.round(parseFloat(process.env.HOURS || '12')) 
+  let HOURS=1
+  Room.find({private: false, $or: [{created: {$gte: new Date(new Date().getTime() - 1000*60*60*(HOURS))}}, { users: {$ne: []} }]}, (err, rooms) => {
+    Message.find({timestamp: {$gte: new Date(new Date().getTime() - 3000*60*60*(HOURS))}}, (err, messages) => {
       User.findById(req.user._id).then((me) => {
         me.roomId = "Lobby";
         me.save().then(() => {
