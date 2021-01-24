@@ -21,7 +21,7 @@ class Lobby extends Component {
     super(props);
     // Initialize Default State
     this.state = {
-      buttonColor: "#2e7d32",
+      buttonColor: "#3fb045",
       rooms: [],
       messages: [],
     };
@@ -90,7 +90,7 @@ class Lobby extends Component {
                         this.setState({ buttonColor: "#43a047" });
                       }}
                       onMouseOut={() => {
-                        this.setState({ buttonColor: "#2e7d32" });
+                        this.setState({ buttonColor: "#3fb045" });
                       }}
                       variant="contained"
                       onClick={() => {
@@ -105,7 +105,7 @@ class Lobby extends Component {
                       }}
                       disabled={this.state.disable}
                     >
-                      <Typography noWrap variant="button">
+                      <Typography noWrap variant="button" style={{fontWeight: 900}}>
                         {" "}
                         New {this.props.category.name} Game{" "}
                       </Typography>

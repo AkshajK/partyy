@@ -434,7 +434,7 @@ let isEqual = (a, b) => {
 const getLeaderboard = (useCurrent, modifiedUserIds) => {
   
   return new Promise((resolve, reject) => {
-    lock.acquire("leaderboard", (done)=>{
+    //lock.acquire("leaderboard", (done)=>{
     
       Category.find({}, (err, categories) => {
         
@@ -443,7 +443,7 @@ const getLeaderboard = (useCurrent, modifiedUserIds) => {
 
         if(sameCategories && useCurrent && curLeaderboard.categories.length > 0) {
           resolve(curLeaderboard);
-          done({}, {})
+         // done({}, {})
         }
         let reset = !sameCategories || !modifiedUserIds;
         var leaderboard = reset ? {} : curLeaderboard.leaderboard;
@@ -506,10 +506,10 @@ const getLeaderboard = (useCurrent, modifiedUserIds) => {
         let res={ leaderboard: leaderboard, categories: categories }
         curLeaderboard = res;
         resolve(res);
-        done({}, {});
+       // done({}, {});
       });
     });
-    }, (err, ret)=>{})
+    //}, (err, ret)=>{})
   })
   
 }
