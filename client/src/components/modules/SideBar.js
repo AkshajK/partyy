@@ -55,7 +55,7 @@ let SideBar = (props) => {
   const [categories, setCategories] = React.useState([])
  const [editModal, setEditModal] = React.useState(false)
  const [newName, setNewName] = React.useState(props.userName)
- const [leaderboardData, setLeaderboardData] = React.useState({rating: 1200, highScore: 0, ratingRank: "", highScoreRank: ""})
+ //const [leaderboardData, setLeaderboardData] = React.useState({rating: 1200, highScore: 0, ratingRank: "", highScoreRank: ""})
 // edit name modal
 let editNameModal = <EditName open={editModal} onClose={()=>{setEditModal(false)}} title={"Change Your Name"} submitText={"Submit"} 
 changeName = {props.changeName} onSubmit={()=>{}} userName={props.userName} />
@@ -87,86 +87,89 @@ let rankify = (num) => {
       props.setCategory(categories[0], leaderboardChange)
     }
   }
-  let leaderboardChange = () => {
-    
-    let newLeaderboardData = Object.assign({}, leaderboardData);
-    if(props.category && leaderboard[props.category._id] ) {
+  let leaderboardChange = (val) => {
+    let category = val || props.category;
+    //console.log(props.category)
+    let leaderboardData = {rating: 1200, highScore: 0, ratingRank: "", highScoreRank: ""}//props.userLeaderboardData.find((data)=>{return data.categoryId === props.category._id}) || {rating: 1200, highScore: 0}
 
-      let r = leaderboard[props.category._id].topScores.find((user)=>{return user.userId === props.userId})
-      if(r) newLeaderboardData.highScore = r.score 
-      r = leaderboard[props.category._id].topRatings.find((user)=>{return user.userId === props.userId})
-      if(r) newLeaderboardData.rating = Math.floor(r.rating)
+    if(category && leaderboard[category._id] ) {
+
+      let r = leaderboard[category._id].topScores.find((user)=>{return user.userId === props.userId})
+      if(r) leaderboardData.highScore = r.score 
+      r = leaderboard[category._id].topRatings.find((user)=>{return user.userId === props.userId})
+      if(r) leaderboardData.rating = Math.floor(r.rating)
   
-      r = leaderboard[props.category._id].topScores.findIndex((user)=>{return user.userId === props.userId})
-      if(r!== -1) newLeaderboardData.highScoreRank = rankify(r+1)
-      r = leaderboard[props.category._id].topRatings.findIndex((user)=>{return user.userId === props.userId})
-      if(r !== -1) newLeaderboardData.ratingRank = rankify(r+1)
+      r = leaderboard[category._id].topScores.findIndex((user)=>{return user.userId === props.userId})
+      if(r!== -1) leaderboardData.highScoreRank = rankify(r+1)
+      r = leaderboard[category._id].topRatings.findIndex((user)=>{return user.userId === props.userId})
+      if(r !== -1) leaderboardData.ratingRank = rankify(r+1)
     }
-    setLeaderboardData(newLeaderboardData);
+    
+    props.setUserInfo((<Box bgcolor="#121212">
+    
+    <List dense>
+      <ListItem style={{marginBottom: "10px"}} key="1">
+      <Typography component={'div'} style={{fontWeight: 900}} variant="h5" color="secondary" >
+      {props.userName}
+    
+    </Typography>
+    <IconButton onClick={() => {setEditModal(true)}} style={{color: "#444444"}}>
+      <CreateIcon />
+        </IconButton> 
+    
+      </ListItem>
+      <ListItem key="2">
+      <Typography component={'div'} variant="subtitle1" color="textSecondary" gutterBottom>
+      {"Rating: "}
+    </Typography>
+    <ListItemSecondaryAction>
+      <Grid container direction="row">
+      <Typography component={'div'} variant="h6" color="textSecondary" gutterBottom>
+      {leaderboardData.ratingRank}
+    </Typography>
+    
+    <Typography component={'div'} variant="h5" color="secondary" style={{width: "75px", textAlign: "right"}} gutterBottom>
+      {leaderboardData.rating}
+    </Typography>
+    
+    
+    </Grid>
+    </ListItemSecondaryAction>
+      </ListItem>
+    
+      <ListItem key="3">
+      
+      <Typography component={'div'} variant="subtitle1" color="textSecondary" gutterBottom>
+      {"High Score: "}
+    </Typography>
+    
+    <ListItemSecondaryAction>
+    <Grid container direction="row">
+    <Typography  component={'div'} variant="h6" color="textSecondary" gutterBottom >
+      {leaderboardData.highScoreRank}
+    </Typography>
+    
+    <Typography component={'div'} variant="h5" color="secondary" gutterBottom style={{width: "75px", textAlign: "right"}}>
+      {leaderboardData.highScore}
+    </Typography>
+    
+    </Grid>
+    </ListItemSecondaryAction>
+      </ListItem>
+    </List>
+    
+    
+    
+    
+    
+    </Box>))
+       
+      
+    
     
   }
 
-  useEffect(() => {
-    props.setUserInfo((<Box bgcolor="#121212">
-    
-<List dense>
-  <ListItem style={{marginBottom: "10px"}} key="1">
-  <Typography component={'div'} style={{fontWeight: 900}} variant="h5" color="secondary" >
-  {props.userName}
-
-</Typography>
-<IconButton onClick={() => {setEditModal(true)}} style={{color: "#444444"}}>
-  <CreateIcon />
-    </IconButton> 
-
-  </ListItem>
-  <ListItem key="2">
-  <Typography component={'div'} variant="subtitle1" color="textSecondary" gutterBottom>
-  {"Rating: "}
-</Typography>
-<ListItemSecondaryAction>
-  <Grid container direction="row">
-  <Typography component={'div'} variant="h6" color="textSecondary" gutterBottom>
-  {leaderboardData.ratingRank}
-</Typography>
-
-<Typography component={'div'} variant="h5" color="secondary" style={{width: "75px", textAlign: "right"}} gutterBottom>
-  {leaderboardData.rating}
-</Typography>
-
-
-</Grid>
-</ListItemSecondaryAction>
-  </ListItem>
-
-  <ListItem key="3">
   
-  <Typography component={'div'} variant="subtitle1" color="textSecondary" gutterBottom>
-  {"High Score: "}
-</Typography>
-
-<ListItemSecondaryAction>
-<Grid container direction="row">
-<Typography  component={'div'} variant="h6" color="textSecondary" gutterBottom >
-  {leaderboardData.highScoreRank}
-</Typography>
-
-<Typography component={'div'} variant="h5" color="secondary" gutterBottom style={{width: "75px", textAlign: "right"}}>
-  {leaderboardData.highScore}
-</Typography>
-
-</Grid>
-</ListItemSecondaryAction>
-  </ListItem>
-</List>
-
-
-
-
-
-</Box>))
-   
-  }, [leaderboardData])
   // get leaderboard again whenever our leaderboard data changes
   useEffect(() => {
     socket.on("leaderboard", (data) => {
@@ -224,7 +227,7 @@ let rankify = (num) => {
           labelId="demo-simple-select-filled-label"
           value={props.category ? ""+props.category._id : ""}
           onChange={(event)=>{
-            props.setCategory(categories.find((c)=>{return c._id+""===event.target.value}))}}
+            props.setCategory(categories.find((c)=>{return c._id+""===event.target.value}), leaderboardChange)}}
           fullWidth
           
         >

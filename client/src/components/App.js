@@ -64,8 +64,8 @@ class App extends Component {
   setUsers = (arr) => {
     this.setState({ users: arr });
   };
-  setCategory = (c, callback=()=>{}) => {
-    this.setState({ category: c }, callback);
+  setCategory = (c, callbackfunc=()=>{}) => {
+    this.setState({ category: c }, () => {callbackfunc(this.state.category)});
   };
   setShowSidebar = (bool) => {
     this.setState({ showSidebar: bool });
