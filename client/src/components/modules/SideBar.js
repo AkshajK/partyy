@@ -55,6 +55,7 @@ let SideBar = (props) => {
   const [categories, setCategories] = React.useState([])
  const [editModal, setEditModal] = React.useState(false)
  const [newName, setNewName] = React.useState(props.userName)
+ const [leaderboardData, setLeaderboardData] = React.useState({rating: 1200, highScore: 0, ratingRank: "", highScoreRank: ""})
 // edit name modal
 let editNameModal = <EditName open={editModal} onClose={()=>{setEditModal(false)}} title={"Change Your Name"} submitText={"Submit"} 
 changeName = {props.changeName} onSubmit={()=>{}} userName={props.userName} />
@@ -69,7 +70,7 @@ let rankify = (num) => {
 }
   //if(!props.category || categories.length === 0 || (Object.entries(leaderboard).length === 0)) return <CircularProgress />
 
-  let leaderboardData = {rating: 1200, highScore: 0, ratingRank: "", highScoreRank: ""}//props.userLeaderboardData.find((data)=>{return data.categoryId === props.category._id}) || {rating: 1200, highScore: 0}
+  //let leaderboardData = {rating: 1200, highScore: 0, ratingRank: "", highScoreRank: ""}//props.userLeaderboardData.find((data)=>{return data.categoryId === props.category._id}) || {rating: 1200, highScore: 0}
   let leaderboardDataArr = undefined;
   if(props.category && leaderboard[props.category._id] ) {
     
@@ -83,23 +84,29 @@ let rankify = (num) => {
 
   let categoryChange = () => {
     if(!props.category) {
-      props.setCategory(categories[0])
+      props.setCategory(categories[0], leaderboardChange)
     }
   }
   let leaderboardChange = () => {
     
-    
+    let newLeaderboardData = Object.assign({}, leaderboardData);
     if(props.category && leaderboard[props.category._id] ) {
+
       let r = leaderboard[props.category._id].topScores.find((user)=>{return user.userId === props.userId})
-      if(r) leaderboardData.highScore = r.score 
+      if(r) newLeaderboardData.highScore = r.score 
       r = leaderboard[props.category._id].topRatings.find((user)=>{return user.userId === props.userId})
-      if(r) leaderboardData.rating = Math.floor(r.rating)
+      if(r) newLeaderboardData.rating = Math.floor(r.rating)
   
       r = leaderboard[props.category._id].topScores.findIndex((user)=>{return user.userId === props.userId})
-      if(r!== -1) leaderboardData.highScoreRank = rankify(r+1)
+      if(r!== -1) newLeaderboardData.highScoreRank = rankify(r+1)
       r = leaderboard[props.category._id].topRatings.findIndex((user)=>{return user.userId === props.userId})
-      if(r !== -1) leaderboardData.ratingRank = rankify(r+1)
+      if(r !== -1) newLeaderboardData.ratingRank = rankify(r+1)
     }
+    setLeaderboardData(newLeaderboardData);
+    
+  }
+
+  useEffect(() => {
     props.setUserInfo((<Box bgcolor="#121212">
     
 <List dense>
@@ -159,14 +166,15 @@ let rankify = (num) => {
 
 </Box>))
    
-  }
+  }, [leaderboardData])
   // get leaderboard again whenever our leaderboard data changes
   useEffect(() => {
     socket.on("leaderboard", (data) => {
       let newLeaderboard = data.leaderboard
       let newCategories = data.categories
-      setLeaderboard(newLeaderboard)
       setCategories(newCategories)
+      setLeaderboard(newLeaderboard)
+      
       
     })
     return () => {
@@ -179,8 +187,9 @@ let rankify = (num) => {
     post("api/getLeaderboard").then((data) => {
       let newLeaderboard = data.leaderboard
       let newCategories = data.categories
-      setLeaderboard(newLeaderboard)
       setCategories(newCategories)
+      setLeaderboard(newLeaderboard)
+      
      
     })
     
