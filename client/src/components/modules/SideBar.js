@@ -81,104 +81,122 @@ let rankify = (num) => {
     for(var i=0; i<props.users.length; i++) if(!leaderboardDataArr[props.users[i].userId]) leaderboardDataArr[props.users[i].userId] = {rank: "", rating: 1200};
   }
 
+  let categoryChange = () => {
+    if(!props.category) {
+      props.setCategory(categories[0])
+    }
+  }
+  let leaderboardChange = () => {
+    
+    
+    if(props.category && leaderboard[props.category._id] ) {
+      let r = leaderboard[props.category._id].topScores.find((user)=>{return user.userId === props.userId})
+      if(r) leaderboardData.highScore = r.score 
+      r = leaderboard[props.category._id].topRatings.find((user)=>{return user.userId === props.userId})
+      if(r) leaderboardData.rating = Math.floor(r.rating)
+  
+      r = leaderboard[props.category._id].topScores.findIndex((user)=>{return user.userId === props.userId})
+      if(r!== -1) leaderboardData.highScoreRank = rankify(r+1)
+      r = leaderboard[props.category._id].topRatings.findIndex((user)=>{return user.userId === props.userId})
+      if(r !== -1) leaderboardData.ratingRank = rankify(r+1)
+    }
+    props.setUserInfo((<Box bgcolor="#121212">
+    
+<List dense>
+  <ListItem style={{marginBottom: "10px"}} key="1">
+  <Typography component={'div'} style={{fontWeight: 900}} variant="h5" color="secondary" >
+  {props.userName}
 
+</Typography>
+<IconButton onClick={() => {setEditModal(true)}} style={{color: "#444444"}}>
+  <CreateIcon />
+    </IconButton> 
+
+  </ListItem>
+  <ListItem key="2">
+  <Typography component={'div'} variant="subtitle1" color="textSecondary" gutterBottom>
+  {"Rating: "}
+</Typography>
+<ListItemSecondaryAction>
+  <Grid container direction="row">
+  <Typography component={'div'} variant="h6" color="textSecondary" gutterBottom>
+  {leaderboardData.ratingRank}
+</Typography>
+
+<Typography component={'div'} variant="h5" color="secondary" style={{width: "75px", textAlign: "right"}} gutterBottom>
+  {leaderboardData.rating}
+</Typography>
+
+
+</Grid>
+</ListItemSecondaryAction>
+  </ListItem>
+
+  <ListItem key="3">
+  
+  <Typography component={'div'} variant="subtitle1" color="textSecondary" gutterBottom>
+  {"High Score: "}
+</Typography>
+
+<ListItemSecondaryAction>
+<Grid container direction="row">
+<Typography  component={'div'} variant="h6" color="textSecondary" gutterBottom >
+  {leaderboardData.highScoreRank}
+</Typography>
+
+<Typography component={'div'} variant="h5" color="secondary" gutterBottom style={{width: "75px", textAlign: "right"}}>
+  {leaderboardData.highScore}
+</Typography>
+
+</Grid>
+</ListItemSecondaryAction>
+  </ListItem>
+</List>
+
+
+
+
+
+</Box>))
+   
+  }
   // get leaderboard again whenever our leaderboard data changes
   useEffect(() => {
-    // Update the document title using the browser API
-    let setData = (data, category, setCategory) => {
+    socket.on("leaderboard", (data) => {
       let newLeaderboard = data.leaderboard
       let newCategories = data.categories
       setLeaderboard(newLeaderboard)
       setCategories(newCategories)
-      if(!props.category) {
-        props.setCategory(newCategories[0])
-      }
-      if(props.category && newLeaderboard[props.category._id] ) {
-        let r = newLeaderboard[props.category._id].topScores.find((user)=>{return user.userId === props.userId})
-        if(r) leaderboardData.highScore = r.score 
-        r = newLeaderboard[props.category._id].topRatings.find((user)=>{return user.userId === props.userId})
-        if(r) leaderboardData.rating = Math.floor(r.rating)
-    
-        r = newLeaderboard[props.category._id].topScores.findIndex((user)=>{return user.userId === props.userId})
-        if(r!== -1) leaderboardData.highScoreRank = rankify(r+1)
-        r = newLeaderboard[props.category._id].topRatings.findIndex((user)=>{return user.userId === props.userId})
-        if(r !== -1) leaderboardData.ratingRank = rankify(r+1)
-      }
-      props.setUserInfo((<Box bgcolor="#121212">
       
-  <List dense>
-    <ListItem style={{marginBottom: "10px"}} key="1">
-    <Typography component={'div'} style={{fontWeight: 900}} variant="h5" color="secondary" >
-    {props.userName}
-
-  </Typography>
-  <IconButton onClick={() => {setEditModal(true)}} style={{color: "#444444"}}>
-    <CreateIcon />
-      </IconButton> 
-  
-    </ListItem>
-    <ListItem key="2">
-    <Typography component={'div'} variant="subtitle1" color="textSecondary" gutterBottom>
-    {"Rating: "}
-  </Typography>
-  <ListItemSecondaryAction>
-    <Grid container direction="row">
-    <Typography component={'div'} variant="h6" color="textSecondary" gutterBottom>
-    {leaderboardData.ratingRank}
-  </Typography>
-  
-  <Typography component={'div'} variant="h5" color="secondary" style={{width: "75px", textAlign: "right"}} gutterBottom>
-    {leaderboardData.rating}
-  </Typography>
-
-  
-  </Grid>
-  </ListItemSecondaryAction>
-    </ListItem>
-
-    <ListItem key="3">
-    
-    <Typography component={'div'} variant="subtitle1" color="textSecondary" gutterBottom>
-    {"High Score: "}
-  </Typography>
-  
-  <ListItemSecondaryAction>
-  <Grid container direction="row">
-  <Typography  component={'div'} variant="h6" color="textSecondary" gutterBottom >
-    {leaderboardData.highScoreRank}
-  </Typography>
-  
-  <Typography component={'div'} variant="h5" color="secondary" gutterBottom style={{width: "75px", textAlign: "right"}}>
-    {leaderboardData.highScore}
-  </Typography>
-  
-  </Grid>
-  </ListItemSecondaryAction>
-    </ListItem>
-  </List>
-  
-  
-  
- 
-  
-</Box>))
-     
-    }
-    post("api/getLeaderboard").then((data) => {
-
-      setData(data)
     })
-    socket.on("leaderboard", (data) => {
-      
-      setData(data)
-    })
-
     return () => {
       socket.off("leaderboard")
     }
-  }, [props.category, props.userName]);
-  
+  }, [])
+  useEffect(() => {
+    // Update the document title using the browser API
+    
+    post("api/getLeaderboard").then((data) => {
+      let newLeaderboard = data.leaderboard
+      let newCategories = data.categories
+      setLeaderboard(newLeaderboard)
+      setCategories(newCategories)
+     
+    })
+    
+  }, [props.userName]);
 
+  useEffect(() => {
+    // Update the document title using the browser API
+    
+    categoryChange()
+  }, [categories]);
+  
+  useEffect(() => {
+    // Update the document title using the browser API
+    
+    leaderboardChange()
+  }, [leaderboard]);
   
   
   

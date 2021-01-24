@@ -432,7 +432,7 @@ let isEqual = (a, b) => {
 }
 
 const getLeaderboard = (useCurrent, modifiedUserIds) => {
-  
+  console.log("getting leaderboard")
   return new Promise((resolve, reject) => {
     //lock.acquire("leaderboard", (done)=>{
     
