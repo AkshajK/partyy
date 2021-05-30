@@ -1,3 +1,3 @@
 ## Welcome to Partyy.life!
 
-## Check out https://partyy.life
+## Check out https://partyylife.herokuapp.com
