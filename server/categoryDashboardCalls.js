@@ -14,11 +14,12 @@ Returns: {[{category: Category, songs: [Song]}]}
 Description: Returns all the categories, with all the songs in each category
 */
 getCategoryAndSongData = (req, res) => {
-  if(!req.user.isSiteAdmin) return;
+  if (!req.user.isSiteAdmin) return;
   Category.find({}, (err, categories) => {
+    console.log(`Categories: ${categories}`);
     Song.find({}, (err, songs) => {
       let ans = [];
-      for (var i = 0; i < categories.length; i++) {
+      for (var i = 0; i < categories?.length || 0; i++) {
         let songC = songs.filter((s) => {
           return s.categoryId === categories[i]._id + "";
         });
@@ -36,17 +37,17 @@ var SpotifyWebApi = require("spotify-web-api-node");
 var Promise = require("promise");
 
 let getSongs = (playlistId, offSet, spotifyApi, categoryId) => {
-  var total = 100
+  var total = 100;
   return new Promise((resolve, reject) => {
     spotifyApi
       .getPlaylistTracks(playlistId, {
         offset: offSet,
         limit: 100,
         fields: "items",
-        market: "US"
+        market: "US",
       })
       .then((data) => {
-        let tracks = data.body.items
+        let tracks = data.body.items;
         if (tracks.length === 0) {
           resolve();
           return;
@@ -54,47 +55,48 @@ let getSongs = (playlistId, offSet, spotifyApi, categoryId) => {
         let counter = 0;
         for (var i = 0; i < tracks.length; i++) {
           let songApi = tracks[i].track;
-          
-          if(songApi && songApi.preview_url) {
+
+          if (songApi && songApi.preview_url) {
             let song = new Song({
-              artist: ((songApi.artists || []).length > 0 ? songApi.artists : [{name: "Artist"}]).map((a)=>{return a.name}),
+              artist: ((songApi.artists || []).length > 0
+                ? songApi.artists
+                : [{ name: "Artist" }]
+              ).map((a) => {
+                return a.name;
+              }),
               title: songApi.name,
               artUrl: songApi.album.images[0] ? songApi.album.images[0].url : undefined,
               songUrl: songApi.preview_url,
-              spotifyUrl: ((songApi.external_urls)||{spotify: undefined}).spotify,
+              spotifyUrl: (songApi.external_urls || { spotify: undefined }).spotify,
               categoryId: categoryId,
             });
             //console.log(song);
-          song.save().then(() => {
-            //console.log("Yes preview url" + counter)
-            counter += 1;
-            if (counter === tracks.length) {
-              if (tracks.length === 100) {
-                getSongs(playlistId, offSet + 100, spotifyApi, categoryId).then(() => {
+            song.save().then(() => {
+              //console.log("Yes preview url" + counter)
+              counter += 1;
+              if (counter === tracks.length) {
+                if (tracks.length === 100) {
+                  getSongs(playlistId, offSet + 100, spotifyApi, categoryId).then(() => {
+                    resolve();
+                  });
+                } else {
                   resolve();
-                });
+                }
               }
-              else {
-                resolve();
-              }
-            }
-          });
-          }
-          else {
+            });
+          } else {
             //same thing but dont saave song
-           // console.log("No preview url" + counter + " avail markets: " + songApi.available_markets)
+            // console.log("No preview url" + counter + " avail markets: " + songApi.available_markets)
             counter += 1;
             if (counter === tracks.length) {
               if (tracks.length === 100) {
                 getSongs(playlistId, offSet + 100, spotifyApi, categoryId).then(() => {
                   resolve();
                 });
-              }
-              else {
+              } else {
                 resolve();
               }
             }
-            
           }
         }
       });
@@ -111,24 +113,26 @@ Description:
 var spotifyApi = new SpotifyWebApi({
   clientId: process.env.SPOTIFY_ID,
   clientSecret: process.env.SPOTIFY_SECRET,
-  redirectUri: process.env.URL+"/api/addCategory",
+  redirectUri: process.env.URL + "/api/addCategory",
 });
 
 addCategoryAuthenticate = (req, res) => {
-  if(!req.user.isSiteAdmin) return;
-  var scopes = ['user-read-private', 'user-read-email', 'playlist-read-private']
-  var authorizeURL = spotifyApi.createAuthorizeURL(scopes, req.body.name+"-----"+req.body.playlistId);
-  res.send({url: authorizeURL});
+  if (!req.user.isSiteAdmin) return;
+  var scopes = ["user-read-private", "user-read-email", "playlist-read-private"];
+  var authorizeURL = spotifyApi.createAuthorizeURL(
+    scopes,
+    req.body.name + "-----" + req.body.playlistId
+  );
+  res.send({ url: authorizeURL });
   //playlist-read-collaborative
-}
-
+};
 
 addCategory = (req, res) => {
-  if(!req.user.isSiteAdmin) return;
-  var code  = req.query.code; 
+  if (!req.user.isSiteAdmin) return;
+  var code = req.query.code;
   var state = req.query.state;
-  var playlistId = state.split("-----")[1]
-  var name = state.split("-----")[0]
+  var playlistId = state.split("-----")[1];
+  var name = state.split("-----")[0];
   spotifyApi.authorizationCodeGrant(code).then(
     function (data) {
       console.log("The access token expires in " + data.body["expires_in"]);
@@ -136,19 +140,18 @@ addCategory = (req, res) => {
 
       // Save the access token so that it's used in future calls
       spotifyApi.setAccessToken(data.body["access_token"]);
-      spotifyApi.setRefreshToken(data.body['refresh_token']);
+      spotifyApi.setRefreshToken(data.body["refresh_token"]);
       console.log(playlistId);
 
-      Category.findOne({name: name}).then((c)=> {
-        if(c) {
-          console.log("found")
-          Song.remove({categoryId: c._id}).then(() => {
-            c.playlistId = playlistId
+      Category.findOne({ name: name }).then((c) => {
+        if (c) {
+          console.log("found");
+          Song.remove({ categoryId: c._id }).then(() => {
+            c.playlistId = playlistId;
             c.save().then(
               (saved) => {
-                
                 getSongs(playlistId, 0, spotifyApi, saved._id).then(() => {
-                  res.redirect('/dashboard');
+                  res.redirect("/dashboard");
                 });
               },
               (err) => {
@@ -156,19 +159,16 @@ addCategory = (req, res) => {
                 res.send({ error: true });
               }
             );
-          })
-          
-        }
-        else {
+          });
+        } else {
           const category = new Category({
             name: name,
             playlistId: playlistId,
           });
           category.save().then(
             (saved) => {
-              
               getSongs(playlistId, 0, spotifyApi, saved._id).then(() => {
-                res.redirect('/dashboard');
+                res.redirect("/dashboard");
               });
             },
             (err) => {
@@ -177,8 +177,7 @@ addCategory = (req, res) => {
             }
           );
         }
-      })
-      
+      });
     },
     function (err) {
       console.log("Something went wrong when retrieving an access token", err);
@@ -186,24 +185,21 @@ addCategory = (req, res) => {
   );
 };
 
-var ObjectId = require('mongodb').ObjectId
+var ObjectId = require("mongodb").ObjectId;
 deleteCategory = (req, res) => {
-  if(!req.user.isSiteAdmin) return;
-  Category.remove({_id: ObjectId(req.body.categoryId)}).then(() => {
-    Song.remove({categoryId: req.body.categoryId}).then(() => {
-      Room.remove({"category._id": ObjectId(req.body.categoryId)}).then(() => {
-        res.send({})
-      })
-    })
+  if (!req.user.isSiteAdmin) return;
+  Category.remove({ _id: ObjectId(req.body.categoryId) }).then(() => {
+    Song.remove({ categoryId: req.body.categoryId }).then(() => {
+      Room.remove({ "category._id": ObjectId(req.body.categoryId) }).then(() => {
+        res.send({});
+      });
+    });
   });
-  
-  
-}
-
+};
 
 module.exports = {
   getCategoryAndSongData,
   addCategory,
   addCategoryAuthenticate,
-  deleteCategory
+  deleteCategory,
 };
