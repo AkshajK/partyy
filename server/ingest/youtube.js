@@ -14,12 +14,11 @@ function run(bin, args, opts = {}) {
   });
 }
 
-// Five candidates, no download. Each: {id, duration, channel, title}.
-async function candidates(title, artist) {
+async function search(query) {
   const out = await run(YTDLP, [
     "-q", "--no-warnings", "--flat-playlist",
     "--print", "%(id)s\t%(duration)s\t%(channel)s\t%(title)s",
-    `ytsearch5:${title} ${artist}`,
+    `ytsearch6:${query}`,
   ]);
   return out
     .split("\n")
@@ -28,6 +27,25 @@ async function candidates(title, artist) {
       const [id, duration, channel, t] = l.split("\t");
       return { id, duration: parseFloat(duration) || 0, channel: channel || "", title: t || "" };
     });
+}
+
+// Candidates, no download. Retries with a plainer query when the first search
+// returns nothing (punctuation like "P!nk" or long feat. credits can confuse it).
+async function candidates(title, artist) {
+  const plain = (title || "").replace(/\s*[\(\[][^\)\]]*[\)\]]/g, "").trim();
+  const queries = [`${title} ${artist}`];
+  if (plain && plain !== title) queries.push(`${plain} ${artist}`);
+  queries.push(`${plain || title} ${artist} audio`.replace(/[^\w\s&'.-]/g, " "));
+  for (const q of queries) {
+    let c = [];
+    try {
+      c = await search(q);
+    } catch (e) {
+      /* try next */
+    }
+    if (c.length) return c;
+  }
+  return [];
 }
 
 const BAD = /\b(live|cover|remix|reaction|karaoke|instrumental|sped up|slowed|nightcore|8d|tutorial|lesson|acoustic version|choreography|dance)\b/i;
