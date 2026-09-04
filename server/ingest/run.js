@@ -24,10 +24,13 @@ function syncAudio() {
   });
 }
 
+// All progress writes are atomic updates: several downloaders run in parallel
+// and Mongoose refuses parallel save() on one document.
+async function update(job, ops) {
+  await ImportJob.updateOne({ _id: job._id }, ops);
+}
 async function log(job, line) {
-  job.log.push(new Date().toISOString().slice(11, 19) + " " + line);
-  if (job.log.length > 500) job.log = job.log.slice(-500);
-  await job.save();
+  await update(job, { $push: { log: { $each: [new Date().toISOString().slice(11, 19) + " " + line], $slice: -500 } } });
 }
 
 // One wanted song end to end. Returns "added" | "skipped" | throws.
@@ -68,16 +71,14 @@ async function runImport(jobId, { beforeDone } = {}) {
   const job = await ImportJob.findById(jobId);
   if (!job) throw new Error("no such job " + jobId);
   fs.mkdirSync(AUDIO_DIR, { recursive: true });
-  job.status = "running";
-  await job.save();
+  await update(job, { $set: { status: "running" } });
   try {
     const src = await resolveInput(job.input);
     const categoryName = (job.categoryName || src.name || "").trim();
     if (!categoryName) throw new Error("no category name given and the source has no name");
     let category = await Category.findOne({ name: categoryName });
     if (!category) category = await new Category({ name: categoryName }).save();
-    job.categoryId = category._id + "";
-    job.total = src.items.length;
+    await update(job, { $set: { categoryId: category._id + "", total: src.items.length } });
     await log(job, `source=${src.kind} songs=${src.items.length} category="${categoryName}"` + (src.capped ? " (Spotify embed only exposes the first 100 tracks; paste the rest as a list)" : ""));
 
     const existing = new Set(
@@ -100,15 +101,14 @@ async function runImport(jobId, { beforeDone } = {}) {
         const want = src.items[next++];
         try {
           const r = await ingestOne(job, category, existing, added, want);
-          if (r === "added") job.done += 1;
-          else job.skipped += 1;
+          await update(job, { $inc: r === "added" ? { done: 1 } : { skipped: 1 } });
           await log(job, `${r}: ${want.title} - ${want.artist}`);
           if (r === "added" && ++sinceSync >= 25) {
             sinceSync = 0;
             await flush().catch((e) => log(job, "sync failed (will retry at end): " + e.message));
           }
         } catch (e) {
-          job.failed.push({ title: want.title, artist: want.artist, reason: e.message.slice(0, 200) });
+          await update(job, { $push: { failed: { title: want.title, artist: want.artist, reason: e.message.slice(0, 200) } } });
           await log(job, `FAILED: ${want.title} - ${want.artist}: ${e.message.slice(0, 120)}`);
         }
       }
@@ -119,14 +119,11 @@ async function runImport(jobId, { beforeDone } = {}) {
       await flush();
     }
     if (beforeDone) await beforeDone(job);
-    job.status = "done";
+    await update(job, { $set: { status: "done", finished: new Date() } });
   } catch (e) {
-    job.status = "failed";
-    job.error = e.message;
+    await update(job, { $set: { status: "failed", error: e.message, finished: new Date() } });
   }
-  job.finished = new Date();
-  await job.save();
-  return job;
+  return ImportJob.findById(job._id);
 }
 
 module.exports = { runImport, AUDIO_DIR };
