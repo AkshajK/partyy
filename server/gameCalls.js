@@ -58,7 +58,7 @@ startGame = (req, res) => {
     lock.acquire("room"+req.body.name, function(done) {
     Room.findById(user.roomId).then((room) => {
       Song.aggregate([{$match:
-        {categoryId: room.category._id+"" } }, { $sample: { size: 1 } }], async (err, songs) => {
+        {categoryId: room.category._id+"", pending: {$ne: true}, bad: {$ne: true} } }, { $sample: { size: 1 } }], async (err, songs) => {
         if (room.status === "InProgress") {
           res.send({})
           done({}, {});
@@ -199,7 +199,7 @@ endRound = (roomId, roundNum, gameId) => {
       }
       
     Song.aggregate([{$match:
-        {categoryId: room.category._id+"" } }, { $sample: { size: 1 } }], async (err, songs) => {
+        {categoryId: room.category._id+"", pending: {$ne: true}, bad: {$ne: true} } }, { $sample: { size: 1 } }], async (err, songs) => {
 
        game = await Game.findById(room.gameId)
        let songHistory = game.songHistory;

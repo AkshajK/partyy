@@ -5,18 +5,12 @@
 //
 //   AUDIO_DIR=~/PartyyAudio SYNC_TARGET=root@host:/opt/partyy/audio/ node scripts/ingest-worker.js
 require("dotenv").config();
-const { execFileSync } = require("child_process");
 const mongoose = require("mongoose");
 const ImportJob = require("../server/models/importJob");
 const { runImport, AUDIO_DIR } = require("../server/ingest/run");
 
-const SYNC_TARGET = process.env.SYNC_TARGET; // e.g. root@159.203.120.222:/opt/partyy/audio/
+const SYNC_TARGET = process.env.SYNC_TARGET; // e.g. root@159.203.120.222:/opt/partyy/audio/ (rsync happens inside runImport)
 const POLL_MS = parseInt(process.env.POLL_MS || "20000", 10);
-
-function sync() {
-  if (!SYNC_TARGET) return;
-  execFileSync("rsync", ["-az", "--ignore-existing", AUDIO_DIR.replace(/\/?$/, "/"), SYNC_TARGET], { stdio: "inherit", timeout: 30 * 60 * 1000 });
-}
 
 async function tick() {
   const job = await ImportJob.findOneAndUpdate(
@@ -26,12 +20,7 @@ async function tick() {
   );
   if (!job) return false;
   console.log(new Date().toISOString(), "running job", job._id + "", job.categoryName || "");
-  const done = await runImport(job._id + "", {
-    beforeDone: async () => {
-      console.log("syncing audio to", SYNC_TARGET);
-      sync();
-    },
-  });
+  const done = await runImport(job._id + "");
   console.log(`job ${done._id} ${done.status}: added=${done.done} skipped=${done.skipped} failed=${done.failed.length}`);
   return true;
 }
