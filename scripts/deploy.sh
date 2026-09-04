@@ -9,7 +9,7 @@ REPO="https://github.com/AkshajK/partyy.git"
 
 ssh -o BatchMode=yes "$HOST" bash -s "$BRANCH" "$REPO" "${1:-}" <<'REMOTE'
 set -euo pipefail
-BRANCH="$1"; REPO="$2"; MODE="$3"
+BRANCH="$1"; REPO="$2"; MODE="${3:-}"
 export NVM_DIR="$HOME/.nvm"; . "$NVM_DIR/nvm.sh"; nvm use 16 >/dev/null
 mkdir -p /opt/partyy/audio
 mkdir -p /opt/partyy/app
