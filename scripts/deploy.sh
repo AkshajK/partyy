@@ -12,10 +12,11 @@ set -euo pipefail
 BRANCH="$1"; REPO="$2"; MODE="$3"
 export NVM_DIR="$HOME/.nvm"; . "$NVM_DIR/nvm.sh"; nvm use 16 >/dev/null
 mkdir -p /opt/partyy/audio
-if [ ! -d /opt/partyy/app/.git ]; then
-  git clone -q --branch "$BRANCH" "$REPO" /opt/partyy/app
-fi
+mkdir -p /opt/partyy/app
 cd /opt/partyy/app
+if [ ! -d .git ]; then
+  git init -q && git remote add origin "$REPO"   # dir may already hold .env
+fi
 git fetch -q origin "$BRANCH"
 git checkout -q "$BRANCH"
 git reset -q --hard "origin/$BRANCH"
