@@ -23,6 +23,8 @@ const mainCalls = require("./mainCalls");
 const roomCalls = require("./roomCalls");
 const gameCalls = require("./gameCalls");
 const categoryDashboardCalls = require("./categoryDashboardCalls");
+const clipCalls = require("./clipCalls");
+const importCalls = require("./importCalls");
 // api endpoints: all these paths will be prefixed with "/api/"
 const router = express.Router();
 
@@ -79,6 +81,11 @@ router.post("/getCategoryAndSongData", auth.ensureLoggedIn, categoryDashboardCal
 router.get("/addCategory", auth.ensureLoggedIn, categoryDashboardCalls.addCategory);
 router.post("/addCategoryAuthenticate", auth.ensureLoggedIn, categoryDashboardCalls.addCategoryAuthenticate);
 router.post("/deleteCategory", auth.ensureLoggedIn, categoryDashboardCalls.deleteCategory);
+
+// self-hosted audio (2026-09): random 30s window of the current song
+router.get("/clip/:gameId/:round", auth.ensureLoggedIn, clipCalls.clip);
+router.post("/importSongs", auth.ensureLoggedIn, importCalls.importSongs);
+router.post("/importJobs", auth.ensureLoggedIn, importCalls.importJobs);
 
 
 // anything else falls to this "not found" case

@@ -25,8 +25,26 @@ const lock = require("./lock").lock;
 
 var ObjectId = require('mongodb').ObjectId
 const NUM_ROUNDS = 5;
+const CLIP_SECONDS = 30;
 let fromNow = (num) => {
   return new Date(new Date().getTime() + num);
+};
+
+// Self-hosted songs get a fresh random 30-second window every round.
+// Legacy Spotify-preview songs have no duration and always play the preview.
+let pickClipStart = (song) => {
+  if (!song || !song.audioFile || !song.duration) return undefined;
+  const lead = 8; // skip silent intros
+  const latest = Math.max(lead, Math.floor(song.duration) - CLIP_SECONDS - 5);
+  return lead + Math.floor(Math.random() * Math.max(1, latest - lead + 1));
+};
+
+// What the client is allowed to see of the current song: just a URL to play.
+// The answer (title/artist/art) is only revealed via songHistory after the round.
+let publicSong = (game) => {
+  const song = game.song || {};
+  if (song.audioFile) return { songUrl: "/api/clip/" + game._id + "/" + game.roundNumber };
+  return { songUrl: song.songUrl };
 };
 
 startGame = (req, res) => {
@@ -53,6 +71,7 @@ startGame = (req, res) => {
         const game = new Game({
           roomId: room._id,
           song: songs[0],
+          clipStart: pickClipStart(songs[0]),
           songHistory: [],
           players: players,
           originalLength: players.length,
@@ -77,7 +96,7 @@ startGame = (req, res) => {
               }
             
             let hideAnswer = savedGame 
-            hideAnswer.song = {songUrl: hideAnswer.song.songUrl}
+            hideAnswer.song = publicSong(savedGame)
             socket
               .getIo()
               .in("Room: " + room._id)
@@ -130,7 +149,7 @@ startRound = (roomId, roundNum, gameId) => {
 
       let savedGame = await game.save();
       let answer = savedGame.song.title;
-      let hideAnswer = Object.assign(savedGame, {song: {songUrl: savedGame.song.songUrl}})
+      let hideAnswer = Object.assign(savedGame, {song: publicSong(savedGame)})
           
         socket
           .getIo()
@@ -203,6 +222,7 @@ endRound = (roomId, roundNum, gameId) => {
         else {
           game.status = "RoundStarting";
           game.song = songs[0];
+          game.clipStart = pickClipStart(songs[0]);
           game.statusChangeTime = fromNow(3000);
          
           game.roundNumber = game.roundNumber + 1;
@@ -212,7 +232,7 @@ endRound = (roomId, roundNum, gameId) => {
         savedGame = await game.save();
         
           let hideAnswer = savedGame 
-          hideAnswer.song = {songUrl: hideAnswer.song.songUrl}
+          hideAnswer.song = publicSong(savedGame)
           socket
             .getIo()
             .in("Room: " + room._id)
@@ -402,7 +422,7 @@ socket.getIo()
   .emit("message", anotherMsg);
   
   let hideAnswer = savedGame 
-  hideAnswer.song = {songUrl: hideAnswer.song.songUrl}
+  hideAnswer.song = publicSong(savedGame)
   socket.getIo()
   
   .in("Room: " + savedGame.roomId)

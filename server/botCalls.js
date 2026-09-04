@@ -25,12 +25,12 @@ Room.find({status: {$ne: "Waiting"}}).then((rooms)=> {
 }
 
 botJoinRoom = (req,res)=>{
-  if(!req.user.isSiteAdmin) return;
+  if(!req.user.isSiteAdmin) return res.status(403).send({ msg: "admin only" });
   roomCalls.joinRoom({body: {name: req.body.name}, user: {_id: req.body.botId, bot: true}}, res)
 }
 
 botLeaveRoom = (req,res)=>{
-  if(!req.user.isSiteAdmin) return;
+  if(!req.user.isSiteAdmin) return res.status(403).send({ msg: "admin only" });
   Room.findById(req.body.roomId).then((room)=> {
     roomCalls.leaveRoom({body: {roomId: req.body.roomId, name: room.name}, user: {_id: req.body.botId, bot: true}}, res)
   })
@@ -38,7 +38,7 @@ botLeaveRoom = (req,res)=>{
 }
 
 addBot = (req,res)=>{
-  if(!req.user.isSiteAdmin) return;
+  if(!req.user.isSiteAdmin) return res.status(403).send({ msg: "admin only" });
   const newUser = new User({
     name: req.body.name,
     cookieToken: "",
@@ -53,7 +53,7 @@ addBot = (req,res)=>{
 }
 
 deleteBot = (req,res)=>{
-  if(!req.user.isSiteAdmin) return;
+  if(!req.user.isSiteAdmin) return res.status(403).send({ msg: "admin only" });
   User.findByIdAndRemove(req.body.botId).then(() => {
     res.send({});
     socket.removeUser({_id: req.body.botId, bot: true}, "", false);
@@ -62,7 +62,7 @@ deleteBot = (req,res)=>{
 
 
 joinBotDashboard = (req, res) => {
-  if(!req.user.isSiteAdmin) return;
+  if(!req.user.isSiteAdmin) return res.status(403).send({ msg: "admin only" });
   User.find({bot: true}, (err, users) => {
     Room.find({$or: [{created: {$gte: new Date(new Date().getTime() - 1000*60*60*12)}}, { users: {$ne: []} }]}, (err, rooms) => {
       res.send({bots: users, rooms: rooms});

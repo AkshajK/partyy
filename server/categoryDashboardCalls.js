@@ -14,7 +14,7 @@ Returns: {[{category: Category, songs: [Song]}]}
 Description: Returns all the categories, with all the songs in each category
 */
 getCategoryAndSongData = (req, res) => {
-  if (!req.user.isSiteAdmin) return;
+  if (!req.user.isSiteAdmin) return res.status(403).send({ msg: "admin only" });
   Category.find({}, (err, categories) => {
     console.log(`Categories: ${categories}`);
     Song.find({}, (err, songs) => {
@@ -117,7 +117,7 @@ var spotifyApi = new SpotifyWebApi({
 });
 
 addCategoryAuthenticate = (req, res) => {
-  if (!req.user.isSiteAdmin) return;
+  if (!req.user.isSiteAdmin) return res.status(403).send({ msg: "admin only" });
   var scopes = ["user-read-private", "user-read-email", "playlist-read-private"];
   var authorizeURL = spotifyApi.createAuthorizeURL(
     scopes,
@@ -128,7 +128,7 @@ addCategoryAuthenticate = (req, res) => {
 };
 
 addCategory = (req, res) => {
-  if (!req.user.isSiteAdmin) return;
+  if (!req.user.isSiteAdmin) return res.status(403).send({ msg: "admin only" });
   var code = req.query.code;
   var state = req.query.state;
   var playlistId = state.split("-----")[1];
@@ -187,7 +187,7 @@ addCategory = (req, res) => {
 
 var ObjectId = require("mongodb").ObjectId;
 deleteCategory = (req, res) => {
-  if (!req.user.isSiteAdmin) return;
+  if (!req.user.isSiteAdmin) return res.status(403).send({ msg: "admin only" });
   Category.remove({ _id: ObjectId(req.body.categoryId) }).then(() => {
     Song.remove({ categoryId: req.body.categoryId }).then(() => {
       Room.remove({ "category._id": ObjectId(req.body.categoryId) }).then(() => {

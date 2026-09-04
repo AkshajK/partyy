@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <key>Label</key><string>ai.kevinzhu.partyy-ingest</string>
+  <key>ProgramArguments</key>
+  <array>
+    <string>/bin/zsh</string>
+    <string>-lc</string>
+    <string>source ~/.nvm/nvm.sh && nvm use 16 >/dev/null && cd ~/Projects/partyy && exec node scripts/ingest-worker.js</string>
+  </array>
+  <key>EnvironmentVariables</key>
+  <dict>
+    <key>PATH</key><string>/Users/kevinzhu/bin:/usr/local/bin:/opt/homebrew/bin:/usr/bin:/bin</string>
+    <key>DATABASE_NAME</key><string>partyy</string>
+    <key>AUDIO_DIR</key><string>/Users/kevinzhu/PartyyAudio</string>
+    <key>SYNC_TARGET</key><string>root@159.203.120.222:/opt/partyy/audio/</string>
+    <key>INGEST_CONCURRENCY</key><string>2</string>
+  </dict>
+  <key>RunAtLoad</key><true/>
+  <key>KeepAlive</key><true/>
+  <key>ThrottleInterval</key><integer>30</integer>
+  <key>StandardOutPath</key><string>/Users/kevinzhu/Library/Logs/partyy-ingest.log</string>
+  <key>StandardErrorPath</key><string>/Users/kevinzhu/Library/Logs/partyy-ingest.log</string>
+</dict>
+</plist>

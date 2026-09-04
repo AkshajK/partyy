@@ -5,6 +5,7 @@ const GameSchema = new mongoose.Schema({
   winner: String, // userId
 
   song: Object,
+  clipStart: Number, // seconds into song.audioFile where this round's 30s window begins (self-hosted songs only)
   songHistory: [Object], // song Ids (including song)
   status: {
     type: String, // "RoundStarting" or "RoundInProgress" or "RoundFinished",
