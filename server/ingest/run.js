@@ -53,6 +53,7 @@ async function ingestOne(job, category, existing, added, want) {
     youtubeId: pick.id,
     source: "youtube",
     pending: SYNC_TARGET ? true : undefined,
+    requested: { title: want.title, artist: want.artist },
   });
   const file = await yt.download(pick.id, AUDIO_DIR, song._id + "");
   song.audioFile = path.basename(file);

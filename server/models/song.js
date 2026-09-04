@@ -17,6 +17,7 @@ const SongSchema = new mongoose.Schema({
   duration: Number, // seconds, from ffprobe
   youtubeId: String,
   source: String, // "spotify-preview" | "youtube"
+  requested: { title: String, artist: String }, // what the import was asked for, for auditing
   pending: Boolean, // true until the MP3 has been synced to the game server; hidden from games meanwhile
 });
 
