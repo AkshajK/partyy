@@ -28,7 +28,7 @@ function artistMatches(r, wantArtist) {
 }
 
 // Words that mark a variant we do not want unless the user asked for it.
-const VARIANT = /\b(remix|remixes|dub|live|acoustic|instrumental|karaoke|cover|edit|version|mix|sped up|slowed|demo|remaster(?:ed)?|radio|extended|tribute|medley|commentary|nightcore|backing track|originally performed|in the style of|made famous|8d)\b/i;
+const VARIANT = /\b(remix|remixes|dub|live|acoustic|instrumental|karaoke|cover|edit|version|mix|sped up|slowed|demo|remaster(?:ed)?|radio|extended|tribute|medley|commentary|nightcore|club|backing track|originally performed|in the style of|made famous|8d)\b/i;
 
 // "Song (feat. X) [Radio Edit]" -> "Song" for searching; the credit is noise.
 function cleanTitle(t) {
