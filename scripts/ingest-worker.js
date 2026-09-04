@@ -29,6 +29,12 @@ async function main() {
   // Atlas drops idle TLS sockets now and then; without a handler the whole
   // multi-hour import dies on one ECONNRESET. Mongoose reconnects on its own.
   mongoose.connection.on("error", (e) => console.error("mongo connection error:", e.message));
+  // The mongodb 3.x driver emits idle-socket resets on its internal Connection,
+  // which mongoose does not forward; they would otherwise kill the process.
+  process.on("uncaughtException", (e) => {
+    if (e && (e.name === "MongoNetworkError" || e.code === "ECONNRESET")) return console.error("mongo socket reset (driver reconnects):", e.message);
+    throw e;
+  });
   await mongoose.connect(process.env.ATLAS_SRV, {
     useNewUrlParser: true,
     useUnifiedTopology: true,

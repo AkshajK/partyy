@@ -71,8 +71,9 @@ async function itunesLookup(title, artist, { ambiguous = false } = {}) {
     } catch (e) {
       continue;
     }
-    // The artist we asked for must be on the result, and most of the title too.
-    results = results.filter((r) => artistMatches(r, artist) && titleMatches(r, ct));
+    // The artist we asked for must be on the result, most of the title too, and
+    // no remix/live/karaoke variant unless the wanted title itself is one.
+    results = results.filter((r) => artistMatches(r, artist) && titleMatches(r, ct) && (VARIANT.test(title) || !VARIANT.test(r.trackName)));
     for (const r of results) {
       const { score, recall } = scoreResult(r, title, artist);
       if (score > bestScore) {
