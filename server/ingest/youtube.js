@@ -48,11 +48,18 @@ async function candidates(title, artist) {
   return [];
 }
 
-const BAD = /\b(live|cover|remix|reaction|karaoke|instrumental|sped up|slowed|nightcore|8d|tutorial|lesson|acoustic version|choreography|dance)\b/i;
+const BAD_WORDS = ["live", "cover", "remix", "reaction", "karaoke", "instrumental", "sped up", "slowed", "nightcore", "8d", "tutorial", "lesson", "acoustic version", "choreography", "dance practice", "dance cover", "fan made", "mashup"];
+// Words that mark a wrong upload, unless the song is actually called that ("Live Your Life").
+function badRegex(wantTitle) {
+  const t = (wantTitle || "").toLowerCase();
+  const words = BAD_WORDS.filter((w) => !t.includes(w));
+  return new RegExp("\\b(" + words.join("|") + ")\\b", "i");
+}
 
 // Score: duration close to the reference wins, official/topic channels get a
 // nudge, obviously-wrong uploads are dropped.
-function pickBest(cands, refDurationSec) {
+function pickBest(cands, refDurationSec, wantTitle) {
+  const BAD = badRegex(wantTitle);
   let best = null;
   let bestScore = -Infinity;
   for (const c of cands) {

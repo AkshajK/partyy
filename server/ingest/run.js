@@ -42,7 +42,7 @@ async function ingestOne(job, category, existing, added, want) {
   if (existing.has(key)) return "skipped";
 
   const cands = await yt.candidates(title, artist[0] || "");
-  const pick = yt.pickBest(cands, meta ? meta.durationMs / 1000 : undefined);
+  const pick = yt.pickBest(cands, meta ? meta.durationMs / 1000 : undefined, title);
   if (!pick) throw new Error("no YouTube match" + (meta ? "" : " (and no iTunes match)"));
 
   const song = new Song({

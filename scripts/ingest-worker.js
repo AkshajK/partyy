@@ -26,6 +26,9 @@ async function tick() {
 }
 
 async function main() {
+  // Atlas drops idle TLS sockets now and then; without a handler the whole
+  // multi-hour import dies on one ECONNRESET. Mongoose reconnects on its own.
+  mongoose.connection.on("error", (e) => console.error("mongo connection error:", e.message));
   await mongoose.connect(process.env.ATLAS_SRV, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
