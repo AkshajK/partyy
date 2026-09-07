@@ -5,7 +5,7 @@ import NotFound from "./pages/NotFound.js";
 import SideBar from "./modules/SideBar.js";
 
 import Lobby from "./pages/Lobby.js";
-import CategoryDashboard from "./pages/CategoryDashboard.js";
+import Library from "./pages/Library.js";
 import BotDashboard from "./pages/BotDashboard.js";
 import Room from "./pages/Room.js";
 import CircularProgress from "@material-ui/core/CircularProgress";
@@ -354,7 +354,8 @@ class App extends Component {
                   mobile = {mobile}
                   login = {mobile ? login : undefined}
                 />
-                <CategoryDashboard exact path="/dashboard" category={this.state.category} />
+                <Library exact path="/library" />
+                <Library exact path="/dashboard" />
                 <BotDashboard exact path="/bots" category={this.state.category} />
 
                 <Room

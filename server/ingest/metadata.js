@@ -91,6 +91,7 @@ async function itunesLookup(title, artist, { ambiguous = false } = {}) {
     artUrl: (best.artworkUrl100 || "").replace("100x100bb", "600x600bb") || undefined,
     durationMs: best.trackTimeMillis,
     itunesUrl: best.trackViewUrl,
+    releaseYear: best.releaseDate ? parseInt(best.releaseDate.slice(0, 4), 10) : undefined,
     confidence: bestScore,
   };
 }

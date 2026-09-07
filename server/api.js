@@ -25,6 +25,7 @@ const gameCalls = require("./gameCalls");
 const categoryDashboardCalls = require("./categoryDashboardCalls");
 const clipCalls = require("./clipCalls");
 const importCalls = require("./importCalls");
+const libraryCalls = require("./libraryCalls");
 // api endpoints: all these paths will be prefixed with "/api/"
 const router = express.Router();
 
@@ -86,6 +87,13 @@ router.post("/deleteCategory", auth.ensureLoggedIn, categoryDashboardCalls.delet
 router.get("/clip/:gameId/:round", auth.ensureLoggedIn, clipCalls.clip);
 router.post("/importSongs", auth.ensureLoggedIn, importCalls.importSongs);
 router.post("/importJobs", auth.ensureLoggedIn, importCalls.importJobs);
+
+// admin library page
+router.post("/library", auth.ensureLoggedIn, libraryCalls.library);
+router.post("/library/updateSong", auth.ensureLoggedIn, libraryCalls.updateSong);
+router.post("/library/deleteSong", auth.ensureLoggedIn, libraryCalls.deleteSong);
+router.post("/library/refetchSong", auth.ensureLoggedIn, libraryCalls.refetchSong);
+router.post("/library/updateCategory", auth.ensureLoggedIn, libraryCalls.updateCategory);
 
 
 // anything else falls to this "not found" case

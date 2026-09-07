@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 const CategorySchema = new mongoose.Schema({
   name: String,
   playlistId: String,
-  
+  isDefault: { type: Boolean, default: false }, // shown first in the lobby dropdown
 });
 
 // compile model from schema

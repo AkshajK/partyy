@@ -6,6 +6,8 @@ const ImportJobSchema = new mongoose.Schema({
   categoryName: String,
   categoryId: String,
   input: String, // raw text the admin pasted (playlist URL or title/artist lines)
+  refetchSongId: String, // set for "re-fetch this song's audio from a pinned YouTube video" jobs
+  youtubeId: String,
   status: {
     type: String, // "queued" | "running" | "done" | "failed"
     default: "queued",

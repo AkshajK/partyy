@@ -54,6 +54,7 @@ async function ingestOne(job, category, existing, added, want) {
     source: "youtube",
     pending: SYNC_TARGET ? true : undefined,
     requested: { title: want.title, artist: want.artist },
+    releaseYear: meta ? meta.releaseYear : undefined,
   });
   const file = await yt.download(pick.id, AUDIO_DIR, song._id + "");
   song.audioFile = path.basename(file);
@@ -68,11 +69,39 @@ async function ingestOne(job, category, existing, added, want) {
   return "added";
 }
 
+// Replace one song's audio with a specific YouTube video (admin picked it by hand).
+async function refetchOne(job) {
+  const song = await Song.findById(job.refetchSongId);
+  if (!song) throw new Error("song no longer exists");
+  await log(job, `re-fetching "${song.title}" from youtube ${job.youtubeId}`);
+  if (song.audioFile) { try { fs.unlinkSync(path.join(AUDIO_DIR, song.audioFile)); } catch (e) {} }
+  await Song.updateOne({ _id: song._id }, { $set: { pending: !!SYNC_TARGET } });
+  const file = await yt.download(job.youtubeId, AUDIO_DIR, song._id + "");
+  const duration = await yt.probeDuration(file);
+  if (!duration || duration < 40) throw new Error("audio too short: " + duration);
+  await Song.updateOne({ _id: song._id }, { $set: { audioFile: path.basename(file), duration, youtubeId: job.youtubeId, source: "youtube" } });
+  if (SYNC_TARGET) {
+    syncAudio();
+    await Song.updateOne({ _id: song._id }, { $unset: { pending: 1 } });
+  }
+  await update(job, { $set: { total: 1 }, $inc: { done: 1 } });
+  await log(job, `done: ${song.title} now ${Math.round(duration)}s`);
+}
+
 async function runImport(jobId, { beforeDone } = {}) {
   const job = await ImportJob.findById(jobId);
   if (!job) throw new Error("no such job " + jobId);
   fs.mkdirSync(AUDIO_DIR, { recursive: true });
   await update(job, { $set: { status: "running" } });
+  if (job.refetchSongId) {
+    try {
+      await refetchOne(job);
+      await update(job, { $set: { status: "done", finished: new Date() } });
+    } catch (e) {
+      await update(job, { $set: { status: "failed", error: e.message, finished: new Date() } });
+    }
+    return ImportJob.findById(job._id);
+  }
   try {
     const src = await resolveInput(job.input);
     const categoryName = (job.categoryName || src.name || "").trim();
