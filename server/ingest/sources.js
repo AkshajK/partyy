@@ -64,6 +64,10 @@ function cleanYouTubeTitle(t) {
 function parseLine(line, fallbackArtist) {
   const l = line.trim();
   if (!l) return null;
+  if (l.includes("\t")) {
+    const [t, a] = l.split("\t");
+    return { title: t.trim(), artist: (a || "").trim() };
+  }
   let m = l.match(/^(.+?)\s+by\s+(.+)$/i);
   if (m) return { title: m[1].trim(), artist: m[2].trim() };
   m = l.match(/^(.+?)\s*[-–—]\s*(.+)$/);

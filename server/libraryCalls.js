@@ -17,7 +17,7 @@ const admin = (req, res) => {
 
 const library = async (req, res) => {
   if (!admin(req, res)) return;
-  const categories = await Category.find({}).sort({ isDefault: -1, _id: 1 }).lean();
+  const categories = await Category.find({}).sort({ isDefault: -1, order: 1, name: 1 }).lean();
   const songs = await Song.find({}).lean();
   res.send({
     categories: categories.map((c) => ({ _id: c._id, name: c.name, isDefault: !!c.isDefault })),
@@ -60,7 +60,8 @@ const deleteSong = async (req, res) => {
   const song = await Song.findById(req.body.id);
   if (!song) return res.status(404).send({ msg: "no such song" });
   if (song.audioFile) {
-    try { fs.unlinkSync(path.join(AUDIO_DIR, path.basename(song.audioFile))); } catch (e) {}
+    const shared = await Song.countDocuments({ _id: { $ne: song._id }, audioFile: song.audioFile });
+    if (!shared) { try { fs.unlinkSync(path.join(AUDIO_DIR, path.basename(song.audioFile))); } catch (e) {} }
   }
   await song.deleteOne();
   res.send({ ok: true });

@@ -456,7 +456,7 @@ const getLeaderboard = (useCurrent, modifiedUserIds) => {
   return new Promise((resolve, reject) => {
     //lock.acquire("leaderboard", (done)=>{
     
-      Category.find({}).sort({ isDefault: -1, _id: 1 }).exec((err, categories) => {
+      Category.find({}).sort({ isDefault: -1, order: 1, name: 1 }).exec((err, categories) => {
         
         // check if categories is the same
         let sameCategories = isEqual(categories.map((c=>{return c._id+""})), curLeaderboard.categories.map((c=>{return c._id+""})))

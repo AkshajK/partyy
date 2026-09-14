@@ -41,6 +41,15 @@ async function ingestOne(job, category, existing, added, want) {
   const key = norm(title) + "|" + norm(artist[0] || "");
   if (existing.has(key)) return "skipped";
 
+  // Same song already fetched for another category? Share its file instead of downloading again.
+  const twin = await Song.findOne({ audioFile: { $exists: true }, pending: { $ne: true }, title: new RegExp("^" + title.replace(/[.*+?^${}()|[\]\\]/g, "\\$&") + "$", "i"), artist: artist[0] });
+  if (twin) {
+    const copy = new Song({ title: twin.title, artist: twin.artist, artUrl: twin.artUrl, categoryId: category._id + "", youtubeId: twin.youtubeId, source: twin.source, audioFile: twin.audioFile, duration: twin.duration, releaseYear: twin.releaseYear, requested: { title: want.title, artist: want.artist } });
+    await copy.save();
+    existing.add(key);
+    return "added";
+  }
+
   const cands = await yt.candidates(title, artist[0] || "");
   const pick = yt.pickBest(cands, meta ? meta.durationMs / 1000 : undefined, title);
   if (!pick) throw new Error("no YouTube match" + (meta ? "" : " (and no iTunes match)"));
