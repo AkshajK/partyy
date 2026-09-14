@@ -6,6 +6,7 @@ import SideBar from "./modules/SideBar.js";
 
 import Lobby from "./pages/Lobby.js";
 import Library from "./pages/Library.js";
+import WhatsNew from "./pages/WhatsNew.js";
 import BotDashboard from "./pages/BotDashboard.js";
 import Room from "./pages/Room.js";
 import CircularProgress from "@material-ui/core/CircularProgress";
@@ -314,7 +315,7 @@ class App extends Component {
               bgcolor="sidebar"
               style={{ borderRight: undefined }}
             >
-              <Box width="100%" height="calc(100% - 70px)">
+              <Box width="100%" height="calc(100% - 100px)">
                 <SideBar
                   changeName={this.changeName}
                   setUserInfo={this.setUserInfo}
@@ -326,7 +327,16 @@ class App extends Component {
                   setCategory={this.setCategory}
                 />
               </Box>
-              {showSidebar ? login : <></>}
+              {showSidebar ? (
+                <React.Fragment>
+                  <Button fullWidth size="small" style={{ color: "#888", textTransform: "none" }} onClick={() => this.redirect("/whats-new")}>
+                    {"What's new"}
+                  </Button>
+                  {login}
+                </React.Fragment>
+              ) : (
+                <></>
+              )}
             </Box>
           
           <Box width={showSidebar ? "calc(100% - 320px)" : "100%"} height="100%">
@@ -354,6 +364,7 @@ class App extends Component {
                   mobile = {mobile}
                   login = {mobile ? login : undefined}
                 />
+                <WhatsNew exact path="/whats-new" />
                 <Library exact path="/library" />
                 <Library exact path="/dashboard" />
                 <BotDashboard exact path="/bots" category={this.state.category} />
