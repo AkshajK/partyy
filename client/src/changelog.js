@@ -2,10 +2,10 @@
 // Keep entries short and in plain words; this is for people who play, not devs.
 export const CHANGELOG = [
   {
-    date: "2026-09-13",
+    date: "2026-09-14",
     title: "Year-by-year categories",
     items: [
-      "New modes for every year from 2010 to 2020: the top 50 songs from each year's Billboard year-end chart. Pick one in the lobby dropdown.",
+      "Eleven new modes, 2010 Hits through 2020 Hits: the top 50 songs from each year's Billboard year-end chart, over 540 songs in all. Pick one in the lobby dropdown.",
       "The dropdown now lists General and Classics first, then the years in order.",
       "Every song now carries its release year (admins can see and fix it in the library).",
     ],
